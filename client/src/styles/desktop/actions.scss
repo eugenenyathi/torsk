@@ -1,0 +1,294 @@
+.actions-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100vh;
+  z-index: 10;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  background-color: $color-light-1;
+  transform: translateX(280px);
+  transition: $transition-1;
+
+  &.active {
+    transform: translateX(0px);
+  }
+
+  &.show-action {
+    width: 40%;
+  }
+}
+
+.actions-header {
+  position: relative;
+  height: $header-size;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  background-color: $color-light-1;
+
+  @include flexSpaceBtw;
+
+  h2 {
+    font-weight: normal;
+  }
+
+  .close-icon {
+    cursor: pointer;
+  }
+
+  &::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background-color: $color-grey-6;
+  }
+}
+
+.actions-content {
+  width: 100%;
+  height: 100%;
+  @include flexAlign;
+  align-items: flex-start;
+}
+
+.actions-ul-wrapper {
+  padding-top: 25px;
+  height: 100%;
+  border-right: 1px solid $color-grey-6;
+
+  &.no-show-action {
+    width: 100%;
+  }
+
+  .list-item {
+    list-style-type: none;
+
+    display: block;
+    width: 100%;
+
+    cursor: pointer;
+    padding: 11px 25px;
+    margin-bottom: 5px;
+    color: $color-dark-3;
+    font-size: 18px;
+    letter-spacing: 0.4px;
+    text-decoration: none;
+    @include flexAlign;
+    gap: 15px;
+    transition: $transition-1;
+
+    &:hover {
+      background-color: $color-grey-ddd;
+    }
+
+    &.grey-out {
+      color: $color-grey-2;
+      cursor: default;
+
+      .icon {
+        color: $color-grey-2;
+      }
+    }
+
+    .icon {
+      color: $color-primary-1;
+    }
+  }
+}
+
+.action-info {
+  flex: 1;
+  height: 100%;
+  padding: 20px 0px;
+  background-color: $color-grey-1;
+}
+
+.specs-container {
+  .info {
+    @include flexAlign;
+    gap: 13px;
+    font-size: 15px;
+    padding: 15px 25px;
+    border-bottom: 1px solid $color-grey-3;
+
+    &:hover {
+      background-color: $color-grey-eee;
+    }
+
+    .icon {
+      color: $color-grey-aaa;
+    }
+
+    .spec {
+      @include flexflip;
+      gap: 7px;
+
+      p {
+        &:first-child {
+          color: $color-grey-aaa;
+        }
+        color: $color-dark-3;
+      }
+    }
+  }
+
+  .top-tree {
+    @include flexAlign;
+    gap: 13px;
+    font-size: 15px;
+    padding: 15px 25px;
+    border-bottom: 1px solid $color-grey-3;
+
+    .icon {
+      color: $color-grey-aaa;
+    }
+  }
+
+  .specs-wrapper {
+    @include flexflip;
+    gap: 3px;
+
+    .spec {
+      @include flexAlign;
+      gap: 13px;
+
+      &:first-child {
+        font-size: 15px;
+      }
+
+      font-size: 14px;
+
+      p {
+        &:first-child {
+          color: $color-grey-aaa;
+        }
+
+        color: $color-dark-3;
+      }
+    }
+  }
+}
+
+.update-container {
+  overflow: auto;
+
+  &.action-info {
+    padding: 25px 20px 20px 20px;
+    background-color: $color-light-1;
+  }
+}
+
+.update-content {
+  &.action-state {
+    position: relative;
+    top: 25%;
+    @include flexCenter;
+
+    .context-heading {
+      font-weight: normal;
+      font-size: 23px;
+      padding-bottom: 15px;
+      margin-bottom: 30px;
+      text-transform: capitalize;
+      border-bottom: 1px solid $color-grey-3;
+    }
+
+    p {
+      @include flexAlign;
+      gap: 3px;
+      font-size: 17px;
+
+      span {
+        font-weight: bold;
+      }
+    }
+
+    .update-btn {
+      margin-top: 30px;
+      text-transform: capitalize;
+    }
+  }
+
+  .update-control {
+    @extend .form-control;
+    margin-bottom: 16px;
+
+    &.edit-context {
+      margin-bottom: 18px;
+    }
+  }
+
+  label {
+    @extend .label;
+    font-size: 16px;
+    margin-bottom: 10px;
+    letter-spacing: 0.4px;
+  }
+
+  .update-input {
+    @extend .form-input;
+    color: $color-dark-2;
+    border-radius: 0px;
+    font-size: 16px;
+    height: 45px;
+  }
+
+  .update-btn {
+    @extend .login-btn;
+    margin: 0;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    padding: 10px 30px;
+    border-radius: 6px;
+    box-shadow: none;
+  }
+
+  .go-back {
+    @include flexAlign;
+    color: $color-grey-2;
+    padding-left: 8px;
+    transition: $transition-1;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-dark-2;
+      text-decoration: underline;
+    }
+  }
+}
+
+.action-alert-container {
+  @extend .filter-list-container;
+}
+
+.action-alert-content {
+  width: 385px;
+  height: 100px;
+  padding: 15px;
+
+  @include flexCenter;
+
+  border-radius: 4px;
+  background-color: $color-light-1;
+
+  h2 {
+    font-size: 20px;
+    font-weight: normal;
+    text-align: center;
+  }
+
+  .close-icon {
+    cursor: pointer;
+    color: $color-light-1;
+    position: absolute;
+    top: 50%;
+    right: 30%;
+    transform: translateY(-50%);
+    transition: $transition-1;
+  }
+}

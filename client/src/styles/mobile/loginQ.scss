@@ -1,0 +1,148 @@
+@media (max-width: 840px) {
+	.login-content {
+		width: 380px;
+		display: block;
+		border-radius: 13px;
+		box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.login-img-wrapper {
+		display: none;
+	}
+
+	.login-form {
+		padding: 25px;
+
+		.krynn-logo {
+			font-size: 31px;
+			line-height: 1px;
+			margin-bottom: 18px;
+		}
+
+		.header {
+			font-size: 17px;
+			padding: 10px 0px;
+			margin-bottom: 20px;
+		}
+	}
+
+	.login-control {
+		margin-bottom: 16px;
+
+		.login-input {
+			font-size: 16px;
+			height: 48px;
+			padding: 0px 11px;
+
+			&::placeholder {
+				font-size: 14px;
+				letter-spacing: 0.28px;
+			}
+		}
+
+		.eye-icon {
+			font-size: 14px;
+		}
+	}
+
+	.login-btn {
+		font-size: 17px;
+		letter-spacing: 0.37px;
+		margin-top: 20px;
+		padding: 12px 30px;
+	}
+
+	.link-login {
+		font-size: 13px;
+		margin-top: 11px;
+	}
+
+	.alert {
+		padding: 6px;
+		border-radius: 3px;
+		margin-bottom: 13px;
+	}
+}
+
+@media (max-width: 480px) {
+	.login-content {
+		width: 345px;
+		border-radius: 8px;
+		box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.login-form {
+		.krynn-logo {
+			font-size: 27px;
+			margin-bottom: 15px;
+		}
+
+		.header {
+			font-size: 15px;
+			padding: 8px 0px;
+			margin-bottom: 20px;
+		}
+	}
+
+	.login-control {
+		margin-bottom: 15px;
+
+		.login-input {
+			font-size: 16px;
+			height: 45px;
+
+			&::placeholder {
+				font-size: 14px;
+			}
+		}
+
+		.eye-icon {
+			font-size: 13px;
+		}
+	}
+
+	.login-btn {
+		font-size: 16px;
+		margin-top: 18px;
+		padding: 12px 25px;
+	}
+
+	.alert {
+		font-size: 12px;
+		margin-bottom: 11px;
+	}
+}
+
+@media (max-width: 380px) {
+	.login-content {
+		width: 330px;
+		border-radius: 6px;
+	}
+
+	.login-form {
+		.krynn-logo {
+			font-size: 25px;
+		}
+	}
+
+	.login-control {
+		margin-bottom: 13px;
+
+		.login-input {
+			font-size: 16px;
+			height: 43px;
+		}
+
+		.eye-icon {
+			font-size: 12px;
+		}
+	}
+
+	.login-btn {
+		margin-top: 16px;
+	}
+
+	.alert {
+		font-size: 10px;
+	}
+}

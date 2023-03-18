@@ -1,0 +1,74 @@
+@media (max-width: 840px) {
+	.signup-content {
+		width: 380px;
+		display: block;
+		border-radius: 13px;
+		box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.front-img-wrapper {
+		display: none;
+	}
+
+	.signup-email-wrapper,
+	.signup-personal-info,
+	.signup-root-password {
+		padding: 25px;
+	}
+
+	.signup-email-wrapper {
+		.krynn-logo {
+			font-size: 31px;
+			line-height: 1px;
+			margin-bottom: 13px;
+
+			&.email-code {
+				margin-bottom: 28px;
+			}
+		}
+
+		.header {
+			font-size: 17px;
+		}
+	}
+
+	.signup-personal-info {
+		.krynn-logo {
+			font-size: 31px;
+			margin-bottom: 13px;
+		}
+
+		.header {
+			font-size: 17px;
+			margin-bottom: 13px;
+		}
+	}
+
+	.signup-root-password {
+		.krynn-logo {
+			margin-bottom: 13px;
+			padding-bottom: 13px;
+		}
+	}
+	.signup-control {
+		label {
+			font-size: 15px;
+			margin-bottom: 6px;
+		}
+
+		.signup-input {
+			height: 48px;
+		}
+
+		.eye-icon {
+			@include icon(77%, 4%);
+		}
+	}
+
+	.signup-btn {
+		font-size: 17px;
+		letter-spacing: 0.37px;
+		margin-top: 20px;
+		padding: 12px 35px;
+	}
+}

@@ -1,0 +1,32 @@
+.selection-bar {
+	display: flex;
+	align-items: center;
+	background-color: $color-light-3;
+
+	.list-item {
+		flex: 1;
+		list-style-type: none;
+
+		a {
+			display: block;
+			width: 100%;
+			padding: 13px;
+			text-decoration: none;
+			text-align: center;
+			letter-spacing: 0.4px;
+			color: $color-dark-4;
+			cursor: pointer;
+			font-size: 16px;
+			transition: $transition-1;
+
+			&:hover {
+				color: $color-primary-1;
+			}
+
+			&.router-link-exact-active {
+				color: $color-primary-1;
+				font-weight: bold;
+			}
+		}
+	}
+}

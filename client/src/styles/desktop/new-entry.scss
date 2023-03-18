@@ -1,0 +1,137 @@
+.add-entry-container {
+  margin-top: 20px;
+  @include flexCenter;
+}
+
+.add-entry-content {
+  padding: 25px;
+  width: 40vw;
+  border-radius: 6px;
+  background-color: $color-light-1;
+
+  h2 {
+    font-weight: normal;
+    margin-bottom: 18px;
+  }
+
+  .entry-control {
+    @extend .form-control;
+  }
+
+  label {
+    @extend .label;
+    margin-bottom: 8px;
+  }
+
+  .entry-input {
+    @extend .form-input;
+    font-size: 16px;
+    height: 43px;
+    color: $color-dark-2;
+  }
+
+  .add-btn {
+    @extend .login-btn;
+    margin: 0;
+    margin-top: 23px;
+    font-size: 16px;
+    padding: 11px 30px;
+    border-radius: 6px;
+    box-shadow: none;
+  }
+}
+
+.entry-control.cpu {
+  .inner-control {
+    @include flexAlign;
+    gap: 15px;
+
+    .select-menu {
+      width: 100%;
+    }
+  }
+
+  .grand-child-control {
+    @include flexAlign;
+    gap: 10px;
+
+    input {
+      width: 70px;
+    }
+  }
+}
+
+.checkboxes-control {
+  @extend .form-control;
+  margin-top: 25px;
+  @include flexAlign;
+  gap: 20px;
+
+  &.action-printer {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 25px;
+  }
+}
+
+.checkbox-wrapper {
+  input {
+    display: none;
+  }
+
+  &.wireless {
+    .checkbox-visual {
+      width: 150px;
+      height: 43px;
+    }
+  }
+
+  .checkbox-visual {
+    @include flexAlign;
+    gap: 7px;
+
+    height: 39px;
+    padding: 0 16px;
+    font-size: 16px;
+    letter-spacing: 0.4px;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 35px;
+    border: 1px solid $color-grey-3;
+    background-color: $color-light-1;
+    transition: $transition-1;
+
+    .material-design-icon__svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &.active {
+      border-color: transparent;
+      color: $color-light-1;
+      background-color: $color-primary-1;
+    }
+
+    &:hover {
+      border-color: transparent;
+      color: $color-light-1;
+      background-color: $color-primary-1;
+    }
+  }
+}
+
+.storage-wrapper {
+  @include flexAlign;
+  gap: 13px;
+
+  .storage-radio-wrapper {
+    @include flexAlign;
+    gap: 10px;
+  }
+}
+
+.storage-input-wrapper {
+  flex: 1;
+  @include flexAlign;
+  gap: 10px;
+}

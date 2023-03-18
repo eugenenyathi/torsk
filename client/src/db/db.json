@@ -1,0 +1,736 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "bosseugene@krynn.com",
+      "username": "bosseugene",
+      "name": "Eugene Nyathi",
+      "jwt": "1234567"
+    },
+    {
+      "id": 2,
+      "email": "bosskin@krynn.com",
+      "username": "kin",
+      "name": "Steward Nyoni",
+      "jwt": "891552"
+    }
+  ],
+  "emails": [
+    {
+      "id": 1,
+      "user": "Eugene Nyathi",
+      "email": "bosseugene@krynn.com",
+      "password": "1234567",
+      "code": 657882
+    },
+    {
+      "id": 2,
+      "user": "Systems Administrator",
+      "email": "systemsadmmin@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    },
+    {
+      "id": 3,
+      "user": "IT Technician",
+      "email": "vfm_it@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    },
+    {
+      "id": 4,
+      "user": "Registry Officer",
+      "email": "regsitry@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    },
+    {
+      "id": 5,
+      "user": "Estates Officers",
+      "email": "estates@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    },
+    {
+      "id": 6,
+      "user": "Creditors Officer",
+      "email": "creditors@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    },
+    {
+      "id": 7,
+      "user": "Debtors Officer",
+      "email": "debtors@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    },
+    {
+      "id": 8,
+      "user": "HR Assistant",
+      "email": "hrassistant@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    },
+    {
+      "id": 9,
+      "user": "PA to TC",
+      "email": "tcpa@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    },
+    {
+      "id": 10,
+      "user": "PA to Chambersec",
+      "email": "chamberpa@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    },
+    {
+      "id": 11,
+      "user": "PA to DES",
+      "email": "despa@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    },
+    {
+      "id": 12,
+      "user": "PA to FD",
+      "email": "fdpa@vfm.co.zw",
+      "password": "1234567",
+      "code": 834842
+    }
+  ],
+  "desktops": [
+    {
+      "id": 1,
+      "name": "IT support",
+      "user": "IT Technician",
+      "os": "Windows 10",
+      "msoffice": "Office 2019",
+      "ram": "4GB",
+      "address": "637831853"
+    },
+    {
+      "id": 2,
+      "name": "Registry",
+      "user": "Registry Officer",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "137156873"
+    },
+    {
+      "id": 3,
+      "name": "Creditors",
+      "user": "Creditors Clerk",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "347147314"
+    },
+    {
+      "id": 4,
+      "name": "HAdm",
+      "user": "Housing Administrator",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "6GB",
+      "address": "177568087"
+    },
+
+    {
+      "id": 5,
+      "name": "Roads",
+      "user": "Roads Supervisor",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "8GB",
+      "address": "347234561"
+    },
+    {
+      "id": 6,
+      "name": "GIS",
+      "user": "GIS Officer",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "16GB",
+      "address": "853473102"
+    },
+    {
+      "id": 7,
+      "name": "Debtors",
+      "user": "Debtors Clerk",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "791473784"
+    },
+    {
+      "id": 8,
+      "name": "DataCaptureClerk",
+      "user": "DataCapture Clerk",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "231147311"
+    },
+    {
+      "id": 9,
+      "name": "AssistRevenueAcc",
+      "user": "Assistant Accountant",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "761147963"
+    },
+    {
+      "id": 10,
+      "name": "AssistExpAcc",
+      "user": "Assistant Accountant",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB"
+    },
+
+    {
+      "id": 11,
+      "name": "HRClerk",
+      "user": "HR Clerk",
+      "os": "Windows 10",
+      "msoffice": "Office 2010",
+      "ram": "4GB",
+      "address": "452147856"
+    },
+    {
+      "id": 12,
+      "name": "HRAssist",
+      "user": "HR Assistant",
+      "os": "Windows 7",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "347147314"
+    },
+    {
+      "id": 13,
+      "name": "IT support",
+      "user": "IT Technician",
+      "os": "Windows 10",
+      "msoffice": "Office 2019",
+      "ram": "4GB",
+      "address": "347147314"
+    },
+    {
+      "id": 14,
+      "name": "Registry",
+      "user": "Registry Officer",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "347147314"
+    },
+    {
+      "id": 15,
+      "name": "Creditors",
+      "user": "Creditors Clerk",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "347147314"
+    },
+    {
+      "id": 16,
+      "name": "HAdm",
+      "user": "Housing Administrator",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "6GB",
+      "address": "347147314"
+    },
+
+    {
+      "id": 17,
+      "name": "Roads",
+      "user": "Roads Supervisor",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "8GB",
+      "address": "347147314"
+    },
+    {
+      "id": 18,
+      "name": "GIS",
+      "user": "GIS Officer",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "16GB",
+      "address": "347147314"
+    },
+    {
+      "id": 19,
+      "name": "Debtors",
+      "user": "Debtors Clerk",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "347147314"
+    },
+    {
+      "id": 20,
+      "name": "DataCaptureClerk",
+      "user": "DataCapture Clerk",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "347147314"
+    },
+    {
+      "id": 21,
+      "name": "AssistRevenueAcc",
+      "user": "Assistant Accountant",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "347147314"
+    },
+    {
+      "id": 22,
+      "name": "AssistExpAcc",
+      "user": "Assistant Accountant",
+      "os": "Windows 10",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "347147314"
+    },
+
+    {
+      "id": 23,
+      "name": "HRClerk",
+      "user": "HR Clerk",
+      "os": "Windows 10",
+      "msoffice": "Office 2010",
+      "ram": "4GB",
+      "address": "347147314"
+    },
+    {
+      "id": 24,
+      "name": "HRAssist",
+      "user": "HR Assistant",
+      "os": "Windows 7",
+      "msoffice": "Office 2013",
+      "ram": "4GB",
+      "address": "347147314"
+    }
+  ],
+  "tablets": [
+    {
+      "id": 1,
+      "user": "IT Technician",
+      "os": "Android 10",
+      "storage": "32GB",
+      "purchaseDate": "2018-10-11"
+    },
+    {
+      "id": 2,
+      "user": "Registry Officer",
+      "os": "Android 10",
+      "storage": "32GB",
+      "purchaseDate": "2018-10-11"
+    },
+    {
+      "id": 3,
+      "user": "Creditors Clerk",
+      "os": "Android 10",
+      "storage": "32GB",
+      "purchaseDate": "2018-10-11"
+    },
+    {
+      "id": 4,
+      "user": "Housing Administrator",
+      "os": "Android 10",
+      "storage": "32GB",
+      "purchaseDate": "2021-10-11"
+    },
+
+    {
+      "id": 5,
+      "user": "Roads Supervisor",
+      "os": "Android 10",
+      "storage": "32GB",
+      "purchaseDate": "2020-10-11"
+    },
+    {
+      "id": 6,
+      "user": "GIS Officer",
+      "os": "Android 9",
+      "storage": "16GB",
+      "purchaseDate": "2022-10-11"
+    },
+    {
+      "id": 7,
+      "user": "Debtors Clerk",
+      "os": "Android 8",
+      "storage": "16GB",
+      "purchaseDate": "2019-10-11"
+    },
+    {
+      "id": 8,
+      "user": "DataCapture Clerk",
+      "os": "Android 11",
+      "storage": "62GB",
+      "purchaseDate": "2018-10-11"
+    },
+    {
+      "id": 9,
+      "user": "Assistant Accountant",
+      "os": "Android 10",
+      "storage": "32GB",
+      "purchaseDate": "2019-10-11"
+    },
+    {
+      "id": 10,
+      "user": "Assistant Accountant",
+      "os": "Android 10",
+      "storage": "32GB",
+      "purchaseDate": "2018-10-11"
+    },
+
+    {
+      "id": 11,
+      "user": "HR Clerk",
+      "os": "Android 10",
+      "storage": "32GB",
+      "purchaseDate": "2021-10-11"
+    },
+    {
+      "id": 12,
+      "user": "HR Assistant",
+      "os": "Android 9",
+      "storage": "132GB",
+      "purchaseDate": "2018-10-11"
+    }
+  ],
+  "printers": [
+    {
+      "id": 1,
+      "name": "HP LaserJet Pro MFP M428fdn ",
+      "user": "HR",
+      "multipurpose": "Yes",
+      "catridge": "87A",
+      "duplex": "Yes",
+      "network": "Yes"
+    },
+    {
+      "id": 2,
+      "name": "HP LaserJet Tank 2504dw ",
+      "user": "Creditors",
+      "multipurpose": "Yes",
+      "catridge": "37A",
+      "duplex": "Yes",
+      "network": "Yes"
+    },
+    {
+      "id": 3,
+      "name": "HP LaserJet Enterprise M507x ",
+      "user": "Assistant Accountant",
+      "multipurpose": "Yes",
+      "catridge": "26A",
+      "duplex": "Yes",
+      "network": "Yes"
+    },
+    {
+      "id": 4,
+      "name": "HP LaserJet Enterprise M455dn ",
+      "user": "Registry",
+      "multipurpose": "Yes",
+      "catridge": "05A",
+      "duplex": "Yes",
+      "network": "Yes"
+    },
+    {
+      "id": 5,
+      "name": "HP LaserJet Pro M454dn ",
+      "user": "PA to TC",
+      "multipurpose": "Yes",
+      "catridge": "37A",
+      "duplex": "Yes",
+      "network": "Yes"
+    },
+    {
+      "id": 6,
+      "name": "HP LaserJet Pro M501dn ",
+      "user": "PA to Chambersec",
+      "multipurpose": "Yes",
+      "catridge": "255A",
+      "duplex": "Yes",
+      "network": "Yes"
+    },
+    {
+      "id": 7,
+      "name": "HP DeskJet 2720e",
+      "user": "PA to DES",
+      "multipurpose": "Yes",
+      "catridge": "90A",
+      "duplex": "Yes",
+      "network": "Yes"
+    },
+    {
+      "id": 8,
+      "name": "HP DeskJet 2720e",
+      "user": "PA to FD",
+      "multipurpose": "Yes",
+      "catridge": "05A",
+      "duplex": "Yes",
+      "network": "Yes"
+    },
+    {
+      "id": 9,
+      "name": "HP Envy 6430e ",
+      "user": "Systems Administrator",
+      "multipurpose": "No",
+      "catridge": "26A",
+      "duplex": "Yes",
+      "network": "No"
+    },
+
+    {
+      "id": 10,
+      "name": "HP SmartTank 7005 ",
+      "user": "IT Support",
+      "multipurpose": "No",
+      "catridge": "11A",
+      "duplex": "No",
+      "network": "No"
+    },
+
+    {
+      "id": 11,
+      "name": "HP LaserJet M140we ",
+      "user": "Debtors",
+      "multipurpose": "No",
+      "catridge": "37A",
+      "duplex": "No",
+      "network": "No"
+    }
+  ],
+  "routers": [
+    {
+      "id": 1,
+      "location": "Server room",
+      "ipaddress": "192.168.1.98",
+      "antennas": "no",
+      "ports": 12,
+      "occupiedports": 3,
+      "deadports": 0
+    },
+    {
+      "id": 2,
+      "location": "FD Office",
+      "ipaddress": "192.168.1.43",
+      "antennas": "yes",
+      "ports": 8,
+      "occupiedports": 3,
+      "deadports": 0
+    },
+    {
+      "id": 3,
+      "location": "Roads Supervisor",
+      "ipaddress": "192.168.1.66",
+      "antennas": "yes",
+      "ports": 8,
+      "occupiedports": 3,
+      "deadports": 1
+    },
+    {
+      "id": 4,
+      "location": "HR",
+      "ipaddress": "192.168.1.35",
+      "antennas": "yes",
+      "ports": 8,
+      "occupiedports": 3,
+      "deadports": 0
+    },
+    {
+      "id": 5,
+      "location": "Estates",
+      "ipaddress": "192.168.1.144",
+      "antennas": "yes",
+      "ports": 8,
+      "occupiedports": 1,
+      "deadports": 0
+    },
+    {
+      "id": 6,
+      "location": "Library",
+      "ipaddress": "192.168.1.33",
+      "antennas": "yes",
+      "ports": 8,
+      "occupiedports": 1,
+      "deadports": 0
+    },
+    {
+      "id": 7,
+      "location": "Assistant Accountant",
+      "ipaddress": "192.168.1.158",
+      "antennas": "yes",
+      "ports": 8,
+      "occupiedports": 1,
+      "deadports": 0
+    },
+    {
+      "id": 8,
+      "location": "Clinic waiting bay",
+      "ipaddress": "192.168.1.254",
+      "antennas": "yes",
+      "ports": 8,
+      "occupiedports": 3,
+      "deadports": 0
+    },
+    {
+      "id": 9,
+      "location": "Public Health",
+      "ipaddress": "192.168.1.205",
+      "antennas": "yes",
+      "ports": 8,
+      "occupiedports": 3,
+      "deadports": 0
+    }
+  ],
+
+  "switches": [
+    {
+      "id": 1,
+      "location": "Server room",
+      "ports": 24,
+      "freeports": 3,
+      "deadports": 0
+    },
+    {
+      "id": 2,
+      "location": "FD Office",
+      "ports": 8,
+      "freeports": 1,
+      "deadports": 0
+    },
+    {
+      "id": 3,
+      "location": "Roads Supervisor",
+      "ports": 8,
+      "freeports": 2,
+      "deadports": 1
+    },
+    {
+      "id": 4,
+      "location": "HR",
+      "ports": 8,
+      "freeports": 0,
+      "deadports": 0
+    },
+    {
+      "id": 5,
+      "location": "Estates",
+      "ports": 8,
+      "freeports": 0,
+      "deadports": 0
+    },
+
+    {
+      "id": 6,
+      "location": "Accountants Office",
+      "ports": 16,
+      "freeports": 2,
+      "deadports": 0
+    },
+    {
+      "id": 7,
+      "location": "Sister's Office",
+      "ports": 8,
+      "freeports": 1,
+      "deadports": 1
+    }
+  ],
+  "transceivers": [
+    {
+      "id": 2,
+      "location": "Server room",
+      "type": "Fibre to Ethernet"
+    },
+    {
+      "id": 3,
+      "location": "Sister's Office",
+      "type": "Fibre to Ethernet"
+    },
+
+    {
+      "id": 4,
+      "location": "Water works",
+      "type": "Fibre to Ethernet"
+    }
+  ],
+  "wifi": [
+    {
+      "id": 1,
+      "router": "Server room",
+      "ssid": "VFM_COUNCIL",
+      "password": "vfacouncil!"
+    },
+    {
+      "id": 2,
+      "router": "Town Clerk",
+      "ssid": "CITYVICFALLS",
+      "password": "vfacouncil!"
+    },
+    {
+      "id": 3,
+      "router": "Boardroom",
+      "ssid": "Boardroom",
+      "password": "vfacouncil!"
+    }
+  ],
+  "softwares": [
+    {
+      "id": 1,
+      "catergory": "Office Suite",
+      "software": "Microsoft Office"
+    },
+    {
+      "id": 2,
+      "catergory": "Antivirus",
+      "software": "Eset, Symantec"
+    },
+    {
+      "id": 3,
+      "catergory": "Remote Desktop",
+      "software": "Anydesk"
+    },
+    {
+      "id": 4,
+      "catergory": "System",
+      "software": "Promun"
+    },
+    {
+      "id": 5,
+      "catergory": "Backup software",
+      "software": "Acronis"
+    },
+    {
+      "id": 6,
+      "catergory": "Network",
+      "software": "Sophos"
+    },
+    {
+      "id": 7,
+      "catergory": "City Budget",
+      "software": "Quantrix"
+    }
+  ],
+  "settings": {
+    "org": "Victoria Falls City Council",
+    "code": "555-666-777",
+    "joined": "2022-12-11",
+    "username": "enyathi",
+    "fullName": "Eugene Nyathi",
+    "email": "bosseugene@krynn.com",
+    "role": "basic user"
+  }
+}

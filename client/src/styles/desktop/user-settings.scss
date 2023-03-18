@@ -1,0 +1,86 @@
+.user-settings-wrapper {
+  width: 70%;
+  top: 15%;
+  left: 21%;
+
+  .alert {
+    width: 80%;
+  }
+}
+
+.user-settings-content {
+  width: calc(100% - 40%);
+
+  .heading {
+    font-size: 25px;
+    font-weight: normal;
+    margin-bottom: 30px;
+  }
+
+  .current-password,
+  .new-password {
+    h2 {
+      font-size: 18px;
+      font-weight: normal;
+      margin-bottom: 25px;
+    }
+  }
+
+  .settings-control {
+    @extend .form-control;
+    width: 80%;
+
+    label {
+      @extend .label;
+      margin-bottom: 12px;
+    }
+
+    .settings-input {
+      @extend .form-input;
+      height: 45px;
+      background-color: transparent;
+
+      &::placeholder {
+        font-weight: normal;
+      }
+
+      &:focus {
+        border-color: $color-dark-1;
+      }
+    }
+
+    .eye-icon {
+      top: 70%;
+      cursor: pointer;
+
+      .material-design-icon__svg {
+        width: 21px;
+        height: 21px;
+      }
+    }
+  }
+}
+
+.settings-btn {
+  @extend .front-btn;
+  margin: 0;
+  margin-top: 25px;
+  padding: 11px 30px;
+  box-shadow: none;
+  font-size: 16px;
+  color: $color-light-1;
+  text-transform: capitalize;
+  background-color: $color-dark-4;
+  transition: $transition-1;
+
+  &:hover {
+    background-color: $color-primary-1;
+  }
+}
+
+.pop-back.settings {
+  margin-top: 25px;
+  font-size: 15px;
+  cursor: pointer;
+  justify-content: flex-start;
+}

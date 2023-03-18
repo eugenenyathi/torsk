@@ -1,0 +1,117 @@
+.tabular {
+  margin-top: 10px;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 16px;
+  overflow: hidden;
+
+  thead tr {
+    background-color: $color-grey-1;
+
+    th {
+      color: $color-dark-1;
+      font-weight: bold;
+      text-align: left;
+      padding: 13px 20px;
+
+      &:first-child {
+        width: 30px;
+      }
+
+      &:nth-child(2) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .filter-icon {
+        color: $color-dark-4;
+        cursor: pointer;
+        font-size: 13px;
+        transition: $transition-1;
+
+        .material-design-icon__svg {
+          width: 21px;
+          height: 21px;
+        }
+
+        &:hover {
+          color: $color-dark-3;
+        }
+      }
+    }
+  }
+
+  th,
+  td {
+    padding: 14px 20px;
+  }
+
+  tbody tr {
+    color: $color-dark-3;
+    cursor: pointer;
+    text-align: left;
+    font-size: 15px;
+    border-top: 1px solid $color-grey-3;
+    border-bottom: 1px solid $color-grey-3;
+    background-color: $color-grey-1;
+    transition: $transition-1;
+    animation: opacity 500ms linear;
+
+    &:hover {
+      border-color: $color-grey-ccc;
+      background-color: $color-grey-3;
+
+      td:first-child {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+
+    &.isActive {
+      border-color: $color-grey-ccc;
+      background-color: $color-grey-3;
+
+      td:first-child {
+        opacity: 1;
+      }
+    }
+
+    td {
+      &:first-child {
+        width: 30px;
+        opacity: 0;
+        transition: $transition-1;
+      }
+
+      .checkbox {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .filter-icon {
+    color: $color-dark-4;
+    cursor: pointer;
+    font-size: 13px;
+    transition: $transition-1;
+
+    &.dark {
+      color: $color-dark-3;
+
+      .material-design-icon__svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .material-design-icon__svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    &:hover {
+      color: $color-dark-3;
+    }
+  }
+}

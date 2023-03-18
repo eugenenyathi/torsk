@@ -1,0 +1,56 @@
+.company-profile-wrapper,
+.user-profile-wrapper {
+  width: 70%;
+  top: 13%;
+  left: 22%;
+}
+
+.company-profile-wrapper {
+  margin-bottom: 30px;
+}
+
+.user-profile-wrapper {
+  .profile-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .password-link {
+    @extend .basic-text;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+}
+
+.profile-wrapper {
+  .heading {
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
+
+  .heading-user {
+    @extend .heading;
+    font-size: 18px;
+    color: $color-dark-2;
+    margin-bottom: 8px;
+  }
+
+  .info {
+    @include flexSpaceBtw;
+    margin-bottom: 10px;
+    padding: 15px 0px;
+    border-bottom: 1px solid $color-grey-3;
+
+    p {
+      @extend .basic-text;
+      font-size: 15px;
+      color: $color-dark-3;
+
+      &:first-child {
+        color: $color-primary-1;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+    }
+  }
+}

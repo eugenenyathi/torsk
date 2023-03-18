@@ -1,0 +1,57 @@
+.select-menu {
+  max-width: 380px;
+}
+
+.select-btn {
+  @include flexSpaceBtw;
+  height: 45px;
+  padding: 0 20px;
+  font-size: 16px;
+  color: $color-dark-2;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid $color-grey-3;
+  background-color: $color-light-1;
+
+  &.active {
+    .chevron-icon {
+      transform: rotate(-180deg);
+      transition: $transition-1;
+    }
+  }
+
+  .material-design-icon__svg {
+    width: 27px;
+    height: 27px;
+  }
+}
+
+.options {
+  display: none;
+  max-height: 150px;
+  overflow-y: scroll;
+  list-style-type: none;
+  position: relative;
+  margin-top: 10px;
+  border-radius: 4px;
+  border: 1px solid $color-grey-3;
+  background-color: $color-light-1;
+
+  .option {
+    @include flexSpaceBtw;
+    color: $color-dark-3;
+    cursor: pointer;
+    height: 38px;
+    padding: 0 20px;
+    font-size: 15px;
+    background-color: $color-light-1;
+
+    &:hover {
+      background-color: #f2f2f2;
+    }
+  }
+
+  &.active {
+    display: block;
+  }
+}

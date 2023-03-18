@@ -1,0 +1,16 @@
+ ===== Router Specs =====
+ 1. Antennas
+ 2. Frequency channels
+ 3. Wireless standards
+ 4. Speed
+ 5. Security
+
+ ==== Switch Specs ====
+ 1. Speeed
+ 2. Number of ports
+ 3. Power over Ethernet
+ 3. Stackable vs standalone
+
+  ==== Printers Specs ====
+  1. Networking
+  2. Duplex/Simplex printing
