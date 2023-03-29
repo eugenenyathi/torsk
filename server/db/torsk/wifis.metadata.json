@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"torsk.wifis"},{"v":2,"unique":true,"key":{"ssid":1},"name":"ssid_1","ns":"torsk.wifis","background":true}]}

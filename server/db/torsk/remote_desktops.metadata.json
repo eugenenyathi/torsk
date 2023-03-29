@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"torsk.remote_desktops"},{"v":2,"unique":true,"key":{"user":1},"name":"user_1","ns":"torsk.remote_desktops","background":true},{"v":2,"unique":true,"key":{"address":1},"name":"address_1","ns":"torsk.remote_desktops","background":true}]}
