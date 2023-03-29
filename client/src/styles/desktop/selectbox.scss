@@ -1,5 +1,14 @@
 .select-menu {
   max-width: 380px;
+
+  &.searchable {
+    max-width: 100%;
+
+    .options {
+      display: block;
+      max-height: 200px;
+    }
+  }
 }
 
 .select-btn {
@@ -23,6 +32,22 @@
   .material-design-icon__svg {
     width: 27px;
     height: 27px;
+  }
+
+  .edit-icon {
+    .material-design-icon__svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.select-control {
+  .select-input {
+    @extend .form-input;
+    font-size: 16px;
+    height: 43px;
+    color: $color-dark-2;
   }
 }
 

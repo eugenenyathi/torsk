@@ -2,9 +2,10 @@
   <table class="tabular">
     <thead>
       <tr>
-        <th class="checkbox">
+        <!-- <th class="checkbox">
           <input type="checkbox" class="checkbox" />
-        </th>
+        </th> -->
+        <th></th>
         <th>
           Location
           <Search
@@ -22,6 +23,7 @@
         <th>Antennas</th>
         <th>Ports</th>
         <th>Dead ports</th>
+        <th>Serial Number</th>
       </tr>
     </thead>
     <tbody>
@@ -29,23 +31,24 @@
         v-for="machine in machines"
         :key="machine.id"
         :class="{
-          isActive: isActiveId === machine.id,
+          isActive: isActiveId === machine._id,
         }"
-        @click="selectMachine(machine.id)"
+        @click="selectMachine(machine._id)"
       >
-        <td>
+        <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
-            :value="machine.id"
-            :checked="isActiveId === machine.id"
+            :value="machine._id"
+            :checked="isActiveId === machine._id"
             v-model="checkbox"
           />
-        </td>
+        </td> -->
+        <td></td>
         <td>{{ machine.location }}</td>
-        <td>{{ machine.ipaddress }}</td>
+        <td>{{ machine.ipAddress }}</td>
 
-        <td v-if="machine.antennas === 'yes'">
+        <td v-if="machine.wireless">
           <Check class="filter-icon dark" />
         </td>
         <td v-else>
@@ -53,7 +56,8 @@
         </td>
 
         <td>{{ machine.ports }}</td>
-        <td>{{ machine.deadports }}</td>
+        <td>{{ machine.deadPorts }}</td>
+        <td>{{ machine.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
@@ -64,7 +68,6 @@ import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
 import Check from "vue-material-design-icons/Check.vue";
 import Close from "vue-material-design-icons/Close.vue";
-import conceal from "conceal";
 
 import { useStore } from "vuex";
 import { ref, watch, computed } from "vue";
@@ -83,8 +86,8 @@ watch(checkbox, (newValue, oldValue) => console.log(newValue));
 
 const selectMachine = (machineId) => {
   isActiveId.value = machineId;
-  const data = props.machines.find((machine) => machine.id === machineId);
-  store.dispatch("setTransitData", data);
+  const data = props.machines.find((machine) => machine._id === machineId);
+  store.dispatch("setTransitData", { route: "networking/router", ...data });
   store.dispatch("setGreyOutAction", true);
   emit("open");
 };

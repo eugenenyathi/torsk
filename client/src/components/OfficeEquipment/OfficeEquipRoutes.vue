@@ -7,7 +7,7 @@
   />
   <Layout
     v-else-if="currentRoute === 'Scanners'"
-    anchor="printers"
+    anchor="scanners"
     tabular="scanners"
     device="scanner"
   />

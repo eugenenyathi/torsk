@@ -1,5 +1,5 @@
 <template>
-  <section class="position-container">
+  <section class="nested-views-position-container">
     <SelectionBar :routes="routes" />
     <router-view />
   </section>
@@ -10,6 +10,13 @@
 import SelectionBar from "../../components/SelectionBar.vue";
 
 import { ref } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+store.commit("setShowDeleteBtn", false);
+store.commit("closeActionsMenu", false);
+store.commit("setGreyOutAction", false);
 
 const routes = ref([
   {

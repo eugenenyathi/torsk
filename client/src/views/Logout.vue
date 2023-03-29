@@ -10,10 +10,10 @@ const { deleteAuthUser } = useAuth();
 const logout = () => {
   //update global state
   store.dispatch("logout");
-  //redirect to login
-  router.push({ name: "Login" });
   //delete cookie
   deleteAuthUser();
+  //redirect to login
+  router.push({ name: "Login" });
 };
 
 logout();

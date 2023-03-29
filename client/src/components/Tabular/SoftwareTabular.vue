@@ -3,21 +3,21 @@
     <thead>
       <tr>
         <th></th>
-        <th>Catergory</th>
+        <th>Category</th>
         <th>We run</th>
       </tr>
     </thead>
     <tbody>
       <tr
         v-for="data in softwares"
-        :key="data.id"
+        :key="data._id"
         :class="{
-          isActive: isActiveId === data.id,
+          isActive: isActiveId === data._id,
         }"
-        @click="selectMachine(data.id)"
+        @click="selectMachine(data._id)"
       >
         <td></td>
-        <td>{{ data.catergory }}</td>
+        <td>{{ data.category }}</td>
         <td>{{ data.software }}</td>
       </tr>
     </tbody>
@@ -25,10 +25,6 @@
 </template>
 
 <script setup>
-import Search from "vue-material-design-icons/FilterOutline.vue";
-import Reload from "vue-material-design-icons/Reload.vue";
-import conceal from "conceal";
-
 import { ref, watch, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -46,8 +42,8 @@ const checkbox = ref([]);
 watch(checkbox, (newValue, oldValue) => console.log(newValue));
 
 const selectMachine = (machineId) => {
-  const data = props.softwares.find((machine) => machine.id === machineId);
-  store.dispatch("setTransitData", data);
+  const data = props.softwares.find((machine) => machine._id === machineId);
+  store.dispatch("setTransitData", { route: "software", ...data });
 
   const route = `/software/${machineId}`;
   router.push(route);

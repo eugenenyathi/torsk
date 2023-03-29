@@ -17,7 +17,10 @@ const useLogin = () => {
     isLoading.value = true;
     try {
       //send data
-      const { data: user } = await axios("/users/1");
+      const { data: user } = await axios.post("/auth/login", {
+        username,
+        password,
+      });
       //update global status
       store.dispatch("login", user);
       //update cookies

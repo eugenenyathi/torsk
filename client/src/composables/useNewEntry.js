@@ -34,8 +34,8 @@ const useNewEntry = () => {
       case "Switches":
         router.push("/networking/switches/add");
         break;
-      case "Transceivers":
-        router.push("/networking/transceivers/add");
+      case "Converters":
+        router.push("/networking/converters/add");
         break;
       case "WiFi":
         router.push("/networking/wifi/add");

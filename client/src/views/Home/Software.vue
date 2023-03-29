@@ -1,11 +1,17 @@
 <template>
-        <section class="devices-container home-container">
-                <Layout anchor="softwares" tabular="softwares" />
-        </section>
+  <section class="single-view-position-container">
+    <Layout anchor="softwares" tabular="softwares" />
+  </section>
 </template>
 
 <script setup>
 import Layout from "../../components/Manifesto.vue";
 
-console.log("hello");
+import { useStore } from "vuex";
+
+const store = useStore();
+
+store.commit("setShowDeleteBtn", false);
+store.commit("closeActionsMenu", false);
+store.commit("setGreyOutAction", false);
 </script>

@@ -46,6 +46,17 @@
         </li>
         <li class="menu-link">
           <router-link
+            to="/telephones"
+            :class="{
+              'parent-link-exact-active': subIsActive('/telephones'),
+            }"
+          >
+            <Phone class="icon" />
+            Telephones
+          </router-link>
+        </li>
+        <li class="menu-link">
+          <router-link
             to="/remote"
             :class="{
               'parent-link-exact-active': subIsActive('/remote'),
@@ -98,6 +109,7 @@ import Settings from "vue-material-design-icons/CogOutline.vue";
 import SettingsAlt from "vue-material-design-icons/Cog.vue";
 import CodeBrackets from "vue-material-design-icons/CodeBrackets.vue";
 import Users from "vue-material-design-icons/AccountMultiple.vue";
+import Phone from "vue-material-design-icons/PhoneOutline.vue";
 
 import ActiveChildRoute from "../helpers/ActiveChildRoute.js";
 const { subIsActive } = ActiveChildRoute();

@@ -12,6 +12,7 @@ import {
   Emails,
   Networking,
   OfficeEquipment,
+  Telephones,
   RemoteDesktop,
   Software,
   Company,
@@ -33,17 +34,20 @@ import AddPrinter from "../components/AddRecord/Choices/AddPrinter.vue";
 import AddScanner from "../components/AddRecord/Choices/AddScanner.vue";
 import AddRouter from "../components/AddRecord/Choices/AddRouter.vue";
 import AddSwitch from "../components/AddRecord/Choices/AddSwitch.vue";
-import AddTransceiver from "../components/AddRecord/Choices/AddTransceiver.vue";
+import AddConverter from "../components/AddRecord/Choices/AddConverter.vue";
 import AddWiFi from "../components/AddRecord/Choices/AddWiFi.vue";
 
+import AddTelephone from "../components/AddRecord/Choices/AddTelephone.vue";
 import AddRemoteDesktop from "../components/AddRecord/Choices/AddRemoteDesktop.vue";
 import AddEmail from "../components/AddRecord/Choices/AddEmail.vue";
 import AddSoftware from "../components/AddRecord/Choices/AddSoftware.vue";
 
 //Files to do with editing
+import EditTelephone from "../components/Action/EditTelephone.vue";
 import EditRemoteDesktop from "../components/Action/EditRemoteDesktop.vue";
 import EditEmail from "../components/Action/EditEmail.vue";
 import EditSoftware from "../components/Action/EditSoftware.vue";
+import EditWiFi from "../components/Action/EditWiFi.vue";
 
 //composables
 import useRoute from "../composables/useRoute.js";
@@ -121,9 +125,9 @@ const routes = [
             name: "Switches",
           },
           {
-            path: "transceivers",
+            path: "converters",
             component: NetworkingRoutes,
-            name: "Transceivers",
+            name: "Converters",
           },
           {
             path: "wifi",
@@ -144,6 +148,15 @@ const routes = [
       {
         path: "remote/:id",
         component: EditRemoteDesktop,
+      },
+      {
+        path: "telephones",
+        component: Telephones,
+        name: "Telephones",
+      },
+      {
+        path: "telephones/:id",
+        component: EditTelephone,
       },
       {
         path: "emails",
@@ -196,12 +209,20 @@ const routes = [
         component: AddSwitch,
       },
       {
-        path: "/networking/transceivers/add",
-        component: AddTransceiver,
+        path: "/networking/converters/add",
+        component: AddConverter,
       },
       {
         path: "/networking/wifi/add",
         component: AddWiFi,
+      },
+      {
+        path: "/networking/wifi/:id",
+        component: EditWiFi,
+      },
+      {
+        path: "telephones/add",
+        component: AddTelephone,
       },
       {
         path: "emails/add",

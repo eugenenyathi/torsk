@@ -34,8 +34,8 @@
         </li>
         <li
           :class="{
-            'list-item': isActive !== 2,
-            'list-item active': isActive === 2,
+            'list-item': isActiveId !== 2,
+            'list-item active': isActiveId === 2,
           }"
           @click="openAction('update', 2)"
         >
@@ -74,10 +74,6 @@
         </li>
       </ul>
       <Action v-if="showAction" :action="action" />
-
-      <!-- <teleport to="#port-modal">
-        <ActionAlerts v-if="showAlert" :action="action" @close="closeAlert()" />
-      </teleport> -->
     </div>
   </aside>
 </template>
@@ -139,6 +135,7 @@ const openAction = (category, listItemID) => {
 };
 
 const closeMenu = () => {
+  isActiveId.value = 0;
   showAction.value = false;
   store.commit("closeActionsMenu", false);
   store.commit("setGreyOutAction", false);

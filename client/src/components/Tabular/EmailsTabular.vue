@@ -24,16 +24,16 @@
     <tbody>
       <tr
         v-for="machine in machines"
-        :key="machine.id"
+        :key="machine._id"
         :class="{
-          isActive: isActiveId === machine.id,
+          isActive: isActiveId === machine._id,
         }"
-        @click="selectMachine(machine.id)"
+        @click="selectMachine(machine._id)"
       >
         <td></td>
         <td>{{ machine.user }}</td>
         <td>{{ machine.email }}</td>
-        <td>{{ conceal(machine.password) }}</td>
+        <td>{{ machine.password }}</td>
       </tr>
     </tbody>
   </table>
@@ -63,8 +63,8 @@ const checkbox = ref([]);
 watch(checkbox, (newValue, oldValue) => console.log(newValue));
 
 const selectMachine = (machineId) => {
-  const data = props.machines.find((machine) => machine.id === machineId);
-  store.dispatch("setTransitData", data);
+  const data = props.machines.find((machine) => machine._id === machineId);
+  store.dispatch("setTransitData", { route: "email", ...data });
 
   const route = `/emails/${machineId}`;
   router.push(route);

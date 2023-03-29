@@ -7,11 +7,11 @@
   >
     <div class="user-dropdown-content">
       <ul class="ul-dropdown-wrapper">
-        <li class="dropdown-list-item">
+        <!-- <li class="dropdown-list-item">
           <router-link to="/user_profile" @click="$emit('closeMenu')">
             Profile
           </router-link>
-        </li>
+        </li> -->
         <li class="dropdown-list-item">
           <router-link to="/user_settings" @click="$emit('closeMenu')">
             Settings

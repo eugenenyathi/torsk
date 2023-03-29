@@ -2,9 +2,10 @@
   <table class="tabular">
     <thead>
       <tr>
-        <th class="checkbox">
+        <!-- <th class="checkbox">
           <input type="checkbox" class="checkbox" />
-        </th>
+        </th> -->
+        <th></th>
         <th>
           Location
           <Search
@@ -18,33 +19,36 @@
             @click="$emit('reload')"
           />
         </th>
+        <th>Model</th>
         <th>Ports</th>
-        <th>Free ports</th>
         <th>Dead ports</th>
+        <th>Serial Number</th>
       </tr>
     </thead>
     <tbody>
       <tr
         v-for="machine in machines"
-        :key="machine.id"
+        :key="machine._id"
         :class="{
-          isActive: isActiveId === machine.id,
+          isActive: isActiveId === machine._id,
         }"
-        @click="selectMachine(machine.id)"
+        @click="selectMachine(machine._id)"
       >
-        <td>
+        <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
-            :value="machine.id"
-            :checked="isActiveId === machine.id"
+            :value="machine._id"
+            :checked="isActiveId === machine._id"
             v-model="checkbox"
           />
-        </td>
+        </td> -->
+        <td></td>
         <td>{{ machine.location }}</td>
+        <td>{{ machine.model }}</td>
         <td>{{ machine.ports }}</td>
-        <td>{{ machine.freeports }}</td>
-        <td>{{ machine.deadports }}</td>
+        <td>{{ machine.deadPorts }}</td>
+        <td>{{ machine.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
@@ -70,12 +74,12 @@ const store = useStore();
 const isActiveId = ref(0);
 const checkbox = ref([]);
 
-watch(checkbox, (newValue, oldValue) => console.log(newValue));
+// watch(checkbox, (newValue, oldValue) => console.log(newValue));
 
 const selectMachine = (machineId) => {
   isActiveId.value = machineId;
-  const data = props.machines.find((machine) => machine.id === machineId);
-  store.dispatch("setTransitData", data);
+  const data = props.machines.find((machine) => machine._id === machineId);
+  store.dispatch("setTransitData", { route: "networking/switch", ...data });
   store.dispatch("setGreyOutAction", true);
   emit("open");
 };

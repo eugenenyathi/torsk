@@ -2,11 +2,12 @@
   <table class="tabular">
     <thead>
       <tr>
-        <th class="checkbox">
+        <!-- <th class="checkbox">
           <input type="checkbox" class="checkbox" />
-        </th>
+        </th> -->
+        <th></th>
         <th>
-          Printer
+          User
           <Search
             v-if="!showReloadIcon"
             class="filter-icon"
@@ -18,23 +19,24 @@
             @click="$emit('reload')"
           />
         </th>
-        <th>User</th>
+        <th>Model</th>
         <th>Multi-purpose</th>
         <th>Duplex</th>
         <th>Networked</th>
-        <th>Catridge</th>
+        <th>Cartridge</th>
+        <th>Serial Number</th>
       </tr>
     </thead>
     <tbody>
       <tr
         v-for="machine in machines"
-        :key="machine.id"
+        :key="machine._id"
         :class="{
-          isActive: isActiveId === machine.id,
+          isActive: isActiveId === machine._id,
         }"
-        @click="selectMachine(machine.id)"
+        @click="selectMachine(machine._id)"
       >
-        <td>
+        <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
@@ -42,32 +44,34 @@
             :checked="isActiveId === machine.id"
             v-model="checkbox"
           />
-        </td>
-        <td>{{ machine.name }}</td>
+        </td> -->
+        <td></td>
         <td>{{ machine.user }}</td>
+        <td>{{ machine.model }}</td>
 
-        <td v-if="machine.multipurpose === 'Yes'">
+        <td v-if="machine.multipurpose">
           <Check class="filter-icon dark" />
         </td>
         <td v-else>
           <Close class="filter-icon dark" />
         </td>
 
-        <td v-if="machine.duplex === 'Yes'">
+        <td v-if="machine.duplex">
           <Check class="filter-icon dark" />
         </td>
         <td v-else>
           <Close class="filter-icon dark" />
         </td>
 
-        <td v-if="machine.network === 'Yes'">
+        <td v-if="machine.networked">
           <Check class="filter-icon dark" />
         </td>
         <td v-else>
           <Close class="filter-icon dark" />
         </td>
 
-        <td>{{ machine.catridge }}</td>
+        <td>{{ machine.cartridge }}</td>
+        <td>{{ machine.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
@@ -96,8 +100,8 @@ watch(checkbox, (newValue, oldValue) => console.log(newValue));
 
 const selectMachine = (machineId) => {
   isActiveId.value = machineId;
-  const data = props.machines.find((machine) => machine.id === machineId);
-  store.dispatch("setTransitData", data);
+  const data = props.machines.find((machine) => machine._id === machineId);
+  store.dispatch("setTransitData", { route: "office_equipment", ...data });
   store.dispatch("setGreyOutAction", true);
   emit("open");
 };

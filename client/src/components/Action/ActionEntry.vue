@@ -9,6 +9,7 @@
     :action="action"
     :context="context"
   />
+
   <ActionPrinter
     v-if="currentRoute === 'Printers'"
     :action="action"
@@ -29,10 +30,10 @@
     :action="action"
     context="switch"
   />
-  <ActionTransceiver
-    v-if="currentRoute === 'Transceivers'"
+  <ActionConverter
+    v-if="currentRoute === 'Converters'"
     :action="action"
-    context="transceiver"
+    context="converter"
   />
   <ActionWiFi v-if="currentRoute === 'WiFi'" :action="action" context="wifi" />
 </template>
@@ -44,7 +45,7 @@ import ActionPrinter from "./ActionPrinter";
 import ActionScanner from "./ActionScanner";
 import ActionRouter from "./ActionRouter";
 import ActionSwitch from "./ActionSwitch";
-import ActionTransceiver from "./ActionTransceiver";
+import ActionConverter from "./ActionConverter";
 import ActionWiFi from "./ActionWiFi";
 
 import { useRoute } from "vue-router";

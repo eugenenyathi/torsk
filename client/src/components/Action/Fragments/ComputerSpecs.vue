@@ -4,14 +4,14 @@
       <Devices class="icon" />
       <div class="spec">
         <p>Machine</p>
-        <p>{{ data.name }}</p>
+        <p>{{ data.machine }}</p>
       </div>
     </div>
     <div class="info">
       <Devices class="icon" />
-      <div class="spec">
+      <div class="spec uppercase">
         <p>Model</p>
-        <p>Samsung</p>
+        <p>{{ data.model }}</p>
       </div>
     </div>
     <div class="top-tree">
@@ -23,11 +23,11 @@
         </div>
         <div class="spec">
           <p>CPU</p>
-          <p>Dual Core Intel Celeron B800</p>
+          <p>{{ data.cpu }}</p>
         </div>
         <div class="spec">
           <p>RAM</p>
-          <p>{{ data.ram }}</p>
+          <p>{{ data.ram }}GB</p>
         </div>
       </div>
     </div>
@@ -35,26 +35,26 @@
       <Devices class="icon" />
       <div class="spec">
         <p>Storage</p>
-        <p>HDD 450GB</p>
+        <p>{{ data.storage }}GB</p>
       </div>
     </div>
-    <div class="info">
+    <!-- <div class="info">
       <Devices class="icon" />
       <div class="spec">
         <p>MAC Address</p>
         <p>40-60-A3-77-89</p>
       </div>
-    </div>
+    </div> -->
     <div class="info">
       <Devices class="icon" />
-      <div class="spec">
+      <div class="spec uppercase">
         <p>Desktop Serial Number</p>
         <p>RFX-8954</p>
       </div>
     </div>
     <div class="info">
       <Devices class="icon" />
-      <div class="spec">
+      <div class="spec uppercase">
         <p>Monitor Serial Number</p>
         <p>AKG-3421</p>
       </div>

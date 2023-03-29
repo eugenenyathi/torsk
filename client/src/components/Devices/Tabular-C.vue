@@ -2,11 +2,12 @@
   <table class="tabular">
     <thead>
       <tr>
-        <th class="checkbox">
+        <!-- <th class="checkbox">
           <input type="checkbox" class="checkbox" />
-        </th>
+        </th> -->
+        <th></th>
         <th>
-          Machine
+          User
           <Search
             v-if="!showReloadIcon"
             class="filter-icon"
@@ -18,7 +19,7 @@
             @click="$emit('reload')"
           />
         </th>
-        <th>User</th>
+        <th>Machine</th>
         <th>OS</th>
         <th>Ms Office</th>
         <th>RAM</th>
@@ -27,14 +28,13 @@
     </thead>
     <tbody>
       <tr
-        v-for="machine in machines"
-        :key="machine.id"
-        :class="{
-          isActive: isActiveId === machine.id,
-        }"
-        @click="selectMachine(machine.id)"
+        v-for="(machine, index) in machines"
+        :key="machine._id"
+        :data-index="index"
+        :class="{ isActive: isActiveId === machine._id }"
+        @click="selectMachine(machine._id)"
       >
-        <td>
+        <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
@@ -42,11 +42,12 @@
             :checked="isActiveId === machine.id"
             v-model="checkbox"
           />
-        </td>
-        <td>{{ machine.name }}</td>
+        </td> -->
+        <td></td>
         <td>{{ machine.user }}</td>
+        <td>{{ machine.machine }}</td>
         <td>{{ machine.os }}</td>
-        <td>{{ machine.msoffice }}</td>
+        <td>{{ machine.office }}</td>
         <td>{{ machine.ram }}</td>
       </tr>
     </tbody>
@@ -64,6 +65,7 @@ const props = defineProps({
   machines: Array,
   showReloadIcon: Boolean,
 });
+
 const emit = defineEmits(["open", "openFilterList", "reload"]);
 const store = useStore();
 
@@ -74,8 +76,8 @@ watch(checkbox, (newValue, oldValue) => console.log(newValue));
 
 const selectMachine = (machineId) => {
   isActiveId.value = machineId;
-  const data = props.machines.find((machine) => machine.id === machineId);
-  store.dispatch("setTransitData", data);
+  const data = props.machines.find((machine) => machine._id === machineId);
+  store.dispatch("setTransitData", { route: "devices", ...data });
 
   emit("open");
 };

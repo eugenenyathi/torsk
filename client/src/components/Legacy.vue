@@ -251,4 +251,10 @@ const routes = ref([
     name: "Phones",
   },
 ]);
+
+{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
 </script>

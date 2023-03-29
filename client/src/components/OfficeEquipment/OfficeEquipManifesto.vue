@@ -1,6 +1,7 @@
 <template>
+  <Loader v-if="isLoading" />
   <PrinterTabular
-    v-if="tabular === 'printers'"
+    v-if="tabular === 'printers' && !isLoading"
     :machines="currentDeviceData"
     :showReloadIcon="showReloadIcon"
     @open="openActionsMenu"
@@ -9,7 +10,7 @@
   />
 
   <ScannerTabular
-    v-else-if="tabular === 'scanners'"
+    v-else-if="tabular === 'scanners' && !isLoading"
     :machines="currentDeviceData"
     :showReloadIcon="showReloadIcon"
     @open="openActionsMenu"
@@ -20,13 +21,15 @@
   <Pagination :pageNumbers="pageNumbers" @currentPage="currentPage" />
 
   <teleport to="#port-modal">
-    <FilterList
-      :device="device"
-      v-model="filterInput"
-      v-if="filterMenuOpen"
-      @search="searchData"
-      @close="toggleFilterMenu('close')"
-    />
+    <Transition name="popup" appear>
+      <FilterList
+        :device="device"
+        v-model="filterInput"
+        v-if="filterMenuOpen"
+        @search="searchData"
+        @close="toggleFilterMenu('close')"
+      />
+    </Transition>
   </teleport>
 </template>
 
@@ -35,6 +38,7 @@ import PrinterTabular from "./PrinterTabular.vue";
 import ScannerTabular from "./ScannerTabular.vue";
 import Pagination from "../Pagination";
 import FilterList from "../FilterList";
+import Loader from "../Loader";
 
 import useAxiosError from "../../composables/useAxiosError.js";
 import usePagination from "../../composables/usePagination.js";
@@ -56,6 +60,7 @@ const { subIsActive } = ActiveChildRoute();
 
 const deviceData = ref([]);
 const currentDeviceData = ref([]);
+const isLoading = ref(false);
 const axiosError = ref(null);
 
 const filterInput = ref("");
@@ -74,14 +79,16 @@ const {
 
 const fetchDeviceData = async () => {
   try {
+    isLoading.value = true;
     if (props.anchor === "printers") {
-      const res = await axios("/printers");
-      deviceData.value = res.data;
+      let res = await axios("/torsk/office_equipment/device/printer");
+      deviceData.value = res.data.devices;
     } else if (props.anchor === "scanners") {
-      const res = await axios("/scanners");
-      deviceData.value = res.data;
+      let res = await axios("/torsk/office_equipment/device/scanner");
+      deviceData.value = res.data.devices;
     }
 
+    isLoading.value = false;
     currentDeviceData.value = pagination(deviceData.value);
     pageNumbers.value = paginate(deviceData.value.length);
   } catch (err) {

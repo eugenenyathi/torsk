@@ -1,0 +1,89 @@
+/* Top level routes -- home - routes */
+
+.route-enter-from {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+.route-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.route-leave-from {
+  opacity: 1;
+}
+
+.route-leave-to {
+  opacity: 0;
+}
+
+.route-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.switch-enter-from,
+.switch-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.switch-enter-active {
+  transition: all ease 0.2s;
+}
+.switch-leave-active {
+  transition: all ease 0.2s;
+}
+
+.popup-enter-from {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.popup-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.popup-leave-from {
+  opacity: 1;
+}
+
+.popup-leave-to {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.popup-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.fade-enter-active {
+  transition: all 0.3s ease-in;
+}
+
+.fade-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.flush-enter-from {
+  opacity: 0;
+  top: 5%;
+  transform: translate(-35%, -5%);
+}
+
+.flush-leave-to {
+  opacity: 0;
+  transform: translate(-35%, -5%);
+}
+
+.flush-enter-active {
+  transition: all 0.3s ease-in;
+}
+
+.flush-leave-active {
+  transition: all 0.3s ease-out;
+}

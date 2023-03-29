@@ -1,6 +1,7 @@
 <template>
+  <Loader v-if="isLoading" />
   <RouterTabular
-    v-if="tabular === 'routers'"
+    v-if="tabular === 'routers' && !isLoading"
     :machines="currentDeviceData"
     :showReloadIcon="showReloadIcon"
     @open="openActionsMenu"
@@ -9,7 +10,7 @@
   />
 
   <SwitchTabular
-    v-else-if="tabular === 'switches'"
+    v-else-if="tabular === 'switches' && !isLoading"
     :machines="currentDeviceData"
     :showReloadIcon="showReloadIcon"
     @open="openActionsMenu"
@@ -17,14 +18,14 @@
     @reload="reloadData"
   />
 
-  <TransTabular
-    v-else-if="tabular === 'transceivers'"
+  <ConvTabular
+    v-else-if="tabular === 'converters' && !isLoading"
     :machines="currentDeviceData"
     @open="openActionsMenu"
   />
 
   <WifiTabular
-    v-else-if="tabular === 'wifi'"
+    v-else-if="tabular === 'wifi' && !isLoading"
     :machines="currentDeviceData"
     @open="openActionsMenu"
   />
@@ -32,23 +33,26 @@
   <Pagination :pageNumbers="pageNumbers" @currentPage="currentPage" />
 
   <teleport to="#port-modal">
-    <FilterList
-      :device="device"
-      v-model="filterInput"
-      v-if="filterMenuOpen"
-      @search="searchData"
-      @close="toggleFilterMenu('close')"
-    />
+    <Transition name="popup" appear>
+      <FilterList
+        :device="device"
+        v-model="filterInput"
+        v-if="filterMenuOpen"
+        @search="searchData"
+        @close="toggleFilterMenu('close')"
+      />
+    </Transition>
   </teleport>
 </template>
 
 <script setup>
 import RouterTabular from "./RouterTabular.vue";
 import SwitchTabular from "./SwitchTabular.vue";
-import TransTabular from "./TransTabular.vue";
+import ConvTabular from "./ConvTabular.vue";
 import WifiTabular from "./WifiTabular.vue";
 import Pagination from "../Pagination";
 import FilterList from "../FilterList";
+import Loader from "../Loader";
 
 import useAxiosError from "../../composables/useAxiosError.js";
 import usePagination from "../../composables/usePagination.js";
@@ -70,6 +74,7 @@ const { subIsActive } = ActiveChildRoute();
 
 const deviceData = ref([]);
 const currentDeviceData = ref([]);
+const isLoading = ref(false);
 const axiosError = ref(null);
 
 const filterInput = ref("");
@@ -88,20 +93,22 @@ const {
 
 const fetchDeviceData = async () => {
   try {
+    isLoading.value = true;
     if (props.anchor === "routers") {
-      const res = await axios("/routers");
-      deviceData.value = res.data;
+      const res = await axios("/torsk/networking/device/router");
+      deviceData.value = res.data.devices;
     } else if (props.anchor === "switches") {
-      const res = await axios("/switches");
-      deviceData.value = res.data;
-    } else if (props.anchor === "transceivers") {
-      const res = await axios("/transceivers");
-      deviceData.value = res.data;
+      const res = await axios("/torsk/networking/device/switch");
+      deviceData.value = res.data.devices;
+    } else if (props.anchor === "converters") {
+      const res = await axios("/torsk/networking/device/converter");
+      deviceData.value = res.data.devices;
     } else if (props.anchor === "wifi") {
-      const res = await axios("/wifi");
-      deviceData.value = res.data;
+      const res = await axios("/torsk/networking/device/wifi");
+      deviceData.value = res.data.devices;
     }
 
+    isLoading.value = false;
     currentDeviceData.value = pagination(deviceData.value);
     pageNumbers.value = paginate(deviceData.value.length);
   } catch (err) {

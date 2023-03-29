@@ -1,6 +1,7 @@
 <template>
+  <Loader v-if="isLoading" />
   <TabularC
-    v-if="tabular === 'computer'"
+    v-if="tabular === 'computer' && !isLoading"
     :machines="currentDeviceData"
     :showReloadIcon="showReloadIcon"
     @open="openActionsMenu"
@@ -9,7 +10,7 @@
   />
 
   <TabularM
-    v-else
+    v-else-if="tabular === 'mobile' && !isLoading"
     :machines="currentDeviceData"
     :showReloadIcon="showReloadIcon"
     @open="openActionsMenu"
@@ -20,13 +21,15 @@
   <Pagination :pageNumbers="pageNumbers" @currentPage="currentPage" />
 
   <teleport to="#port-modal">
-    <FilterList
-      :device="device"
-      v-model="filterInput"
-      v-if="filterMenuOpen"
-      @search="searchData"
-      @close="toggleFilterMenu('close')"
-    />
+    <Transition name="popup" appear>
+      <FilterList
+        :device="device"
+        v-model="filterInput"
+        v-if="filterMenuOpen"
+        @search="searchData"
+        @close="toggleFilterMenu('close')"
+      />
+    </Transition>
   </teleport>
 </template>
 
@@ -35,11 +38,11 @@ import TabularC from "./Tabular-C.vue";
 import TabularM from "./Tabular-M.vue";
 import Pagination from "../Pagination";
 import FilterList from "../FilterList";
+import Loader from "../Loader";
 
 import useAxiosError from "../../composables/useAxiosError.js";
 import usePagination from "../../composables/usePagination.js";
 
-import ActiveChildRoute from "../../helpers/ActiveChildRoute.js";
 import FilterFn from "../../helpers/FilterFn.js";
 
 import axios from "axios";
@@ -53,10 +56,9 @@ const currentRoute = route.value.toLowerCase();
 const props = defineProps(["anchor", "tabular", "device"]);
 const store = useStore();
 
-const { subIsActive } = ActiveChildRoute();
-
 const deviceData = ref([]);
 const currentDeviceData = ref([]);
+const isLoading = ref(false);
 const axiosError = ref(null);
 
 const filterInput = ref("");
@@ -75,20 +77,23 @@ const {
 
 const fetchDeviceData = async () => {
   try {
+    isLoading.value = true;
+
     if (props.anchor === "desktops") {
-      const res = await axios("/desktops");
-      deviceData.value = res.data;
+      let res = await axios("/torsk/devices/machines/desktop");
+      deviceData.value = res.data.machines;
     } else if (props.anchor === "laptops") {
-      const res = await axios("/desktops");
-      deviceData.value = res.data;
+      let res = await axios("/torsk/devices/machines/laptop");
+      deviceData.value = res.data.machines;
     } else if (props.anchor === "tablets") {
-      const res = await axios("/tablets");
-      deviceData.value = res.data;
+      let res = await axios("/torsk/devices/mobiles/tablet");
+      deviceData.value = res.data.devices;
     } else if (props.anchor === "phones") {
-      const res = await axios("/tablets");
-      deviceData.value = res.data;
+      let res = await axios("/torsk/devices/mobiles/cellphone");
+      deviceData.value = res.data.devices;
     }
 
+    isLoading.value = false;
     currentDeviceData.value = pagination(deviceData.value);
     pageNumbers.value = paginate(deviceData.value.length);
   } catch (err) {

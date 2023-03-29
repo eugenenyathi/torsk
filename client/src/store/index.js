@@ -5,9 +5,15 @@ const store = createStore({
     return {
       user: null,
       showDeleteBtn: false,
+      showFlushMessage: {
+        state: false,
+        action: null,
+        context: null,
+      },
       showActionsMenu: false,
       showChoiceSheet: false,
       transitData: {},
+      transitFormData: {},
       rows: 8,
       greyOutAction: false,
     };
@@ -22,11 +28,17 @@ const store = createStore({
     getTransitData(state) {
       return state.transitData;
     },
+    getTransitFormData(state) {
+      return state.transitFormData;
+    },
     greyOutAction(state) {
       return state.greyOutAction;
     },
     showDeleteBtn(state) {
       return state.showDeleteBtn;
+    },
+    showFlushMessage(state) {
+      return state.showFlushMessage;
     },
     showActionsMenu(state) {
       return state.showActionsMenu;
@@ -48,6 +60,9 @@ const store = createStore({
     setTransitData(state, payload) {
       state.transitData = payload;
     },
+    setTransitFormData(state, payload) {
+      state.transitFormData = payload;
+    },
     setGreyOutAction(state, payload) {
       state.greyOutAction = payload;
     },
@@ -61,7 +76,9 @@ const store = createStore({
     setShowDeleteBtn(state, payload) {
       state.showDeleteBtn = payload;
     },
-
+    setShowFlushMessage(state, payload) {
+      state.showFlushMessage = payload;
+    },
     setShowActionsMenu(state, payload) {
       state.showActionsMenu = payload;
     },
@@ -87,22 +104,25 @@ const store = createStore({
     setTransitData(context, payload) {
       context.commit("setTransitData", payload);
     },
+    setTransitFormData(context, payload) {
+      const data = { ...state.transitFormData, ...payload };
+      context.commit("setTransitFormData", data);
+    },
     setGreyOutAction(context, payload) {
       context.commit("setGreyOutAction", payload);
     },
-
     setRowsPerPage(context, payload) {
       context.commit("setRowsPerPage", payload);
     },
-
     setShowDeleteBtn(context, payload) {
       context.commit("setShowDeleteBtn", payload);
     },
-
+    setShowFlushMessage(context, payload) {
+      context.commit("setShowFlushMessage", payload);
+    },
     setShowChoiceSheet(context, payload) {
       context.commit("setShowChoiceSheet", payload);
     },
-
     closeActionsMenu(context, payload) {
       context.commit("closeActionsMenu", payload);
     },

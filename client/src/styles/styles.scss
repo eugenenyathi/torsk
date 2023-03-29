@@ -1,17 +1,18 @@
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
 }
 
 @import "./global/config.scss";
 @import "./global/utils.scss";
 @import "./global/front.scss";
 @import "./global/utilsQ.scss";
+@import "./global/transitions.scss";
 @import "./desktop/index.scss";
 @import "./mobile/index.scss";

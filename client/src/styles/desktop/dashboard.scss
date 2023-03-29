@@ -1,81 +1,81 @@
 body {
-	background-color: $color-grey-1;
+  background-color: $color-grey-1;
 }
 
 .dashboard-container {
-	position: absolute;
-	top: 11%;
-	left: 20%;
-	width: calc(100% - $sidebar-width);
-	padding: 25px;
+  position: absolute;
+  top: 13%;
+  left: $sidebar-width;
+  width: calc(100% - $sidebar-width);
+  padding: 25px;
 }
 
 .dashboard-content {
-	h2 {
-		color: $color-dark-3;
-		font-size: 18px;
-		font-weight: normal;
-		margin-bottom: 10px;
-	}
+  h2 {
+    color: $color-dark-3;
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
 }
 
 .segment-wrapper {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 15px;
-	margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
 
-	&.red {
-		.icon-container {
-			color: $color-light-1;
-			background-color: $color-tomato-red;
-		}
-	}
+  &.red {
+    .icon-container {
+      color: $color-light-1;
+      background-color: $color-tomato-red;
+    }
+  }
 }
 
 .card {
-	flex: 1;
-	padding: 20px;
-	cursor: pointer;
-	text-decoration: none;
-	border: 1px solid $color-grey-6;
-	border-radius: 5px;
-	background-color: $color-light-1;
-	transition: $transition-1;
+  flex: 1;
+  padding: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid $color-grey-6;
+  border-radius: 5px;
+  background-color: $color-light-1;
+  transition: $transition-1;
 
-	.icon-container {
-		width: 30px;
-		height: 30px;
-		margin-bottom: 8px;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: $color-light-1;
-		background-color: $color-primary-1;
+  .icon-container {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-light-1;
+    background-color: $color-primary-1;
 
-		.material-design-icon__svg {
-			width: 20px;
-			height: 20px;
-		}
-	}
+    .material-design-icon__svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 
-	.statistic {
-		color: $color-dark-1;
-		font-size: 28px;
-		font-weight: bold;
-		text-align: center;
-		margin-bottom: 15px;
-	}
+  .statistic {
+    color: $color-dark-1;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+  }
 
-	.category {
-		color: $color-dark-4;
-		font-size: 17px;
-		letter-spacing: 0.4;
-	}
+  .category {
+    color: $color-dark-4;
+    font-size: 17px;
+    letter-spacing: 0.4;
+  }
 
-	&:hover {
-		transform: scale(1.03);
-	}
+  // &:hover {
+  //   transform: scale(1.03);
+  // }
 }

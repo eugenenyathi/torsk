@@ -2,11 +2,11 @@
   <main class="login-container">
     <section class="login-content">
       <div class="login-img-wrapper">
-        <img :src="loginImg" alt="krynn-img" class="login-img" />
+        <img :src="loginImg" alt="torsk-img" class="login-img" />
       </div>
 
       <form class="login-form" @submit.prevent="handleSubmit">
-        <span class="krynn-logo">Kramatorsk</span>
+        <span class="krynn-logo">Torsk</span>
         <h2
           :class="{
             header: !alert.show,
@@ -15,9 +15,13 @@
         >
           Welcome to the Planet.
         </h2>
-        <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
+
+        <Transition name="fade">
+          <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
+        </Transition>
         <div class="login-control">
-          <BaseInput
+          <input
+            type="text"
             class="login-input"
             placeholder="Username"
             v-model="username"
@@ -25,7 +29,7 @@
         </div>
 
         <div class="login-control">
-          <BaseInput
+          <input
             :type="pwdType"
             class="login-input"
             placeholder="Password"
@@ -71,7 +75,6 @@ import useLogin from "../composables/useLogin";
 
 //helpers
 import AlertFn from "../helpers/AlertFn.js";
-import watchFn from "../helpers/watchFn.js";
 import validatePassword from "../helpers/validatePassword.js";
 
 //vue
@@ -80,7 +83,7 @@ import { ref, reactive, watch } from "vue";
 //assets
 const loginImg = require("../assets/krynn-1.webp");
 
-const username = ref("bosseugene");
+const username = ref("superadmin");
 const password = ref("Trish15122010!");
 const showPassword = ref(false);
 const pwdType = ref("password");
@@ -88,7 +91,6 @@ const pwdType = ref("password");
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 const { isLoading, axiosError, login } = useLogin();
-const { watchAxiosErr } = watchFn();
 
 watch(axiosError, (currentValue, oldValue) => {
   if (currentValue) {

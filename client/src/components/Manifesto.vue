@@ -1,6 +1,7 @@
 <template>
+  <Loader v-if="isLoading" />
   <RDTabular
-    v-if="tabular === 'remotedesktop'"
+    v-if="tabular === 'remotedesktop' && !isLoading"
     :machines="currentDeviceData"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open')"
@@ -8,7 +9,7 @@
   />
 
   <EmailsTabular
-    v-if="tabular === 'emails'"
+    v-if="tabular === 'emails' && !isLoading"
     :machines="currentDeviceData"
     :showReloadIcon="showReloadIcon"
     @open="openActionsMenu"
@@ -17,7 +18,7 @@
   />
 
   <SoftwareTabular
-    v-if="tabular === 'softwares'"
+    v-if="tabular === 'softwares' && !isLoading"
     :softwares="currentDeviceData"
     @open="openActionsMenu"
   />
@@ -39,6 +40,7 @@
 import EmailsTabular from "./Tabular/EmailsTabular.vue";
 import RDTabular from "./Tabular/RDTabular.vue";
 import SoftwareTabular from "./Tabular/SoftwareTabular.vue";
+import Loader from "./Loader";
 
 import Pagination from "./Pagination";
 import FilterList from "./FilterList";
@@ -55,6 +57,7 @@ import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 
 const currentRoute = computed(() => useRoute().name);
+const isLoading = ref(false);
 
 const props = defineProps(["anchor", "tabular", "device"]);
 const store = useStore();
@@ -83,22 +86,26 @@ const {
 
 const fetchDeviceData = async () => {
   try {
+    isLoading.value = true;
     if (props.anchor === "printers") {
       const res = await axios("/printers");
       deviceData.value = res.data;
-
-      console.log(res.data);
-    } else if (props.anchor === "remotedesktop") {
-      const res = await axios("/desktops");
-      deviceData.value = res.data;
-    } else if (props.anchor === "emails") {
-      const res = await axios("/emails");
-      deviceData.value = res.data;
-    } else if (props.anchor === "softwares") {
-      const res = await axios("/softwares");
-      deviceData.value = res.data;
     }
-
+    // else if (props.anchor === "printers") {
+    //   const res = await axios("/printers");
+    //   deviceData.value = res.data;
+    // }
+    else if (props.anchor === "remotedesktop") {
+      const res = await axios("/torsk/remote_desktop/");
+      deviceData.value = res.data.addresses;
+    } else if (props.anchor === "emails") {
+      const res = await axios("/torsk/email");
+      deviceData.value = res.data.emails;
+    } else if (props.anchor === "softwares") {
+      const res = await axios("/torsk/software");
+      deviceData.value = res.data.softwares;
+    }
+    isLoading.value = false;
     currentDeviceData.value = pagination(deviceData.value);
     pageNumbers.value = paginate(deviceData.value.length);
   } catch (err) {

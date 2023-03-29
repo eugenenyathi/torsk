@@ -8,7 +8,7 @@
   text-align: center;
   width: 100%;
   font-size: 13px;
-  animation: fade 500ms linear;
+  // animation: fade 500ms linear;
 
   &.alert-danger {
     color: $color-danger;
@@ -23,6 +23,31 @@
   }
 }
 
+.flush-message-container {
+  position: absolute;
+  top: 8%;
+  left: calc($sidebar-width + 35%);
+  transform: translate(-35%, -8%);
+  z-index: 2000;
+}
+
+.flush-message-content {
+  width: 400px;
+  height: 60px;
+  padding: 0px 15px;
+
+  @include flexCenter;
+
+  border-radius: 4px;
+  background: $color-grey-6;
+
+  h2 {
+    color: $color-success;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: center;
+  }
+}
 .icon {
   outline: none;
   border: none;
@@ -54,12 +79,68 @@
   background-color: $color-primary-3;
 }
 
+.immutable-data {
+  @include flexAlign;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid $color-grey-3;
+  font-size: 16px;
+  border-radius: 4px;
+  height: 43px;
+  padding: 0px 13px;
+  background: transparent;
+}
+
+.edit-icon {
+  color: $color-dark-3;
+  cursor: pointer;
+
+  .material-design-icon__svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 .position-container {
   position: absolute;
   top: calc($header-size + 2%);
   left: $sidebar-width;
   width: calc(100% - $sidebar-width);
+  height: 100%;
   padding: 25px;
+}
+
+.single-view-position-container {
+  @extend .position-container;
+  top: calc($header-size + 6%);
+  padding: 0;
+}
+
+.nested-views-position-container {
+  @extend .position-container;
+  top: calc($header-size + 6%);
+  padding: 0;
+
+  &.special {
+    top: calc($header-size + 5%);
+  }
+}
+
+.go-back {
+  @include flexAlign;
+  color: $color-grey-2;
+  padding-left: 8px;
+  transition: $transition-1;
+  cursor: pointer;
+
+  &.add {
+    font-size: 15px;
+  }
+
+  &:hover {
+    color: $color-dark-2;
+    text-decoration: underline;
+  }
 }
 
 .popup-container {
@@ -89,6 +170,13 @@
     transform: translateY(-50%);
     transition: $transition-1;
   }
+}
+
+.progress-loader {
+  position: absolute;
+  top: calc(50% - $header-size);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 @keyframes fade {

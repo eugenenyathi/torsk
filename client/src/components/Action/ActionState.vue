@@ -2,7 +2,9 @@
   <section class="update-container action-info">
     <div class="update-content action-state">
       <form @submit.prevent="handleSubmit">
-        <h2 class="context-heading">{{ data.name }}</h2>
+        <h2 class="context-heading">
+          {{ data.machine || data.user || data.location }} {{ context }}
+        </h2>
         <p v-if="action === 'faulty'">
           <ChevronRight />
           Confirm adding this {{ context }} as faulty.
@@ -13,10 +15,26 @@
         </p>
         <p v-else-if="action === 'delete'">
           <ChevronRight />
-          Confirm this <span>deletion</span>
+          Confirm you want to <span>delete </span> this {{ context }}
         </p>
 
-        <button class="update-btn">Confirm</button>
+        <button
+          v-if="!isLoading"
+          class="update-btn"
+          :disabled="isLoading"
+          @click="handleAction"
+        >
+          confirm
+        </button>
+        <button
+          v-else
+          class="update-btn"
+          :disabled="isLoading"
+          @click="handleAction"
+        >
+          confirm
+          <Loader />
+        </button>
       </form>
     </div>
   </section>
@@ -24,6 +42,8 @@
 
 <script setup>
 import ChevronRight from "vue-material-design-icons/ChevronRight.vue";
+import Loader from "@/components/BtnLoader.vue";
+import useDeleteEntry from "@/composables/useDeleteEntry";
 
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
@@ -36,4 +56,13 @@ const props = defineProps({
 });
 
 const data = computed(() => store.getters.getTransitData);
+const { isLoading, deleteEntry } = useDeleteEntry();
+
+const handleAction = () => {
+  switch (props.action) {
+    case "delete":
+      deleteEntry();
+      break;
+  }
+};
 </script>

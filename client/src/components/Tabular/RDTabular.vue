@@ -4,7 +4,7 @@
       <tr>
         <th></th>
         <th>
-          Machine
+          User
           <Search
             v-if="!showReloadIcon"
             class="filter-icon"
@@ -16,21 +16,19 @@
             @click="$emit('reload')"
           />
         </th>
-        <th>User</th>
         <th>Remote Address</th>
       </tr>
     </thead>
     <tbody>
       <tr
         v-for="machine in machines"
-        :key="machine.id"
+        :key="machine._id"
         :class="{
-          isActive: isActiveId === machine.id,
+          isActive: isActiveId === machine._id,
         }"
-        @click="selectMachine(machine.id)"
+        @click="selectMachine(machine._id)"
       >
         <td></td>
-        <td>{{ machine.name }}</td>
         <td>{{ machine.user }}</td>
         <td>{{ machine.address }}</td>
       </tr>
@@ -56,13 +54,12 @@ const store = useStore();
 const router = useRouter();
 
 const isActiveId = ref(0);
-const checkbox = ref([]);
-
-watch(checkbox, (newValue, oldValue) => console.log(newValue));
+// const checkbox = ref([]);
+// watch(checkbox, (newValue, oldValue) => console.log(newValue));
 
 const selectMachine = (machineId) => {
-  const data = props.machines.find((machine) => machine.id === machineId);
-  store.dispatch("setTransitData", data);
+  const data = props.machines.find((machine) => machine._id === machineId);
+  store.dispatch("setTransitData", { route: "remote_desktop", ...data });
 
   const route = `/remote/${machineId}`;
   router.push(route);

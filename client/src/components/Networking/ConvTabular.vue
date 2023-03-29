@@ -2,23 +2,25 @@
   <table class="tabular">
     <thead>
       <tr>
-        <th class="checkbox">
+        <!-- <th class="checkbox">
           <input type="checkbox" class="checkbox" />
-        </th>
+        </th> -->
+        <th></th>
         <th>Location</th>
         <th>Model</th>
+        <th>Serial Number</th>
       </tr>
     </thead>
     <tbody>
       <tr
         v-for="machine in machines"
-        :key="machine.id"
+        :key="machine._id"
         :class="{
-          isActive: isActiveId === machine.id,
+          isActive: isActiveId === machine._id,
         }"
-        @click="selectMachine(machine.id)"
+        @click="selectMachine(machine._id)"
       >
-        <td>
+        <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
@@ -26,9 +28,11 @@
             :checked="isActiveId === machine.id"
             v-model="checkbox"
           />
-        </td>
+        </td> -->
+        <td></td>
         <td>{{ machine.location }}</td>
-        <td>{{ machine.type }}</td>
+        <td>{{ machine.model }}</td>
+        <td>{{ machine.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
@@ -58,8 +62,8 @@ watch(checkbox, (newValue, oldValue) => console.log(newValue));
 
 const selectMachine = (machineId) => {
   isActiveId.value = machineId;
-  const data = props.machines.find((machine) => machine.id === machineId);
-  store.dispatch("setTransitData", data);
+  const data = props.machines.find((machine) => machine._id === machineId);
+  store.dispatch("setTransitData", { route: "networking/converter", ...data });
   store.dispatch("setGreyOutAction", true);
   emit("open");
 };

@@ -3,10 +3,13 @@
     <form class="update-content" @submit.prevent="handleSubmit">
       <div class="update-control">
         <BaseInput
-          class="update-input"
+          :class="{
+            'update-input': data.location !== 'it',
+            'update-input upper-case': data.location === 'it',
+          }"
           label="Router Location"
           v-model="model"
-          :value="data.router"
+          :value="data.location"
         />
       </div>
       <div class="update-control">
