@@ -76,7 +76,7 @@ watch(checkbox, (newValue, oldValue) => console.log(newValue));
 const selectMachine = (machineId) => {
   isActiveId.value = machineId;
   const data = props.machines.find((machine) => machine._id === machineId);
-  store.dispatch("setTransitData", { route: "devices", ...data });
+  store.dispatch("setTransitData", { route: "devices/mobile", ...data });
 
   emit("open");
 };

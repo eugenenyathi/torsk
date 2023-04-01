@@ -3,9 +3,10 @@
     <div class="add-entry-container">
       <div class="add-entry-content">
         <Transition name="switch" mode="out-in">
-          <Specs1 v-if="page === 1" @next="next" />
-          <Specs2 v-else-if="page === 2" @pop="pop" @next="next" />
-          <Specs3 v-else @pop="pop" @next="next" />
+          <Page1 v-if="page === 1" @next="next" />
+          <Page2 v-else-if="page === 2" @pop="pop" @next="next" />
+          <Page3 v-else-if="page === 3" @pop="pop" @next="next" />
+          <Page4 v-else @pop="pop" />
         </Transition>
       </div>
     </div>
@@ -13,13 +14,14 @@
 </template>
 
 <script setup>
-import Specs1 from "./ComputerSpecs1.vue";
-import Specs2 from "./ComputerSpecs2.vue";
-import Specs3 from "./ComputerSpecs3.vue";
+import Page1 from "./AddMachinePgOne.vue";
+import Page2 from "./AddMachinePgTwo.vue";
+import Page3 from "./AddMachinePgThree.vue";
+import Page4 from "./AddMachinePgFour.vue";
 
 import { ref } from "vue";
 
-//TODO add office and anti-virus field + alert in each spec + add the same fields to the updates & specs area
+//TODO add watch state for axiosError
 
 const page = ref(1);
 

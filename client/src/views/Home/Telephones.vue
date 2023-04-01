@@ -1,6 +1,6 @@
 <template>
   <section class="single-view-position-container">
-    <Layout anchor="emails" tabular="emails" device="email" />
+    <Layout anchor="telephones" tabular="telephones" device="telephone" />
   </section>
 </template>
 

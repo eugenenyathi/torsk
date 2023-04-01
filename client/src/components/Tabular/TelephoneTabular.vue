@@ -67,8 +67,10 @@ watch(checkbox, (newValue, oldValue) => console.log(newValue));
 
 const selectMachine = (machineId) => {
   const data = props.machines.find((machine) => machine._id === machineId);
+  store.dispatch("flushTransitFormData");
   store.dispatch("setTransitData", { route: "telephone", ...data });
 
+  //push to the adding page
   const route = `/telephones/${machineId}`;
   router.push(route);
 

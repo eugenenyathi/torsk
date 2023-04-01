@@ -28,7 +28,7 @@ import OfficeEquipRoutes from "../components/OfficeEquipment/OfficeEquipRoutes.v
 import NetworkingRoutes from "../components/Networking/NetworkingRoutes.vue";
 
 //Files to with adding a new device
-import AddComputer from "../components/AddRecord/Choices/AddComputer.vue";
+import AddComputer from "../components/AddRecord/Choices/AddMachine.vue";
 import AddMobile from "../components/AddRecord/Choices/AddMobile.vue";
 import AddPrinter from "../components/AddRecord/Choices/AddPrinter.vue";
 import AddScanner from "../components/AddRecord/Choices/AddScanner.vue";

@@ -28,19 +28,26 @@
 import ChevronDown from "vue-material-design-icons/ChevronDown";
 import { ref } from "vue";
 
-const props = defineProps({ context: String, options: Array });
-const emit = defineEmits(["selectedOption"]);
+const props = defineProps({
+  context: String,
+  options: Array,
+  prevSelectedOption: String,
+});
+const emit = defineEmits(["optionNotListed", "selectedOption"]);
 
 const active = ref(false);
-const selectedOption = ref("");
+const selectedOption = ref(props.prevSelectedOption);
 
 const toggleMenu = () => {
   active.value = !active.value;
 };
 
 const selectOption = (option) => {
-  selectedOption.value = option;
-  active.value = false;
-  emit("selectedOption", option);
+  if (option === "Other") emit("optionNotListed");
+  else {
+    selectedOption.value = option;
+    active.value = false;
+    emit("selectedOption", option);
+  }
 };
 </script>

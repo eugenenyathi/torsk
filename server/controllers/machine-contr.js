@@ -3,7 +3,10 @@ const RemoteDesktop = require("../models/remote-desktop-model");
 const { StatusCodes } = require("http-status-codes");
 
 const addMachine = async (req, res) => {
-  const machine = await Machine.create({ ...req.body });
+  const machine = await Machine.create({
+    machineType: req.params.machineType,
+    ...req.body,
+  });
 
   return res
     .status(StatusCodes.CREATED)
@@ -34,7 +37,7 @@ const getMachine = async (req, res) => {
 const updateMachine = async (req, res) => {
   const machineId = req.params.machineId;
 
-  console.log(machineId);
+  // console.log(machineId);
 
   const machine = await Machine.findOneAndUpdate(
     { _id: machineId },

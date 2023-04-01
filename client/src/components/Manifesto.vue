@@ -1,5 +1,14 @@
 <template>
   <Loader v-if="isLoading" />
+
+  <TelephoneTabular
+    v-if="tabular === 'telephones' && !isLoading"
+    :machines="currentDeviceData"
+    :showReloadIcon="showReloadIcon"
+    @openFilterList="toggleFilterMenu('open')"
+    @reload="reloadData"
+  />
+
   <RDTabular
     v-if="tabular === 'remotedesktop' && !isLoading"
     :machines="currentDeviceData"
@@ -37,6 +46,7 @@
 </template>
 
 <script setup>
+import TelephoneTabular from "./Tabular/TelephoneTabular.vue";
 import EmailsTabular from "./Tabular/EmailsTabular.vue";
 import RDTabular from "./Tabular/RDTabular.vue";
 import SoftwareTabular from "./Tabular/SoftwareTabular.vue";
@@ -87,15 +97,10 @@ const {
 const fetchDeviceData = async () => {
   try {
     isLoading.value = true;
-    if (props.anchor === "printers") {
-      const res = await axios("/printers");
-      deviceData.value = res.data;
-    }
-    // else if (props.anchor === "printers") {
-    //   const res = await axios("/printers");
-    //   deviceData.value = res.data;
-    // }
-    else if (props.anchor === "remotedesktop") {
+    if (props.anchor === "telephones") {
+      const res = await axios("/torsk/telephone");
+      deviceData.value = res.data.devices;
+    } else if (props.anchor === "remotedesktop") {
       const res = await axios("/torsk/remote_desktop/");
       deviceData.value = res.data.addresses;
     } else if (props.anchor === "emails") {

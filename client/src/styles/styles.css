@@ -1031,9 +1031,12 @@ body {
 .specs-container .info .spec.uppercase p:first-child {
   text-transform: capitalize;
 }
+.specs-container .info .spec.no-case p:nth-child(2) {
+  text-transform: none;
+}
 .specs-container .info .spec p {
-  text-transform: capitalize;
   color: #333;
+  text-transform: capitalize;
 }
 .specs-container .info .spec p:first-child {
   color: #aaa;
@@ -1108,6 +1111,22 @@ body {
 }
 .update-content .update-control {
   margin-bottom: 16px;
+}
+.update-content .update-control.cpu .inner-control {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.update-content .update-control.cpu .inner-control .select-menu {
+  width: 100%;
+}
+.update-content .update-control.cpu .grand-child-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.update-content .update-control.cpu .grand-child-control input {
+  width: 70px;
 }
 .update-content label {
   font-size: 16px;

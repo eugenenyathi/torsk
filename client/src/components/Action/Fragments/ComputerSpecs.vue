@@ -23,7 +23,7 @@
         </div>
         <div class="spec">
           <p>CPU</p>
-          <p>{{ data.cpu }}</p>
+          <p :style="{ textTransform: 'none' }">{{ data.cpu }}</p>
         </div>
         <div class="spec">
           <p>RAM</p>
@@ -35,35 +35,35 @@
       <Devices class="icon" />
       <div class="spec">
         <p>Storage</p>
-        <p>{{ data.storage }}GB</p>
+        <p>{{ data.storageType }} {{ data.storageGigs }}GB</p>
       </div>
     </div>
-    <!-- <div class="info">
+    <div class="info">
       <Devices class="icon" />
       <div class="spec">
         <p>MAC Address</p>
-        <p>40-60-A3-77-89</p>
+        <p :style="{ textTransform: 'none' }">{{ data.macAddress }}</p>
       </div>
-    </div> -->
+    </div>
     <div class="info">
       <Devices class="icon" />
       <div class="spec uppercase">
         <p>Desktop Serial Number</p>
-        <p>RFX-8954</p>
+        <p>{{ data.serialNumber }}</p>
       </div>
     </div>
     <div class="info">
       <Devices class="icon" />
       <div class="spec uppercase">
         <p>Monitor Serial Number</p>
-        <p>AKG-3421</p>
+        <p>{{ data.monitorSerialNumber }}</p>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { reactive, computed } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();

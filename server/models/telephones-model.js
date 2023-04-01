@@ -21,12 +21,12 @@ const TelephoneSchema = new Schema({
     minLength: 7,
     maxLength: 7,
   },
-  cellphone: {
-    type: Number,
-    unique: true,
-    minLength: 10,
-    maxLength: 10,
-  },
+  // cellphone: {
+  //   type: Number,
+  //   unique: true,
+  //   minLength: 10,
+  //   maxLength: 10,
+  // },
   model: {
     type: String,
     required: [true, "The model can not be empty."],
@@ -40,4 +40,4 @@ const TelephoneSchema = new Schema({
   },
 });
 
-module.exports = model("emails", TelephoneSchema);
+module.exports = model("telephones", TelephoneSchema);

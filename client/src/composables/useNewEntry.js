@@ -42,6 +42,9 @@ const useNewEntry = () => {
         break;
 
       //OTHERS
+      case "Telephones":
+        router.push("/telephones/add");
+        break;
       case "Remote Desktop":
         router.push("/remote/add");
         break;

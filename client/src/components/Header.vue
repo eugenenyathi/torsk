@@ -75,7 +75,7 @@ const store = useStore();
 
 const showSheet = ref(false);
 const showChoice = ref(false);
-// const showFlushMessage = ref(true);
+
 const choice = ref("");
 const showMenu = ref(false);
 

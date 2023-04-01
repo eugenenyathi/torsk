@@ -83,6 +83,8 @@ import { ref, reactive, watch } from "vue";
 //assets
 const loginImg = require("../assets/krynn-1.webp");
 
+//TODO fix users to be redirected to home when they visit login
+
 const username = ref("superadmin");
 const password = ref("Trish15122010!");
 const showPassword = ref(false);

@@ -144,12 +144,21 @@
         }
       }
 
+      &.no-case {
+        p {
+          &:nth-child(2) {
+            text-transform: none;
+          }
+        }
+      }
+
       p {
+        color: $color-dark-3;
         text-transform: capitalize;
+
         &:first-child {
           color: $color-grey-aaa;
         }
-        color: $color-dark-3;
       }
     }
   }
@@ -235,6 +244,26 @@
   .update-control {
     @extend .form-control;
     margin-bottom: 16px;
+
+    &.cpu {
+      .inner-control {
+        @include flexAlign;
+        gap: 15px;
+
+        .select-menu {
+          width: 100%;
+        }
+      }
+
+      .grand-child-control {
+        @include flexAlign;
+        gap: 10px;
+
+        input {
+          width: 70px;
+        }
+      }
+    }
   }
 
   label {

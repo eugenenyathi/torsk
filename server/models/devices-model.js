@@ -43,9 +43,9 @@ const MachineSchema = new Schema({
     required: [true, "The CPU can not be empty."],
     // lowercase: true,
   },
-  cpu: {
+  cpuGen: {
     type: Number,
-    required: [true, "The cpu gen can not be empty."],
+    required: [true, "The cpu generation can not be empty."],
     // lowercase: true,
   },
   ram: {

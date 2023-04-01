@@ -47,6 +47,10 @@ const useDeleteEntry = () => {
         break;
       case "/networking/wifi":
         router.push("/networking/wifi");
+      case "telephone":
+        router.push("/telephones");
+      //TODO the default case should be updating the state globally to reflect changes
+      //for the other routes
     }
   };
 

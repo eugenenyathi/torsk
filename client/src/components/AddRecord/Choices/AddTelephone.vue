@@ -2,138 +2,155 @@
   <section class="position-container">
     <div class="add-entry-container">
       <div class="add-entry-content">
-        <h2>Add a new email</h2>
-        <form @submit.prevent="handleSubmit()">
-          <div class="entry-control">
-            <label for="">User</label>
-            <input
-              type="text"
-              class="entry-input"
-              placeholder="e.g. IT Technician"
-              v-model="collective.user"
-            />
-          </div>
-          <div class="entry-control">
-            <label for="">Email</label>
-            <input type="text" class="entry-input" v-model="collective.email" />
-          </div>
-          <div class="entry-control">
-            <label for="">Password</label>
-            <input
-              :type="pwdType"
-              class="entry-input"
-              v-model="collective.password"
-            />
-            <button
-              v-if="!showPassword"
-              type="button"
-              class="eye-icon"
-              @click="togglePassword"
-            >
-              <EyeOutline />
-            </button>
-            <button
-              v-else
-              type="button"
-              class="eye-icon"
-              @click="togglePassword"
-            >
-              <EyeOffOutline />
-            </button>
-          </div>
+        <Transition name="switch" mode="out-in">
+          <div v-if="page === 1">
+            <h2>Add a new Line</h2>
+            <Transition name="fade">
+              <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
+            </Transition>
+            <form @submit.prevent="next()">
+              <div class="entry-control">
+                <label for="">User</label>
+                <input
+                  type="text"
+                  class="entry-input"
+                  placeholder="e.g. IT Technician"
+                  v-model="collection.user"
+                />
+              </div>
+              <div class="entry-control">
+                <label for="">Extension</label>
+                <input
+                  type="number"
+                  class="entry-input"
+                  placeholder="e.g. 2209"
+                  v-model="collection.extension"
+                />
+              </div>
 
-          <Transition name="fade">
-            <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
-          </Transition>
+              <div class="entry-control">
+                <label for="">Direct Line</label>
+                <input
+                  type="number"
+                  class="entry-input"
+                  placeholder="e.g. 2680000"
+                  v-model="collection.directLine"
+                />
+              </div>
 
-          <button v-if="!isLoading" class="add-btn" :disabled="isLoading">
-            add
-          </button>
-          <button v-else class="add-btn" :disabled="isLoading">
-            add
-            <Loader />
-          </button>
-        </form>
+              <button class="add-btn" :disabled="isLoading">continue</button>
+            </form>
+          </div>
+          <div v-else>
+            <Transition name="fade">
+              <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
+            </Transition>
+            <form @submit.prevent="handleSubmit">
+              <div class="entry-control">
+                <label for="">Model</label>
+                <input
+                  type="text"
+                  class="entry-input"
+                  placeholder="e.g. NEC"
+                  v-model="collection.model"
+                />
+              </div>
+
+              <div class="entry-control">
+                <label for="">Serial Number</label>
+                <input
+                  type="text"
+                  class="entry-input"
+                  placeholder="e.g. NEC"
+                  v-model="collection.serialNumber"
+                />
+              </div>
+
+              <button v-if="!isLoading" class="add-btn" :disabled="isLoading">
+                add
+              </button>
+              <button v-else class="add-btn" :disabled="isLoading">
+                add
+                <Loader />
+              </button>
+
+              <div class="go-back" @click="pop()">
+                <ChevronRight />
+                <span>Back</span>
+              </div>
+            </form>
+          </div>
+        </Transition>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-//icons
-import EyeOutline from "vue-material-design-icons/EyeOutline.vue";
-import EyeOffOutline from "vue-material-design-icons/EyeOffOutline.vue";
-
+import ChevronRight from "vue-material-design-icons/ChevronRight.vue";
 import Loader from "../../BtnLoader";
 import Alert from "../../Alert.vue";
 import AlertFn from "../../../helpers/AlertFn.js";
 
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-
-import axios from "axios";
+import usePushData from "@/composables/usePushData";
 
 const store = useStore();
-const router = useRouter();
 
-const isLoading = ref(false);
+const page = ref(1);
+
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
-const collective = reactive({
-  user: "",
-  email: "",
-  password: "",
+const data = computed(() => store.getters.getTransitFormData);
+
+const collection = reactive({
+  user: data.value.user || "IT Technician",
+  model: data.value.model || "NEC",
+  extension: data.value.extension || 2209,
+  directLine: data.value.directLine || 268911110,
+  serialNumber: data.value.serialNumber || "12345-2312",
 });
 
-const showPassword = ref(false);
-const pwdType = ref("password");
-
-const togglePassword = () => {
-  showPassword.value = !showPassword.value;
-
-  if (pwdType.value === "password") pwdType.value = "text";
-  else pwdType.value = "password";
-};
-
-const handleSubmit = async () => {
-  if (!collective.user) {
+const next = () => {
+  if (!collection.user) {
     showAlert(true, "User field is empty", "danger");
     removeAlert();
-  } else if (!collective.email) {
-    showAlert(true, "Email field is empty", "danger");
-    removeAlert();
-  } else if (!collective.password) {
-    showAlert(true, "Password field is empty", "danger");
+  } else if (!collection.extension) {
+    showAlert(true, "Please enter a valid extension", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch("setTransitFormData", {
+      user: collection.user,
+      extension: collection.extension,
+      directLine: collection.directLine,
+    });
 
-      const res = await axios.post("/torsk/email/", {
-        user: collective.user,
-        email: collective.email,
-        password: collective.password,
-      });
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "added",
-        context: collective.email,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/emails");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      showAlert(true, err.response.data.err, "danger");
-      removeAlert();
-    }
+    page.value = 2;
   }
+};
+
+const { isLoading, axiosError, postData } = usePushData();
+
+const handleSubmit = async () => {
+  if (!collection.model || collection.model.length < 3) {
+    showAlert(true, "Please enter a valid model", "danger");
+    removeAlert();
+  } else if (!collection.serialNumber || collection.serialNumber.length < 3) {
+    showAlert(true, "Please enter a valid desktop serial number", "danger");
+    removeAlert();
+  } else {
+    store.dispatch("setTransitFormData", {
+      model: collection.model,
+      serialNumber: collection.serialNumber,
+    });
+
+    await postData("line", "/telephones", `/torsk/telephone/`);
+  }
+};
+
+const pop = () => {
+  page.value = 1;
 };
 </script>

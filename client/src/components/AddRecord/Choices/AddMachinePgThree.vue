@@ -1,10 +1,9 @@
 <template>
   <div>
-    <h2>Let's finish up</h2>
     <Transition name="fade">
       <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
     </Transition>
-    <form @submit.prevent="handleSubmit()">
+    <form @submit.prevent="next()">
       <div class="entry-control">
         <label for="">Office</label>
         <input
@@ -23,15 +22,7 @@
           v-model="collection.antivirus"
         />
       </div>
-
-      <button v-if="!isLoading" class="add-btn" :disabled="isLoading">
-        add
-      </button>
-      <button v-else class="add-btn" :disabled="isLoading">
-        add
-        <Loader />
-      </button>
-
+      <button class="add-btn">continue</button>
       <div class="go-back" @click="$emit('pop', 2)">
         <ChevronRight />
         <span>Back</span>
@@ -47,31 +38,34 @@ import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";
 
 import { useStore } from "vuex";
-import { ref, reactive } from "vue";
+import { ref, computed, reactive } from "vue";
 
 const store = useStore();
-const emit = defineEmits(["pop"]);
+const emit = defineEmits(["next", "pop"]);
+
+const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  office: "Office 2019",
-  antivirus: "Eset v10",
+  office: data.value.office || "Office 2019",
+  antivirus: data.value.antivirus || "Eset v10",
 });
 
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
-const handleSubmit = () => {
+const next = () => {
   if (!collection.office && collection.office.length < 9) {
     showAlert(true, "Please enter a valid Office", "danger");
     removeAlert();
-  }
-  if (!collection.antivirus && collection.antivirus.length < 3) {
+  } else if (!collection.antivirus && collection.antivirus.length < 3) {
     showAlert(true, "Please enter valid antivirus", "danger");
     removeAlert();
   } else {
-    showAlert(true, "finito", "success");
-    removeAlert();
+    store.dispatch("setTransitFormData", {
+      office: collection.office,
+      antivirus: collection.antivirus,
+    });
+    emit("next", 4);
   }
 };
 </script>

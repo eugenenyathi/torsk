@@ -12,6 +12,7 @@ const store = createStore({
       },
       showActionsMenu: false,
       showChoiceSheet: false,
+      routeData: {},
       transitData: {},
       transitFormData: {},
       rows: 8,
@@ -24,6 +25,9 @@ const store = createStore({
     },
     getRowsPerPage(state) {
       return state.rows;
+    },
+    getRouteData(state) {
+      return state.routeData;
     },
     getTransitData(state) {
       return state.transitData;
@@ -57,11 +61,18 @@ const store = createStore({
     addEmail(state, payload) {
       state.signup = payload;
     },
+    setRouteData(state, payload) {
+      state.routeData = payload;
+    },
     setTransitData(state, payload) {
       state.transitData = payload;
     },
     setTransitFormData(state, payload) {
-      state.transitFormData = payload;
+      const data = { ...state.transitFormData, ...payload };
+      state.transitFormData = data;
+    },
+    flushTransitFormData(state) {
+      state.transitFormData = {};
     },
     setGreyOutAction(state, payload) {
       state.greyOutAction = payload;
@@ -101,12 +112,17 @@ const store = createStore({
     addEmail(context, payload) {
       context.commit("addEmail", payload);
     },
+    setRouteData(context, payload) {
+      context.commit("setRouteData", payload);
+    },
     setTransitData(context, payload) {
       context.commit("setTransitData", payload);
     },
     setTransitFormData(context, payload) {
-      const data = { ...state.transitFormData, ...payload };
-      context.commit("setTransitFormData", data);
+      context.commit("setTransitFormData", payload);
+    },
+    flushTransitFormData(context) {
+      context.commit("flushTransitFormData");
     },
     setGreyOutAction(context, payload) {
       context.commit("setGreyOutAction", payload);
