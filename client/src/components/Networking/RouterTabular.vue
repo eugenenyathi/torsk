@@ -1,5 +1,6 @@
 <template>
-  <table class="tabular">
+  <Loader v-if="isLoading" />
+  <table v-else class="tabular">
     <thead>
       <tr>
         <!-- <th class="checkbox">
@@ -28,36 +29,36 @@
     </thead>
     <tbody>
       <tr
-        v-for="machine in machines"
-        :key="machine.id"
+        v-for="router in routers"
+        :key="router.id"
         :class="{
-          isActive: isActiveId === machine._id,
+          isActive: isActiveId === router._id,
         }"
-        @click="selectMachine(machine._id)"
+        @click="selectRouter(router._id)"
       >
         <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
-            :value="machine._id"
-            :checked="isActiveId === machine._id"
+            :value="router._id"
+            :checked="isActiveId === router._id"
             v-model="checkbox"
           />
         </td> -->
         <td></td>
-        <td>{{ machine.location }}</td>
-        <td>{{ machine.ipAddress }}</td>
+        <td>{{ router.location }}</td>
+        <td>{{ router.ipAddress }}</td>
 
-        <td v-if="machine.wireless">
+        <td v-if="router.wireless">
           <Check class="filter-icon dark" />
         </td>
         <td v-else>
           <Close class="filter-icon dark" />
         </td>
 
-        <td>{{ machine.ports }}</td>
-        <td>{{ machine.deadPorts }}</td>
-        <td>{{ machine.serialNumber }}</td>
+        <td>{{ router.ports }}</td>
+        <td>{{ router.deadPorts }}</td>
+        <td>{{ router.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
@@ -69,27 +70,37 @@ import Reload from "vue-material-design-icons/Reload.vue";
 import Check from "vue-material-design-icons/Check.vue";
 import Close from "vue-material-design-icons/Close.vue";
 
+import Loader from "../Loader";
+
 import { useStore } from "vuex";
 import { ref, watch, computed } from "vue";
 
+import useFetchRouteData from "@/composables/useFetchRouteData";
+
 const props = defineProps({
-  machines: Array,
   showReloadIcon: Boolean,
 });
-const emit = defineEmits(["open", "openFilterList", "reload"]);
+
+const emit = defineEmits(["openFilterList", "reload"]);
 const store = useStore();
 
 const isActiveId = ref(0);
-const checkbox = ref([]);
 
-watch(checkbox, (newValue, oldValue) => console.log(newValue));
+const routers = ref(computed(() => store.getters.getPaginatedData));
+const { isLoading, fetchRouteData } = useFetchRouteData();
 
-const selectMachine = (machineId) => {
-  isActiveId.value = machineId;
-  const data = props.machines.find((machine) => machine._id === machineId);
-  store.dispatch("setTransitData", { route: "networking/router", ...data });
+fetchRouteData("routers");
+
+const selectRouter = (routerId) => {
+  isActiveId.value = routerId;
+  const data = routers.value.find((router) => router._id === routerId);
+  store.dispatch("setShowActionsMenu", true);
+  store.dispatch("setTransitData", {
+    context: `${data.location} router`,
+    route: "networking/routers",
+    ...data,
+  });
   store.dispatch("setGreyOutAction", true);
-  emit("open");
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

@@ -18,7 +18,7 @@
       <Devices class="icon" />
       <div class="spec">
         <p>MAC Address</p>
-        <p>{{ data.macAddress }}</p>
+        <p :style="{ textTransform: 'none' }">{{ data.macAddress }}</p>
       </div>
     </div>
     <div class="info">

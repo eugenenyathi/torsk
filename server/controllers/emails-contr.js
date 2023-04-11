@@ -6,17 +6,17 @@ const addEmail = async (req, res) => {
 
   return res
     .status(StatusCodes.CREATED)
-    .json({ message: "Email added successfully", email });
+    .json({ message: "Email added successfully", data: email });
 };
 
 const getEmails = async (req, res) => {
   const emails = await Email.find();
-  return res.status(StatusCodes.OK).json({ emails });
+  return res.status(StatusCodes.OK).json({ data: emails });
 };
 
 const getEmail = async (req, res) => {
   const email = await Email.find({ email: req.params.email });
-  return res.status(StatusCodes.OK).json({ email });
+  return res.status(StatusCodes.OK).json({ data: email });
 };
 
 const updateEmail = async (req, res) => {
@@ -30,7 +30,7 @@ const updateEmail = async (req, res) => {
 
   return res
     .status(StatusCodes.OK)
-    .json({ message: "Email updated successfully.", email });
+    .json({ message: "Email updated successfully.", data: email });
 };
 
 const deleteEmail = async (req, res) => {

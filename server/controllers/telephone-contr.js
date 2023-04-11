@@ -6,20 +6,20 @@ const addLine = async (req, res) => {
 
   return res
     .status(StatusCodes.CREATED)
-    .json({ message: "Line added successfully", device });
+    .json({ message: "Line added successfully", data: device });
 };
 
 const getLines = async (req, res) => {
   const devices = await Telephone.find();
 
-  return res.status(StatusCodes.OK).json({ devices });
+  return res.status(StatusCodes.OK).json({ data: devices });
 };
 
 const getLine = async (req, res) => {
   const lineId = req.params.lineId;
   const device = await Telephone.findById(lineId);
 
-  return res.status(StatusCodes.OK).json({ device });
+  return res.status(StatusCodes.OK).json({ data: device });
 };
 
 const updateLine = async (req, res) => {
@@ -34,7 +34,7 @@ const updateLine = async (req, res) => {
 
   return res
     .status(StatusCodes.OK)
-    .json({ message: "Line updated successfully.", device });
+    .json({ message: "Line updated successfully.", data: device });
 };
 
 const deleteLine = async (req, res) => {

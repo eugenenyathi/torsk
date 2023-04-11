@@ -176,7 +176,7 @@ import AlertFn from "@/helpers/AlertFn.js";
 import usePushData from "@/composables/usePushData";
 
 import { useStore } from "vuex";
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 
 const store = useStore();
 const emit = defineEmits(["next"]);
@@ -191,15 +191,13 @@ const collection = reactive({
   model: data.value.model || "Samsung S22 Ultra",
   os: data.value.os || "Android 14",
   storage: data.value.storage || 200,
-  macAddress: data.value.macAddress || "12345678910101213",
+  macAddress: data.value.macAddress || "e8:03:9a:3a:56:5c",
   serialNumber: data.value.serialNumber || "123456-8942",
   imei: data.value.imei || "123456789102345",
 });
 
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
-
-const { isLoading, axiosError, postData } = usePushData();
 
 const next = () => {
   if (!collection.deviceType) {
@@ -224,9 +222,18 @@ const next = () => {
   }
 };
 
-const handleSubmit = async () => {
-  // console.log(collection.imei);
+const { isLoading, axiosError, postData } = usePushData();
 
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
+
+const handleSubmit = async () => {
   if (!collection.storage) {
     showAlert(true, "Please enter valid storage gigs", "danger");
     removeAlert();
@@ -237,6 +244,10 @@ const handleSubmit = async () => {
     showAlert(true, "Please enter a valid imei ", "danger");
     removeAlert();
   } else {
+    store.dispatch(
+      "setFlushMessageContext",
+      `${data.value.user} ${data.value.deviceType} `
+    );
     store.dispatch("setTransitFormData", {
       macAddress: collection.macAddress,
       serialNumber: collection.serialNumber,
@@ -244,7 +255,6 @@ const handleSubmit = async () => {
     });
 
     await postData(
-      data.value.deviceType,
       `/devices/${data.value.deviceType}s`,
       `/torsk/devices/mobile/${data.value.deviceType}`
     );

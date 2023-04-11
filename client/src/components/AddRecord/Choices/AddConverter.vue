@@ -51,24 +51,32 @@
 import Loader from "../../BtnLoader";
 import Alert from "../../Alert.vue";
 import AlertFn from "../../../helpers/AlertFn.js";
+import usePushData from "@/composables/usePushData";
 
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-
-import axios from "axios";
 
 const store = useStore();
-const router = useRouter();
-
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
+const data = computed(() => store.getters.getTransitFormData);
+
 const collection = reactive({
-  location: "Server-room",
-  model: "trendnet",
-  serialNumber: "11354-2689",
+  location: data.value.location || "test",
+  model: data.value.model || "trendnet",
+  serialNumber: data.value.serialNumber || "11354-2689",
+});
+
+const { isLoading, axiosError, postData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
 });
 
 const handleSubmit = async () => {
@@ -82,33 +90,17 @@ const handleSubmit = async () => {
     showAlert(true, "Please enter a valid serial number", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch(
+      "setFlushMessageContext",
+      `${collection.location} converter`
+    );
+    store.dispatch("setTransitFormData", {
+      location: collection.location,
+      model: collection.model,
+      serialNumber: collection.serialNumber,
+    });
 
-      const res = await axios.post("/torsk/networking/converter", {
-        location: collection.location,
-        model: collection.model,
-        serialNumber: collection.serialNumber,
-      });
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "added",
-        context: `${collection.location} converter`,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/networking/converters");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      console.log(err);
-      showAlert(true, err.response.data.err, "danger");
-      removeAlert();
-    }
+    await postData("/networking/converters", "/torsk/networking/converters");
   }
 };
 </script>

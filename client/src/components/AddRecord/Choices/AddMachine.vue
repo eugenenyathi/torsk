@@ -22,6 +22,7 @@ import Page4 from "./AddMachinePgFour.vue";
 import { ref } from "vue";
 
 //TODO add watch state for axiosError
+//TODO add user account password field
 
 const page = ref(1);
 

@@ -12,10 +12,10 @@ const addOfficeDevice = async (req, res) => {
   if (!machine) throw new BadRequestError("Please provide a valid machine id");
 
   switch (req.params.deviceType) {
-    case "printer":
+    case "printers":
       device = await Printer.create({ user: machine.user, ...req.body });
       break;
-    case "scanner":
+    case "scanners":
       device = await Scanner.create({ user: machine.user, ...req.body });
       break;
   }
@@ -30,24 +30,24 @@ const getOfficeDevices = async (req, res) => {
   let devices;
 
   switch (req.params.deviceType) {
-    case "printer":
+    case "printers":
       devices = await Printer.find();
       break;
-    case "scanner":
+    case "scanners":
       devices = await Scanner.find();
       break;
   }
-  return res.status(StatusCodes.OK).json({ devices });
+  return res.status(StatusCodes.OK).json({ data: devices });
 };
 
 const getOfficeDevice = async (req, res) => {
   let device;
 
   switch (req.params.deviceType) {
-    case "printer":
+    case "printers":
       device = await Printer.findById(req.body.deviceId);
       break;
-    case "scanner":
+    case "scanners":
       device = await Scanner.findById(req.body.deviceId);
       break;
   }
@@ -58,17 +58,30 @@ const getOfficeDevice = async (req, res) => {
 const updateOfficeDevice = async (req, res) => {
   let device;
 
+  if (req.body.machineId) {
+    //check if the machine id, exists
+    const machine = await Machine.findById(req.body.machineId);
+
+    if (!machine)
+      throw new BadRequestError("Please provide a valid machine id");
+    else {
+      req.body.user = machine.user;
+    }
+  }
+
   switch (req.params.deviceType) {
-    case "printer":
+    case "printers":
       device = await Printer.findOneAndUpdate(
         { _id: req.params.deviceId },
-        { ...req.body }
+        { ...req.body },
+        { new: true }
       );
       break;
-    case "scanner":
+    case "scanners":
       device = await Scanner.findOneAndUpdate(
         { _id: req.params.deviceId },
-        { ...req.body }
+        { ...req.body },
+        { new: true }
       );
 
       break;
@@ -84,11 +97,11 @@ const deleteOfficeDevice = async (req, res) => {
   let device;
 
   switch (req.params.deviceType) {
-    case "printer":
+    case "printers":
       device = await Printer.findOneAndDelete({
         _id: req.params.deviceId,
       });
-    case "scanner":
+    case "scanners":
       device = await Scanner.findOneAndDelete({
         _id: req.params.deviceId,
       });

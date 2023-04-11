@@ -93,7 +93,7 @@ import ProgressWrench from "vue-material-design-icons/ProgressWrench.vue";
 import ArchiveOutline from "vue-material-design-icons/ArchiveOutline.vue";
 
 import { useStore } from "vuex";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 // import { useRoute } from "vue-router";
 
 const store = useStore();
@@ -137,6 +137,7 @@ const openAction = (category, listItemID) => {
 const closeMenu = () => {
   isActiveId.value = 0;
   showAction.value = false;
+  action.value = "";
   store.commit("closeActionsMenu", false);
   store.commit("setGreyOutAction", false);
 };
@@ -146,4 +147,10 @@ const closeAlert = () => {
   showAlert.value = false;
   store.commit("closeActionsMenu", false);
 };
+
+watch(showActions, (newValue, oldValue) => {
+  if (newValue === false) {
+    closeMenu();
+  }
+});
 </script>

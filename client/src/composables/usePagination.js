@@ -2,38 +2,34 @@ import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
 const usePagination = () => {
-	const store = useStore();
-	const rowsPerPage = computed(() => store.getters.getRowsPerPage);
+  const store = useStore();
+  const rowsPerPage = computed(() => store.getters.getRowsPerPage);
 
-	const pageNumbers = ref([]);
+  const pageNumbers = ref([]);
 
-	const pagination = (data, currentPage = 1) => {
-		// console.log("Pagination: ", data);
+  const pagination = (currentPage = 1) => {
+    const routeData = computed(() => store.getters.getRouteData);
+    const indexOfLastElement = currentPage * rowsPerPage.value;
+    const indexOfFirstElement = indexOfLastElement - rowsPerPage.value;
+    const paginatedData = routeData.value.slice(
+      indexOfFirstElement,
+      indexOfLastElement
+    );
 
-		const indexOfLastElement = currentPage * rowsPerPage.value;
-		const indexOfFirstElement = indexOfLastElement - rowsPerPage.value;
-		const currentData = data.slice(indexOfFirstElement, indexOfLastElement);
+    store.dispatch("setPaginatedData", paginatedData);
+  };
 
-		return currentData;
-	};
+  const paginate = (arrLength) => {
+    if (arrLength <= rowsPerPage.value) return [];
 
-	const paginate = (arrLength) => {
-		// console.log("Paginate: ", arrLength);
+    for (let i = 1; i <= Math.ceil(arrLength / rowsPerPage.value); i++) {
+      pageNumbers.value.push(i);
+    }
 
-		if (arrLength <= rowsPerPage.value) return [];
+    return pageNumbers.value;
+  };
 
-		for (let i = 1; i <= Math.ceil(arrLength / rowsPerPage.value); i++) {
-			pageNumbers.value.push(i);
-		}
-
-		return pageNumbers.value;
-	};
-
-	const showCurrentPageData = (page, data, currentDataDisplayed) => {
-		currentDataDisplayed.value = pagination(data.value, page);
-	};
-
-	return { pagination, paginate, rowsPerPage, showCurrentPageData };
+  return { pagination, paginate, rowsPerPage };
 };
 
 export default usePagination;

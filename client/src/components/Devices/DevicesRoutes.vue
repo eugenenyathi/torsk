@@ -1,34 +1,77 @@
 <template>
-  <Layout
-    v-if="currentRoute === 'Desktops'"
-    anchor="desktops"
-    tabular="computer"
-    device="desktop"
+  <TabularC
+    v-if="currentRoute === 'desktops'"
+    :showReloadIcon="showReloadIcon"
+    @openFilterList="toggleFilterMenu('open', 'user')"
+    @reload="reloadData"
   />
-  <Layout
-    v-else-if="currentRoute === 'Laptops'"
-    anchor="laptops"
-    tabular="computer"
-    device="laptop"
+
+  <TabularC
+    v-else-if="currentRoute === 'laptops'"
+    :showReloadIcon="showReloadIcon"
+    @openFilterList="toggleFilterMenu('open', 'user')"
+    @reload="reloadData"
   />
-  <Layout
-    v-else-if="currentRoute === 'Tablets'"
-    anchor="tablets"
-    tabular="mobile"
-    device="tablet"
+
+  <TabularM
+    v-else-if="currentRoute === 'tablets'"
+    :showReloadIcon="showReloadIcon"
+    @openFilterList="toggleFilterMenu('open', 'user')"
+    @reload="reloadData"
   />
-  <Layout
-    v-else-if="currentRoute === 'Cellphones'"
-    anchor="phones"
-    tabular="mobile"
-    device="phone"
+
+  <TabularM
+    v-else-if="currentRoute === 'cellphones'"
+    :showReloadIcon="showReloadIcon"
+    @openFilterList="toggleFilterMenu('open', 'user')"
+    @reload="reloadData"
   />
+
+  <Pagination />
+
+  <teleport to="#port-modal">
+    <Transition name="popup" appear>
+      <FilterList
+        :searchContext="searchContext"
+        v-model="filterInput"
+        v-if="filterMenuOpen"
+        @search="searchData"
+        @close="toggleFilterMenu('close')"
+      />
+    </Transition>
+  </teleport>
 </template>
 
 <script setup>
-import Layout from "./DevicesManifesto.vue";
-import { computed } from "vue";
+import TabularC from "./Tabular-C.vue";
+import TabularM from "./Tabular-M.vue";
+import Pagination from "../Pagination";
+import FilterList from "../FilterList";
+
+import usePagination from "@/composables/usePagination.js";
+import FilterFn from "@/helpers/FilterFn.js";
+
+import { ref, watch, computed } from "vue";
+import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 
-const currentRoute = computed(() => useRoute().name);
+const currentRoute = computed(() => useRoute().name.toLowerCase());
+
+const store = useStore();
+const { pagination, rowsPerPage } = usePagination();
+
+const filterInput = ref("");
+
+const {
+  searchContext,
+  filterMenuOpen,
+  showReloadIcon,
+  reloadData,
+  toggleFilterMenu,
+  searchData,
+} = FilterFn(filterInput);
+
+watch(rowsPerPage, () => {
+  pagination();
+});
 </script>

@@ -11,13 +11,13 @@ const addNetworkDevice = async (req, res) => {
   let device;
 
   switch (req.params.deviceType) {
-    case "router":
+    case "routers":
       device = await Router.create({ ...req.body });
       break;
-    case "switch":
+    case "switches":
       device = await Switch.create({ ...req.body });
       break;
-    case "converter":
+    case "converters":
       device = await Converter.create({ ...req.body });
       break;
     case "wifi":
@@ -44,33 +44,33 @@ const getNetworkDevices = async (req, res) => {
   let devices;
 
   switch (req.params.deviceType) {
-    case "router":
+    case "routers":
       devices = await Router.find();
       break;
-    case "switch":
+    case "switches":
       devices = await Switch.find();
       break;
-    case "converter":
+    case "converters":
       devices = await Converter.find();
       break;
     case "wifi":
       devices = await WiFi.find();
       break;
   }
-  return res.status(StatusCodes.OK).json({ devices });
+  return res.status(StatusCodes.OK).json({ data: devices });
 };
 
 const getNetworkDevice = async (req, res) => {
   let device;
 
   switch (req.params.deviceType) {
-    case "router":
+    case "routers":
       device = await Router.findById(req.body.deviceId);
       break;
-    case "switch":
+    case "switches":
       device = await Switch.findById(req.body.deviceId);
       break;
-    case "converter":
+    case "converters":
       device = await Converter.findById(req.body.deviceId);
       break;
     case "wifi":
@@ -85,21 +85,21 @@ const updateNetworkDevice = async (req, res) => {
   let device;
 
   switch (req.params.deviceType) {
-    case "router":
+    case "routers":
       device = await Router.findOneAndUpdate(
         { _id: req.params.deviceId },
         { ...req.body },
         { new: true }
       );
       break;
-    case "switch":
+    case "switches":
       device = await Switch.findOneAndUpdate(
         { _id: req.params.deviceId },
         { ...req.body },
         { new: true }
       );
       break;
-    case "converter":
+    case "converters":
       device = await Converter.findOneAndUpdate(
         { _id: req.params.deviceId },
         { ...req.body },
@@ -125,7 +125,7 @@ const deleteNetworkDevice = async (req, res) => {
   let device;
 
   switch (req.params.deviceType) {
-    case "router":
+    case "routers":
       device = await Router.findOneAndDelete({
         _id: req.params.deviceId,
       });
@@ -136,12 +136,12 @@ const deleteNetworkDevice = async (req, res) => {
       });
 
       break;
-    case "switch":
+    case "switches":
       device = await Switch.findOneAndDelete({
         _id: req.params.deviceId,
       });
       break;
-    case "converter":
+    case "converters":
       device = await Converter.findOneAndDelete({
         _id: req.params.deviceId,
       });

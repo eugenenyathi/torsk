@@ -6,7 +6,7 @@
         <form @submit.prevent="handleSubmit()">
           <div class="entry-control">
             <label for="">User</label>
-            <SelectBox :data="machines" @option="setMachineId" />
+            <SelectBox :data="machines" context="user" @option="setMachineId" />
           </div>
           <div class="entry-control">
             <label for="">Remote Address</label>
@@ -41,27 +41,29 @@ import Loader from "../../BtnLoader";
 import Alert from "../../Alert.vue";
 import AlertFn from "../../../helpers/AlertFn.js";
 
-import { ref, reactive } from "vue";
+import usePushData from "@/composables/usePushData";
+
+import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 
 import axios from "axios";
 
 const store = useStore();
-const router = useRouter();
+
+const data = computed(() => store.getters.getTransitFormData);
 
 const machines = ref([]);
 const machineId = ref(false);
-const address = ref(1234567895);
+const address = ref(data.value.address);
+const user = ref(data.value.user);
 
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
 const fetchMachines = async () => {
   try {
     const res = await axios("/torsk/devices/machines/");
-    machines.value = res.data.machines;
+    machines.value = res.data.data;
   } catch (err) {
     console.log(err);
   }
@@ -69,9 +71,21 @@ const fetchMachines = async () => {
 
 fetchMachines();
 
-const setMachineId = (id) => {
-  machineId.value = id;
+const setMachineId = (data) => {
+  machineId.value = data._id;
+  user.value = data.user;
 };
+
+const { isLoading, axiosError, postData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
 
 const handleSubmit = async () => {
   if (!machineId.value) {
@@ -81,30 +95,12 @@ const handleSubmit = async () => {
     showAlert(true, "The address field is empty", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch("setFlushMessageContext", `${user.value}'s address`);
+    store.dispatch("setTransitFormData", {
+      address: address.value,
+    });
 
-      const res = await axios.post(`/torsk/remote_desktop/${machineId.value}`, {
-        address: address.value,
-      });
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "added",
-        context: address,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/remote");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      showAlert(true, err.response.data.err, "danger");
-      // removeAlert();
-    }
+    await postData("/remote", `/torsk/remote_desktop/${machineId.value}`);
   }
 };
 </script>

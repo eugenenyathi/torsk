@@ -61,6 +61,9 @@
 </template>
 
 <script setup>
+//TODO fix the /login issue
+//TODO change the favicon
+
 //components
 import BaseInput from "../base/BaseInput.vue";
 import BaseButton from "../base/BaseButton.vue";

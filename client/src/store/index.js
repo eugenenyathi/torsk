@@ -5,6 +5,7 @@ const store = createStore({
     return {
       user: null,
       showDeleteBtn: false,
+      flusMessageContext: null,
       showFlushMessage: {
         state: false,
         action: null,
@@ -12,10 +13,18 @@ const store = createStore({
       },
       showActionsMenu: false,
       showChoiceSheet: false,
-      routeData: {},
+      dashboardData: {},
+      baseApiRoute: null,
+      routeData: {
+        data: [],
+        backUpData: [],
+        paginatedData: [],
+      },
       transitData: {},
       transitFormData: {},
-      rows: 8,
+      rows: 7,
+      pageNumbers: [],
+      currentPage: 1,
       greyOutAction: false,
     };
   },
@@ -26,14 +35,35 @@ const store = createStore({
     getRowsPerPage(state) {
       return state.rows;
     },
+    getPageNumbers(state) {
+      return state.pageNumbers;
+    },
+    getCurrentPage(state) {
+      return state.currentPage;
+    },
+    getDashboardData(state) {
+      return state.dashboardData;
+    },
+    getBaseApiRoute(state) {
+      return state.baseApiRoute;
+    },
     getRouteData(state) {
-      return state.routeData;
+      return state.routeData.data;
+    },
+    getRouteBackUpData(state) {
+      return state.routeData.backUpData;
+    },
+    getPaginatedData(state) {
+      return state.routeData.paginatedData;
     },
     getTransitData(state) {
       return state.transitData;
     },
     getTransitFormData(state) {
       return state.transitFormData;
+    },
+    getFlushMessageContext(state) {
+      return state.flushMessageContext;
     },
     greyOutAction(state) {
       return state.greyOutAction;
@@ -61,8 +91,26 @@ const store = createStore({
     addEmail(state, payload) {
       state.signup = payload;
     },
+    setDashboardData(state, payload) {
+      state.dashboardData = payload;
+    },
+    setBaseApiRoute(state, payload) {
+      state.baseApiRoute = payload;
+    },
     setRouteData(state, payload) {
-      state.routeData = payload;
+      state.routeData.data = payload;
+    },
+    setRouteBackUpData(state, payload) {
+      state.routeData.backUpData = payload;
+    },
+    setPaginatedData(state, payload) {
+      state.routeData.paginatedData = payload;
+    },
+    flushRouteData(state) {
+      state.routeData = {
+        data: [],
+        paginatedData: [],
+      };
     },
     setTransitData(state, payload) {
       state.transitData = payload;
@@ -84,8 +132,17 @@ const store = createStore({
         state.rows = state.rows - 1;
       }
     },
+    setPageNumbers(state, payload) {
+      state.pageNumbers = payload;
+    },
+    setCurrentPage(state, payload) {
+      state.currentPage = payload;
+    },
     setShowDeleteBtn(state, payload) {
       state.showDeleteBtn = payload;
+    },
+    setFlushMessageContext(state, payload) {
+      state.flushMessageContext = payload;
     },
     setShowFlushMessage(state, payload) {
       state.showFlushMessage = payload;
@@ -112,8 +169,26 @@ const store = createStore({
     addEmail(context, payload) {
       context.commit("addEmail", payload);
     },
+    setDashboardData(context, payload) {
+      context.commit("setDashboardData", payload);
+    },
+    setBaseApiRoute(context, payload) {
+      context.commit("setBaseApiRoute", payload);
+    },
     setRouteData(context, payload) {
       context.commit("setRouteData", payload);
+    },
+    setRouteBackUpData(context, payload) {
+      context.commit("setRouteBackUpData", payload);
+    },
+    setPaginatedData(context, payload) {
+      context.commit("setPaginatedData", payload);
+    },
+    flushRouteData(context) {
+      context.commit("flushRouteData");
+    },
+    setShowActionsMenu(context, payload) {
+      context.commit("setShowActionsMenu", payload);
     },
     setTransitData(context, payload) {
       context.commit("setTransitData", payload);
@@ -130,8 +205,17 @@ const store = createStore({
     setRowsPerPage(context, payload) {
       context.commit("setRowsPerPage", payload);
     },
+    setPageNumbers(context, payload) {
+      context.commit("setPageNumbers", payload);
+    },
+    setCurrentPage(context, payload) {
+      context.commit("setCurrentPage", payload);
+    },
     setShowDeleteBtn(context, payload) {
       context.commit("setShowDeleteBtn", payload);
+    },
+    setFlushMessageContext(context, payload) {
+      context.commit("setFlushMessageContext", payload);
     },
     setShowFlushMessage(context, payload) {
       context.commit("setShowFlushMessage", payload);

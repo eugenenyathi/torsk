@@ -9,16 +9,14 @@ import NotFound from "../views/NotFound.vue";
 import {
   Dashboard,
   Devices,
-  Emails,
   Networking,
   OfficeEquipment,
-  Telephones,
-  RemoteDesktop,
-  Software,
   Company,
   UserProfile,
   UserSettings,
 } from "../views/Home/";
+
+import Manifesto from "@/components/Manifesto";
 
 //Devices Routes
 import DevicesRoutes from "../components/Devices/DevicesRoutes.vue";
@@ -51,7 +49,9 @@ import EditWiFi from "../components/Action/EditWiFi.vue";
 
 //composables
 import useRoute from "../composables/useRoute.js";
-const { closeRoute } = useRoute();
+const { redirectRoute, closeRoute } = useRoute();
+
+//TODO split this router file
 
 const routes = [
   {
@@ -138,7 +138,7 @@ const routes = [
       },
       {
         path: "remote",
-        component: RemoteDesktop,
+        component: Manifesto,
         name: "Remote Desktop",
       },
       {
@@ -151,7 +151,7 @@ const routes = [
       },
       {
         path: "telephones",
-        component: Telephones,
+        component: Manifesto,
         name: "Telephones",
       },
       {
@@ -160,7 +160,7 @@ const routes = [
       },
       {
         path: "emails",
-        component: Emails,
+        component: Manifesto,
         name: "Emails",
       },
       {
@@ -169,7 +169,7 @@ const routes = [
       },
       {
         path: "software",
-        component: Software,
+        component: Manifesto,
         name: "Software",
       },
       {
@@ -259,18 +259,21 @@ const routes = [
     path: "/login",
     component: Login,
     name: "Login",
+    beforeEnter: redirectRoute,
   },
 
   {
     path: "/signup",
     component: Signup,
     name: "Signup",
+    beforeEnter: redirectRoute,
   },
 
   {
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: NotFound,
+    beforeEnter: redirectRoute,
   },
 ];
 

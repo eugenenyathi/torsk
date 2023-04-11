@@ -43,26 +43,19 @@ watch(searchInput, (newValue, oldValue) => {
 });
 
 const searchOption = (searchInput) => {
-  if (props.context === "location") {
-    let searchResults = props.data.filter((device) =>
-      device.location.toLowerCase().startsWith(searchInput.toLowerCase())
-    );
+  const searchResults = props.data.filter((device) =>
+    device[`${props.context}`]
+      .toLowerCase()
+      .startsWith(searchInput.toLowerCase())
+  );
 
-    if (searchResults.length > 0) options.value = searchResults;
-  } else {
-    let searchResults = props.data.filter((device) =>
-      device.user.toLowerCase().startsWith(searchInput.toLowerCase())
-    );
-
-    if (searchResults.length > 0) options.value = searchResults;
-  }
+  if (searchResults.length > 0) options.value = searchResults;
 };
 
 const selectOption = (option) => {
-  if (props.context === "location") selectedOption.value = option.location;
-  else selectedOption.value = option.user;
+  selectedOption.value = option[`${props.context}`];
   options.value = [];
-  emit("option", option._id);
+  emit("option", option);
 };
 
 const showSearch = () => {

@@ -57,7 +57,7 @@ import mac from "mac-regex";
 import usePushData from "@/composables/usePushData";
 
 import { useStore } from "vuex";
-import { ref, computed, reactive } from "vue";
+import { ref, computed, reactive, watch } from "vue";
 
 const store = useStore();
 const emit = defineEmits(["pop"]);
@@ -65,7 +65,7 @@ const emit = defineEmits(["pop"]);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  macAddress: data.value.macAddress || "12345678910101213",
+  macAddress: data.value.macAddress || "b8:03:05:41:89:dd",
   serialNumber: data.value.serialNumber || "123456-8942",
   monitorSerialNumber: data.value.monitorSerialNumber || "44356-8942",
 });
@@ -74,6 +74,15 @@ const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
 const { isLoading, axiosError, postData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
 
 const handleSubmit = async () => {
   if (
@@ -92,6 +101,10 @@ const handleSubmit = async () => {
     showAlert(true, "Please enter a valid monitor serial number", "danger");
     removeAlert();
   } else {
+    store.dispatch(
+      "setFlushMessageContext",
+      `${data.value.user} ${data.value.machineType} `
+    );
     store.dispatch("setTransitFormData", {
       macAddress: collection.macAddress,
       serialNumber: collection.serialNumber,
@@ -99,7 +112,6 @@ const handleSubmit = async () => {
     });
 
     await postData(
-      data.value.machineType,
       `/devices/${data.value.machineType}s`,
       `/torsk/devices/machine/${data.value.machineType}`
     );

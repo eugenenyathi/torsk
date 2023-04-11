@@ -35,53 +35,45 @@ import Loader from "../BtnLoader";
 import Alert from "../Alert.vue";
 import AlertFn from "../../helpers/AlertFn.js";
 
-import { ref, reactive, computed } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import usePushData from "@/composables/usePushData";
 
-import axios from "axios";
+import { ref, reactive, computed, watch } from "vue";
+import { useStore } from "vuex";
 
 const data = computed(() => store.getters.getTransitData);
 
 const store = useStore();
-const router = useRouter();
 
 const address = ref(data.value.address);
 
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
+
+const { isLoading, axiosError, putData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
 
 const handleSubmit = async () => {
   if (!address.value) {
     showAlert(true, "The address field is empty", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch(
+      "setFlushMessageContext",
+      `${data.value.user} remote address`
+    );
+    store.dispatch("setTransitFormData", {
+      address: address.value,
+    });
 
-      const res = await axios.put(`/torsk/remote_desktop/${data.value._id}`, {
-        address: address.value,
-      });
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "updated",
-        context: data.value.user,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/remote");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      console.log(err);
-      // showAlert(true, err.response.data.err, "danger");
-      // removeAlert();
-    }
+    await putData(`/torsk/remote_desktop/${data.value._id}`, "/remote");
   }
 };
 </script>

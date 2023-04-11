@@ -22,12 +22,12 @@ const addAddress = async (req, res) => {
 
 const getAddresses = async (req, res) => {
   const addresses = await RemoteDesktop.find();
-  return res.status(StatusCodes.OK).json({ addresses });
+  return res.status(StatusCodes.OK).json({ data: addresses });
 };
 
 const getAddress = async (req, res) => {
   const address = await RemoteDesktop.find({ address: req.params.address });
-  return res.status(StatusCodes.OK).json({ address });
+  return res.status(StatusCodes.OK).json({ data: address });
 };
 
 const updateAddress = async (req, res) => {
@@ -41,7 +41,7 @@ const updateAddress = async (req, res) => {
 
   return res
     .status(StatusCodes.OK)
-    .json({ message: "Address updated successfully.", address });
+    .json({ message: "Address updated successfully.", data: address });
 };
 
 const deleteAddress = async (req, res) => {

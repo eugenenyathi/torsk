@@ -39,11 +39,10 @@ import Loader from "../BtnLoader";
 import Alert from "../Alert.vue";
 import AlertFn from "../../helpers/AlertFn.js";
 
-import { ref, reactive, computed } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import usePushData from "@/composables/usePushData";
 
-import axios from "axios";
+import { ref, reactive, computed, watch } from "vue";
+import { useStore } from "vuex";
 
 const props = defineProps({
   action: String,
@@ -51,10 +50,8 @@ const props = defineProps({
 });
 
 const store = useStore();
-const router = useRouter();
 const data = computed(() => store.getters.getTransitData);
 
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
@@ -63,6 +60,17 @@ const collection = reactive({
   location: data.value.location,
   model: data.value.model,
   serialNumber: data.value.serialNumber,
+});
+
+const { isLoading, axiosError, putData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
 });
 
 const handleSubmit = async () => {
@@ -76,36 +84,17 @@ const handleSubmit = async () => {
     showAlert(true, "Please enter a valid serial number", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch(
+      "setFlushMessageContext",
+      `${collection.location} converter`
+    );
+    store.dispatch("setTransitFormData", {
+      location: collection.location,
+      model: collection.model,
+      serialNumber: collection.serialNumber,
+    });
 
-      const res = await axios.put(
-        `/torsk/networking/converter/${collection.deviceId}`,
-        {
-          location: collection.location,
-          model: collection.model,
-          serialNumber: collection.serialNumber,
-        }
-      );
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "updated",
-        context: `${collection.location} converter`,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/networking/converters");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      console.log(err);
-      showAlert(true, err.response.data.err, "danger");
-      removeAlert();
-    }
+    await putData(`/torsk/networking/converters/${collection.deviceId}`);
   }
 };
 </script>

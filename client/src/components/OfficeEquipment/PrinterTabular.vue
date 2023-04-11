@@ -1,5 +1,6 @@
 <template>
-  <table class="tabular">
+  <Loader v-if="isLoading" />
+  <table v-else class="tabular">
     <thead>
       <tr>
         <!-- <th class="checkbox">
@@ -29,49 +30,49 @@
     </thead>
     <tbody>
       <tr
-        v-for="machine in machines"
-        :key="machine._id"
+        v-for="printer in printers"
+        :key="printer._id"
         :class="{
-          isActive: isActiveId === machine._id,
+          isActive: isActiveId === printer._id,
         }"
-        @click="selectMachine(machine._id)"
+        @click="selectPrinter(printer._id)"
       >
         <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
-            :value="machine.id"
-            :checked="isActiveId === machine.id"
+            :value="printer.id"
+            :checked="isActiveId === printer.id"
             v-model="checkbox"
           />
         </td> -->
         <td></td>
-        <td>{{ machine.user }}</td>
-        <td>{{ machine.model }}</td>
+        <td>{{ printer.user }}</td>
+        <td>{{ printer.model }}</td>
 
-        <td v-if="machine.multipurpose">
+        <td v-if="printer.multipurpose">
           <Check class="filter-icon dark" />
         </td>
         <td v-else>
           <Close class="filter-icon dark" />
         </td>
 
-        <td v-if="machine.duplex">
+        <td v-if="printer.duplex">
           <Check class="filter-icon dark" />
         </td>
         <td v-else>
           <Close class="filter-icon dark" />
         </td>
 
-        <td v-if="machine.networked">
+        <td v-if="printer.networked">
           <Check class="filter-icon dark" />
         </td>
         <td v-else>
           <Close class="filter-icon dark" />
         </td>
 
-        <td>{{ machine.cartridge }}</td>
-        <td>{{ machine.serialNumber }}</td>
+        <td>{{ printer.cartridge }}</td>
+        <td>{{ printer.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
@@ -83,27 +84,37 @@ import Reload from "vue-material-design-icons/Reload.vue";
 import Check from "vue-material-design-icons/Check.vue";
 import Close from "vue-material-design-icons/Close.vue";
 
+import Loader from "../Loader";
+
 import { useStore } from "vuex";
 import { ref, watch, computed } from "vue";
 
+import useFetchRouteData from "@/composables/useFetchRouteData";
+
 const props = defineProps({
-  machines: Array,
   showReloadIcon: Boolean,
 });
-const emit = defineEmits(["open", "openFilterList", "reload"]);
+
+const emit = defineEmits(["openFilterList", "reload"]);
 const store = useStore();
 
 const isActiveId = ref(0);
-const checkbox = ref([]);
 
-watch(checkbox, (newValue, oldValue) => console.log(newValue));
+const printers = ref(computed(() => store.getters.getPaginatedData));
+const { isLoading, fetchRouteData } = useFetchRouteData();
 
-const selectMachine = (machineId) => {
-  isActiveId.value = machineId;
-  const data = props.machines.find((machine) => machine._id === machineId);
-  store.dispatch("setTransitData", { route: "office_equipment", ...data });
+fetchRouteData("printers");
+
+const selectPrinter = (printerId) => {
+  isActiveId.value = printerId;
+  const data = printers.value.find((printer) => printer._id === printerId);
+  store.dispatch("setShowActionsMenu", true);
+  store.dispatch("setTransitData", {
+    context: `${data.user}'s printer`,
+    route: "networking/printers",
+    ...data,
+  });
   store.dispatch("setGreyOutAction", true);
-  emit("open");
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

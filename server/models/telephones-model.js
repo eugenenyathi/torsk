@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 const TelephoneSchema = new Schema({
   user: {
     type: String,
-    unique: true,
     required: [true, "The user can not be empty."],
   },
   extension: {
@@ -21,12 +20,6 @@ const TelephoneSchema = new Schema({
     minLength: 7,
     maxLength: 7,
   },
-  // cellphone: {
-  //   type: Number,
-  //   unique: true,
-  //   minLength: 10,
-  //   maxLength: 10,
-  // },
   model: {
     type: String,
     required: [true, "The model can not be empty."],

@@ -53,7 +53,7 @@ import mac from "mac-regex";
 import usePushData from "@/composables/usePushData";
 
 import { useStore } from "vuex";
-import { ref, computed, reactive } from "vue";
+import { ref, computed, reactive, watch } from "vue";
 
 const store = useStore();
 const emit = defineEmits(["next", "pop"]);
@@ -63,14 +63,23 @@ const formData = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
   macAddress: formData.value.macAddress || data.value.macAddress,
-  serialNumber: formData.value.macAddress || data.value.serialNumber,
-  imei: formData.value.macAddress || data.value.imei,
+  serialNumber: formData.value.serialNumber || data.value.serialNumber,
+  imei: formData.value.imei || data.value.imei,
 });
 
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
 const { isLoading, axiosError, putData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
 
 const handleSubmit = async () => {
   if (
@@ -82,20 +91,25 @@ const handleSubmit = async () => {
   } else if (!collection.serialNumber || collection.serialNumber.length < 3) {
     showAlert(true, "Please enter a valid serial number", "danger");
     removeAlert();
-  } else if (!collection.imei || collection.imei.length != 15) {
+  } else if (
+    !collection.imei ||
+    collection.imei.length != 15 ||
+    collection.imei === "00:00:00:00:00:00"
+  ) {
     showAlert(true, "Please enter a valid imei", "danger");
     removeAlert();
   } else {
+    store.dispatch(
+      "setFlushMessageContext",
+      `${data.value.user} ${data.value.deviceType} `
+    );
     store.dispatch("setTransitFormData", {
       macAddress: collection.macAddress,
       serialNumber: collection.serialNumber,
       imei: collection.imei,
     });
 
-    await putData(
-      data.value.deviceType,
-      `/torsk/devices/mobile/${data.value._id}`
-    );
+    await putData(`/torsk/devices/mobile/${data.value._id}`);
   }
 };
 </script>

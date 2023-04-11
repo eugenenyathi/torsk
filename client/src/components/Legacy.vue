@@ -258,3 +258,10 @@ const routes = ref([
         },
       }
 </script>
+
+// //if the data is not sufficient don't paginate // if
+(state.routeData.data.length <= state.rows) { // state.routeData.paginatedData =
+state.routeData.data; // } else { // const indexOfLastElement = 1 * state.rows;
+// const indexOfFirstElement = indexOfLastElement - state.rows; //
+state.routeData.paginatedData = state.routeData.data.slice( //
+indexOfFirstElement, // indexOfLastElement // ); // }

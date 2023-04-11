@@ -37,5 +37,5 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
-const data = computed(() => store.getters.getRouteData);
+const data = computed(() => store.getters.getDashboardData);
 </script>

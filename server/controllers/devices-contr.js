@@ -14,9 +14,10 @@ const addMachine = async (req, res) => {
       break;
   }
 
-  return res
-    .status(StatusCodes.CREATED)
-    .json({ message: `${req.body.deviceType} added successfully`, asset });
+  return res.status(StatusCodes.CREATED).json({
+    message: `${req.body.deviceType} added successfully`,
+    data: asset,
+  });
 };
 
 const getMachines = async (req, res) => {
@@ -31,7 +32,7 @@ const getMachines = async (req, res) => {
       break;
   }
 
-  return res.status(StatusCodes.OK).json({ asset });
+  return res.status(StatusCodes.OK).json({ data: asset });
 };
 
 const getMachine = async (req, res) => {

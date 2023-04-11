@@ -95,7 +95,7 @@ import AlertFn from "@/helpers/AlertFn.js";
 
 import usePushData from "@/composables/usePushData";
 
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -139,6 +139,15 @@ const next = () => {
 
 const { isLoading, axiosError, putData } = usePushData();
 
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
+
 const handleSubmit = async () => {
   if (!collection.model || collection.model.length < 3) {
     showAlert(true, "Please enter a valid model", "danger");
@@ -147,12 +156,16 @@ const handleSubmit = async () => {
     showAlert(true, "Please enter a valid desktop serial number", "danger");
     removeAlert();
   } else {
+    store.dispatch(
+      "setFlushMessageContext",
+      `${collection.user} telephone line`
+    );
     store.dispatch("setTransitFormData", {
       model: collection.model,
       serialNumber: collection.serialNumber,
     });
 
-    await putData("line", `/torsk/telephone/${data.value._id}`, "/telephones");
+    await putData(`/torsk/telephone/${data.value._id}`, "/telephones");
   }
 };
 

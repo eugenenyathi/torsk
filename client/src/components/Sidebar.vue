@@ -113,4 +113,6 @@ import Phone from "vue-material-design-icons/PhoneOutline.vue";
 
 import ActiveChildRoute from "../helpers/ActiveChildRoute.js";
 const { subIsActive } = ActiveChildRoute();
+
+//TODO additional features, servers, stock, ip-address, network config, email custom settings
 </script>

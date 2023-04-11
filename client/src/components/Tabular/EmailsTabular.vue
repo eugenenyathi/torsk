@@ -1,5 +1,6 @@
 <template>
-  <table class="tabular">
+  <Loader v-if="isLoading" />
+  <table v-else class="tabular">
     <thead>
       <tr class="no-flex-second-child">
         <th></th>
@@ -23,17 +24,17 @@
     </thead>
     <tbody>
       <tr
-        v-for="machine in machines"
-        :key="machine._id"
+        v-for="email in emails"
+        :key="email._id"
         :class="{
-          isActive: isActiveId === machine._id,
+          isActive: isActiveId === email._id,
         }"
-        @click="selectMachine(machine._id)"
+        @click="selectEmail(email._id)"
       >
         <td></td>
-        <td>{{ machine.user }}</td>
-        <td>{{ machine.email }}</td>
-        <td>{{ machine.password }}</td>
+        <td>{{ email.user }}</td>
+        <td>{{ email.email }}</td>
+        <td>{{ email.password }}</td>
       </tr>
     </tbody>
   </table>
@@ -42,31 +43,44 @@
 <script setup>
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
-import conceal from "conceal";
 
-import { ref, watch, computed } from "vue";
+import Loader from "../Loader";
+
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { ref, watch, computed } from "vue";
+
+import useFetchRouteData from "@/composables/useFetchRouteData";
 
 const props = defineProps({
-  machines: Array,
   showReloadIcon: Boolean,
 });
 
-const emit = defineEmits(["open", "openFilterList", "reload"]);
+const emit = defineEmits(["openFilterList", "reload"]);
+
 const store = useStore();
 const router = useRouter();
 
+store.dispatch("setBaseApiRoute", "/torsk/email");
+
 const isActiveId = ref(0);
-const checkbox = ref([]);
 
-watch(checkbox, (newValue, oldValue) => console.log(newValue));
+const emails = ref(computed(() => store.getters.getPaginatedData));
+const { isLoading, fetchRouteData } = useFetchRouteData();
 
-const selectMachine = (machineId) => {
-  const data = props.machines.find((machine) => machine._id === machineId);
-  store.dispatch("setTransitData", { route: "email", ...data });
+fetchRouteData();
 
-  const route = `/emails/${machineId}`;
+const selectEmail = (emailId) => {
+  isActiveId.value = emailId;
+  const data = emails.value.find((email) => email._id === emailId);
+  store.dispatch("flushTransitFormData");
+  store.dispatch("setTransitData", {
+    context: `${data.user} remote address`,
+    route: "remote_desktop",
+    ...data,
+  });
+
+  const route = `/remote/${emailId}`;
   router.push(route);
 
   store.dispatch("setShowDeleteBtn", true);

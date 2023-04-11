@@ -1,5 +1,6 @@
 <template>
-  <table class="tabular">
+  <Loader v-if="isLoading" />
+  <table v-else class="tabular">
     <thead>
       <tr>
         <!-- <th class="checkbox">
@@ -27,27 +28,27 @@
     </thead>
     <tbody>
       <tr
-        v-for="machine in machines"
-        :key="machine._id"
+        v-for="device in devices"
+        :key="device._id"
         :class="{
-          isActive: isActiveId === machine._id,
+          isActive: isActiveId === device._id,
         }"
-        @click="selectMachine(machine._id)"
+        @click="selectDevice(device._id)"
       >
         <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
-            :value="machine.id"
-            :checked="isActiveId === machine._id"
+            :value="device.id"
+            :checked="isActiveId === device._id"
             v-model="checkbox"
           />
         </td> -->
         <td></td>
-        <td>{{ machine.user }}</td>
-        <td>{{ machine.model }}</td>
-        <td>{{ machine.os }}</td>
-        <td>{{ machine.storage }}</td>
+        <td>{{ device.user }}</td>
+        <td>{{ device.model }}</td>
+        <td>{{ device.os }}</td>
+        <td>{{ device.storage }}</td>
       </tr>
     </tbody>
   </table>
@@ -57,28 +58,41 @@
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
 
+import Loader from "../Loader";
+
 import { useStore } from "vuex";
 import { ref, watch, computed } from "vue";
 
+import useFetchRouteData from "@/composables/useFetchRouteData";
+
+import { useRoute } from "vue-router";
+
+const currentRoute = computed(() => useRoute().name.toLowerCase());
+
 const props = defineProps({
-  tableHeading: String,
-  machines: Array,
   showReloadIcon: Boolean,
 });
-const emit = defineEmits(["open", "openFilterList", "reload"]);
+
+const emit = defineEmits(["openFilterList", "reload"]);
 const store = useStore();
+store.dispatch("setBaseApiRoute", "/torsk/devices/mobiles");
 
 const isActiveId = ref(0);
-const checkbox = ref([]);
 
-watch(checkbox, (newValue, oldValue) => console.log(newValue));
+const devices = ref(computed(() => store.getters.getPaginatedData));
+const { isLoading, fetchRouteData } = useFetchRouteData();
 
-const selectMachine = (machineId) => {
-  isActiveId.value = machineId;
-  const data = props.machines.find((machine) => machine._id === machineId);
-  store.dispatch("setTransitData", { route: "devices/mobile", ...data });
+fetchRouteData(currentRoute.value.substring(0, currentRoute.value.length - 1));
 
-  emit("open");
+const selectDevice = (deviceId) => {
+  isActiveId.value = deviceId;
+  const data = devices.value.find((device) => device._id === deviceId);
+  store.dispatch("setShowActionsMenu", true);
+  store.dispatch("setTransitData", {
+    context: `${data.user} device`,
+    route: "devices/mobile",
+    ...data,
+  });
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

@@ -1,5 +1,6 @@
 <template>
-  <table class="tabular">
+  <Loader v-if="isLoading" />
+  <table v-else class="tabular">
     <thead>
       <tr class="no-flex-second-child">
         <th></th>
@@ -25,19 +26,19 @@
     </thead>
     <tbody>
       <tr
-        v-for="machine in machines"
-        :key="machine._id"
+        v-for="telephone in telephones"
+        :key="telephone._id"
         :class="{
-          isActive: isActiveId === machine._id,
+          isActive: isActiveId === telephone._id,
         }"
-        @click="selectMachine(machine._id)"
+        @click="selectTelephone(telephone._id)"
       >
         <td></td>
-        <td>{{ machine.user }}</td>
-        <td>{{ machine.extension }}</td>
-        <td>{{ machine.directLine }}</td>
-        <td>{{ machine.model }}</td>
-        <td>{{ machine.serialNumber }}</td>
+        <td>{{ telephone.user }}</td>
+        <td>{{ telephone.extension }}</td>
+        <td>{{ telephone.directLine }}</td>
+        <td>{{ telephone.model }}</td>
+        <td>{{ telephone.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
@@ -47,31 +48,45 @@
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
 
-import { ref, watch, computed } from "vue";
+import Loader from "../Loader";
+
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { ref, watch, computed } from "vue";
+
+import useFetchRouteData from "@/composables/useFetchRouteData";
 
 const props = defineProps({
-  machines: Array,
   showReloadIcon: Boolean,
 });
 
-const emit = defineEmits(["open", "openFilterList", "reload"]);
+const emit = defineEmits(["openFilterList", "reload"]);
+
 const store = useStore();
 const router = useRouter();
 
+store.dispatch("setBaseApiRoute", "/torsk/telephone");
+
 const isActiveId = ref(0);
-const checkbox = ref([]);
 
-watch(checkbox, (newValue, oldValue) => console.log(newValue));
+const telephones = ref(computed(() => store.getters.getPaginatedData));
+const { isLoading, fetchRouteData } = useFetchRouteData();
 
-const selectMachine = (machineId) => {
-  const data = props.machines.find((machine) => machine._id === machineId);
+fetchRouteData();
+
+const selectTelephone = (telephoneId) => {
+  isActiveId.value = telephoneId;
+  const data = telephones.value.find(
+    (telephone) => telephone._id === telephoneId
+  );
   store.dispatch("flushTransitFormData");
-  store.dispatch("setTransitData", { route: "telephone", ...data });
+  store.dispatch("setTransitData", {
+    context: `${data.user} telephone line`,
+    route: "telephone",
+    ...data,
+  });
 
-  //push to the adding page
-  const route = `/telephones/${machineId}`;
+  const route = `/telephones/${telephoneId}`;
   router.push(route);
 
   store.dispatch("setShowDeleteBtn", true);

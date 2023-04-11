@@ -71,25 +71,26 @@ import SelectBox from "@/base/SearchableSelectBx.vue";
 import Loader from "../../BtnLoader";
 import Alert from "../../Alert.vue";
 import AlertFn from "../../../helpers/AlertFn.js";
+import usePushData from "@/composables/usePushData";
+import useFetch from "@/composables/useFetch";
 
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 
 import axios from "axios";
 
 const store = useStore();
-const router = useRouter();
 
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
+
+const data = computed(() => store.getters.getTransitFormData);
 
 const routers = ref([]);
 const collection = reactive({
   routerId: "",
-  ssid: "VFCC_ICT",
-  password: "vfacouncil!",
+  ssid: data.value.ssid || "VFCC_ICT",
+  password: data.value.password || "vfacouncil!",
 });
 
 const showPassword = ref(false);
@@ -102,10 +103,14 @@ const togglePassword = () => {
   else pwdType.value = "password";
 };
 
+// const { fetchData: fetchRouters } = useFetch();
+// routers.value = fetchRouters("/torsk/networking/device/routers");
+
 const fetchRouters = async () => {
   try {
-    const res = await axios("/torsk/networking/device/router");
-    routers.value = res.data.devices;
+    const res = await axios("/torsk/networking/device/routers");
+    // console.log(res);
+    routers.value = res.data.data;
   } catch (err) {
     console.log(err);
   }
@@ -117,42 +122,36 @@ const setRouterId = (id) => {
   collection.routerId = id;
 };
 
+const { isLoading, axiosError, postData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
+
 const handleSubmit = async () => {
-  if (!collection.ssid || collection.ssid.length < 4) {
+  if (!collection.routerId || collection.routerId.length != 24) {
+    showAlert(true, "Please select a router location", "danger");
+    removeAlert();
+  } else if (!collection.ssid || collection.ssid.length < 4) {
     showAlert(true, "Please enter a valid ssid", "danger");
     removeAlert();
   } else if (!collection.password || collection.password.length < 6) {
     showAlert(true, "Please enter a valid password", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch("setFlushMessageContext", `${collection.ssid} wifi network`);
+    store.dispatch("setTransitFormData", {
+      routerId: collection.routerId,
+      ssid: collection.ssid,
+      password: collection.password,
+    });
 
-      const res = await axios.post("/torsk/networking/wifi", {
-        routerId: collection.routerId,
-        location: collection.location,
-        ssid: collection.ssid,
-        password: collection.password,
-      });
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "added",
-        context: `${collection.ssid} wifi`,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/networking/wifi");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      console.log(err);
-      showAlert(true, err.response.data.err, "danger");
-      removeAlert();
-    }
+    await postData("/networking/wifi", "/torsk/networking/wifi");
   }
 };
 </script>

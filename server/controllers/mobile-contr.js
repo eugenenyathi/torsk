@@ -9,21 +9,21 @@ const addMobileDevice = async (req, res) => {
 
   return res
     .status(StatusCodes.CREATED)
-    .json({ message: "Device added successfully", device });
+    .json({ message: "Device added successfully", data: device });
 };
 
 const getMobileDevices = async (req, res) => {
   const deviceType = req.params.deviceType;
   const devices = await MobileDevice.find({ deviceType });
 
-  return res.status(StatusCodes.OK).json({ devices });
+  return res.status(StatusCodes.OK).json({ data: devices });
 };
 
 const getMobileDevice = async (req, res) => {
   const deviceId = req.params.deviceId;
   const device = await MobileDevice.findById(deviceId);
 
-  return res.status(StatusCodes.OK).json({ device });
+  return res.status(StatusCodes.OK).json({ data: device });
 };
 
 const updateMobileDevice = async (req, res) => {
@@ -39,7 +39,7 @@ const updateMobileDevice = async (req, res) => {
 
   return res
     .status(StatusCodes.OK)
-    .json({ message: "Device updated successfully.", device });
+    .json({ message: "Device updated successfully.", data: device });
 };
 
 const deleteMobileDevice = async (req, res) => {

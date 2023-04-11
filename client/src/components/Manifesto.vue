@@ -1,48 +1,40 @@
 <template>
-  <Loader v-if="isLoading" />
-
-  <TelephoneTabular
-    v-if="tabular === 'telephones' && !isLoading"
-    :machines="currentDeviceData"
-    :showReloadIcon="showReloadIcon"
-    @openFilterList="toggleFilterMenu('open')"
-    @reload="reloadData"
-  />
-
-  <RDTabular
-    v-if="tabular === 'remotedesktop' && !isLoading"
-    :machines="currentDeviceData"
-    :showReloadIcon="showReloadIcon"
-    @openFilterList="toggleFilterMenu('open')"
-    @reload="reloadData"
-  />
-
-  <EmailsTabular
-    v-if="tabular === 'emails' && !isLoading"
-    :machines="currentDeviceData"
-    :showReloadIcon="showReloadIcon"
-    @open="openActionsMenu"
-    @openFilterList="toggleFilterMenu('open')"
-    @reload="reloadData"
-  />
-
-  <SoftwareTabular
-    v-if="tabular === 'softwares' && !isLoading"
-    :softwares="currentDeviceData"
-    @open="openActionsMenu"
-  />
-
-  <Pagination :pageNumbers="pageNumbers" @currentPage="currentPage" />
-
-  <teleport to="#port-modal">
-    <FilterList
-      :device="device"
-      v-model="filterInput"
-      v-if="filterMenuOpen"
-      @search="searchData"
-      @close="toggleFilterMenu('close')"
+  <section class="single-view-position-container">
+    <TelephoneTabular
+      v-if="currentRoute === 'telephones'"
+      :showReloadIcon="showReloadIcon"
+      @openFilterList="toggleFilterMenu('open', 'user')"
+      @reload="reloadData"
     />
-  </teleport>
+
+    <RDTabular
+      v-else-if="currentRoute === 'remote desktop'"
+      :showReloadIcon="showReloadIcon"
+      @openFilterList="toggleFilterMenu('open', 'user')"
+      @reload="reloadData"
+    />
+
+    <EmailsTabular
+      v-else-if="currentRoute === 'emails'"
+      :showReloadIcon="showReloadIcon"
+      @openFilterList="toggleFilterMenu('open', 'user')"
+      @reload="reloadData"
+    />
+
+    <SoftwareTabular v-else-if="currentRoute === 'desktops'" />
+
+    <Pagination />
+
+    <teleport to="#port-modal">
+      <FilterList
+        :searchContext="searchContext"
+        v-model="filterInput"
+        v-if="filterMenuOpen"
+        @search="searchData"
+        @close="toggleFilterMenu('close')"
+      />
+    </teleport>
+  </section>
 </template>
 
 <script setup>
@@ -50,92 +42,37 @@ import TelephoneTabular from "./Tabular/TelephoneTabular.vue";
 import EmailsTabular from "./Tabular/EmailsTabular.vue";
 import RDTabular from "./Tabular/RDTabular.vue";
 import SoftwareTabular from "./Tabular/SoftwareTabular.vue";
-import Loader from "./Loader";
-
 import Pagination from "./Pagination";
 import FilterList from "./FilterList";
 
-import useAxiosError from "../composables/useAxiosError.js";
-import usePagination from "../composables/usePagination.js";
+import usePagination from "@/composables/usePagination.js";
+import FilterFn from "@/helpers/FilterFn.js";
 
-import ActiveChildRoute from "../helpers/ActiveChildRoute.js";
-import FilterFn from "../helpers/FilterFn.js";
-
-import axios from "axios";
 import { ref, watch, computed } from "vue";
-import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
-const currentRoute = computed(() => useRoute().name);
-const isLoading = ref(false);
+//TODO clean-up all files that load the manifesto
 
-const props = defineProps(["anchor", "tabular", "device"]);
+const currentRoute = computed(() => useRoute().name.toLowerCase());
+
+console.log("Current route:", currentRoute.value);
+
 const store = useStore();
-
-store.dispatch("setShowDeleteBtn", false);
-
-const { subIsActive } = ActiveChildRoute();
-
-const deviceData = ref([]);
-const currentDeviceData = ref([]);
-const axiosError = ref(null);
+const { pagination, rowsPerPage } = usePagination();
 
 const filterInput = ref("");
 
-const { paginate, pagination, rowsPerPage, showCurrentPageData } =
-  usePagination();
-
 const {
+  searchContext,
   filterMenuOpen,
   showReloadIcon,
   reloadData,
-  pageNumbers,
   toggleFilterMenu,
   searchData,
-} = FilterFn([filterInput, deviceData, currentDeviceData]);
-
-const fetchDeviceData = async () => {
-  try {
-    isLoading.value = true;
-    if (props.anchor === "telephones") {
-      const res = await axios("/torsk/telephone");
-      deviceData.value = res.data.devices;
-    } else if (props.anchor === "remotedesktop") {
-      const res = await axios("/torsk/remote_desktop/");
-      deviceData.value = res.data.addresses;
-    } else if (props.anchor === "emails") {
-      const res = await axios("/torsk/email");
-      deviceData.value = res.data.emails;
-    } else if (props.anchor === "softwares") {
-      const res = await axios("/torsk/software");
-      deviceData.value = res.data.softwares;
-    }
-    isLoading.value = false;
-    currentDeviceData.value = pagination(deviceData.value);
-    pageNumbers.value = paginate(deviceData.value.length);
-  } catch (err) {
-    console.log(err);
-    // useAxiosError(err, axiosError);
-  }
-};
-
-fetchDeviceData();
-
-//pagination stuff
-const currentPage = (page) => {
-  showCurrentPageData(page, deviceData, currentDeviceData);
-};
+} = FilterFn(filterInput);
 
 watch(rowsPerPage, () => {
-  currentDeviceData.value = pagination(deviceData.value);
+  pagination();
 });
-
-//actions sidemenu
-const openActionsMenu = (machineId) => {
-  store.commit("setShowActionsMenu", {
-    route: "tablets",
-    deviceId: machineId,
-    toggleState: true,
-  });
-};
 </script>

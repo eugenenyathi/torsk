@@ -122,29 +122,29 @@ import Loader from "../../BtnLoader";
 import Alert from "../../Alert.vue";
 import AlertFn from "../../../helpers/AlertFn.js";
 
-import { ref, reactive } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import validate from "ip-validator";
+import usePushData from "@/composables/usePushData";
 
-import axios from "axios";
+import { ref, reactive, computed, watch } from "vue";
+import { useStore } from "vuex";
 
 const page = ref(1);
 
 const store = useStore();
-const router = useRouter();
 
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
+const data = computed(() => store.getters.getTransitFormData);
+
 const collection = reactive({
-  location: "Accounts",
-  model: "trendnet",
-  ipAddress: "192.168.1.23",
-  serialNumber: "12354-5689",
-  ports: 8,
-  deadPorts: 0,
-  wireless: false,
+  location: data.value.location || "test",
+  model: data.value.model || "trendnet",
+  ipAddress: data.value.ipAddress || "192.168.1.23",
+  serialNumber: data.value.serialNumber || "12354-5689",
+  ports: data.value.ports || 8,
+  deadPorts: data.value.deadPorts || 0,
+  wireless: data.value.wireless || false,
 });
 
 const next = async () => {
@@ -154,17 +154,24 @@ const next = async () => {
   } else if (!collection.model || collection.model.length < 2) {
     showAlert(true, "Please enter a valid model", "danger");
     removeAlert();
-  } else if (
-    !collection.ipAddress ||
-    collection.ipAddress.length < 8 ||
-    collection.ipAddress.length > 16
-  ) {
+  } else if (!collection.ipAddress || !validate.ipv4(collection.ipAddress)) {
     showAlert(true, "Please enter a valid ip address", "danger");
     removeAlert();
   } else {
     page.value = 2;
   }
 };
+
+const { isLoading, axiosError, postData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
 
 const handleSubmit = async () => {
   if (!collection.serialNumber || collection.serialNumber.length < 6) {
@@ -178,38 +185,18 @@ const handleSubmit = async () => {
     showAlert(true, "The ports field can not be empty", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch("setFlushMessageContext", `${collection.location} router`);
+    store.dispatch("setTransitFormData", {
+      location: collection.location,
+      model: collection.model,
+      ipAddress: collection.ipAddress,
+      serialNumber: collection.serialNumber,
+      ports: collection.ports,
+      deadPorts: collection.deadPorts,
+      wireless: collection.wireless,
+    });
 
-      const res = await axios.post("/torsk/networking/router", {
-        location: collection.location,
-        model: collection.model,
-        ipAddress: collection.ipAddress,
-        serialNumber: collection.serialNumber,
-        ports: collection.ports,
-        deadPorts: collection.deadPorts,
-        wireless: collection.wireless,
-      });
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "added",
-        context: `${collection.location} router`,
-      });
-
-      setTimeout(() => {
-        store.commit("closeActionsMenu", false);
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/networking/routers");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      console.log(err);
-      showAlert(true, err.response.data.err, "danger");
-      removeAlert();
-    }
+    await postData("/networking/routers", "/torsk/networking/routers");
   }
 };
 

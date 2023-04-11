@@ -1,5 +1,6 @@
 <template>
-  <table class="tabular">
+  <Loader v-if="isLoading" />
+  <table v-else class="tabular">
     <thead>
       <tr>
         <th></th>
@@ -40,26 +41,41 @@
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
 
-import { ref, watch, computed } from "vue";
+import Loader from "../Loader";
+
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { ref, watch, computed } from "vue";
+
+import useFetchRouteData from "@/composables/useFetchRouteData";
 
 const props = defineProps({
-  machines: Array,
   showReloadIcon: Boolean,
 });
 
-const emit = defineEmits(["open", "openFilterList", "reload"]);
+const emit = defineEmits(["openFilterList", "reload"]);
+
 const store = useStore();
 const router = useRouter();
 
+store.dispatch("setBaseApiRoute", "/torsk/remote_desktop");
+
 const isActiveId = ref(0);
-// const checkbox = ref([]);
-// watch(checkbox, (newValue, oldValue) => console.log(newValue));
+
+const machines = ref(computed(() => store.getters.getPaginatedData));
+const { isLoading, fetchRouteData } = useFetchRouteData();
+
+fetchRouteData();
 
 const selectMachine = (machineId) => {
-  const data = props.machines.find((machine) => machine._id === machineId);
-  store.dispatch("setTransitData", { route: "remote_desktop", ...data });
+  isActiveId.value = machineId;
+  const data = machines.value.find((machine) => machine._id === machineId);
+  store.dispatch("flushTransitFormData");
+  store.dispatch("setTransitData", {
+    context: `${data.user} remote address`,
+    route: "remote_desktop",
+    ...data,
+  });
 
   const route = `/remote/${machineId}`;
   router.push(route);

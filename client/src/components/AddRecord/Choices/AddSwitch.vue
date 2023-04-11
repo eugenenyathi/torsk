@@ -86,26 +86,27 @@ import ChevronRight from "vue-material-design-icons/ChevronRight.vue";
 import Loader from "../../BtnLoader";
 import Alert from "../../Alert.vue";
 import AlertFn from "../../../helpers/AlertFn.js";
+import usePushData from "@/composables/usePushData";
 
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-
-import axios from "axios";
 
 const page = ref(1);
 
 const store = useStore();
-const router = useRouter();
 
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
+const data = computed(() => store.getters.getTransitFormData);
+
 const collection = reactive({
-  location: "Accounts",
-  model: "tp-link",
-  serialNumber: "11354-5689",
+  location: data.value.location || "test",
+  model: data.value.model || "tp-link",
+  ports: data.value.ports || 8,
+  deadPorts: data.value.deadPorts || 0,
+  serialNumber: data.value.serialNumber || "11354-5689",
 });
 
 const next = () => {
@@ -127,40 +128,32 @@ const next = () => {
   }
 };
 
+const { isLoading, axiosError, postData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
+
 const handleSubmit = async () => {
   if (!collection.serialNumber || collection.serialNumber.length < 6) {
     showAlert(true, "Please enter a valid serial number", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch("setFlushMessageContext", `${collection.location} switch`);
+    store.dispatch("setTransitFormData", {
+      location: collection.location,
+      model: collection.model,
+      ports: collection.ports,
+      deadPorts: collection.deadPorts,
+      serialNumber: collection.serialNumber,
+    });
 
-      const res = await axios.post("/torsk/networking/switch", {
-        location: collection.location,
-        model: collection.model,
-        ports: collection.ports,
-        deadPorts: collection.deadPorts,
-        serialNumber: collection.serialNumber,
-      });
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "added",
-        context: `${collection.location} switch`,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/networking/switches");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      console.log(err);
-      showAlert(true, err.response.data.err, "danger");
-      removeAlert();
-    }
+    await postData("/networking/switches", "/torsk/networking/switches");
   }
 };
 

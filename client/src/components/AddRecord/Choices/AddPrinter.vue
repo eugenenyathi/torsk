@@ -158,36 +158,37 @@ import SelectBox from "@/base/SearchableSelectBx.vue";
 import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";
 
-import { ref, reactive, computed } from "vue";
+import usePushData from "@/composables/usePushData";
+
+import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 
 import axios from "axios";
 
 const page = ref(1);
 
 const store = useStore();
-const router = useRouter();
 
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
 const machines = ref([]);
+const data = computed(() => store.getters.getTransitFormData);
+
 const collection = reactive({
-  machineId: "",
-  model: "HP Laserjet M502",
-  cartridge: "37A",
-  multiPurpose: false,
-  networked: false,
-  duplex: false,
-  serialNumber: "12345-6789",
+  user: data.value.user || "IT SUPPORT",
+  model: data.value.model || "HP Laserjet M502",
+  cartridge: data.value.cartridge || "37A",
+  multipurpose: data.value.multipurpose || false,
+  networked: data.value.networked || false,
+  duplex: data.value.duplex || false,
+  serialNumber: data.value.serialNumber || "12345-6789",
 });
 
 const fetchMachines = async () => {
   try {
     const res = await axios("/torsk/devices/machines");
-    machines.value = res.data.machines;
+    machines.value = res.data.data;
   } catch (err) {
     console.log(err);
   }
@@ -195,8 +196,9 @@ const fetchMachines = async () => {
 
 fetchMachines();
 
-const setMachineId = (id) => {
-  collection.machineId = id;
+const setMachineId = (data) => {
+  collection.machineId = data._id;
+  collection.user = data.user;
 };
 
 const next = () => {
@@ -212,44 +214,36 @@ const next = () => {
   } else page.value = 2;
 };
 
+const { isLoading, axiosError, postData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
+
 const handleSubmit = async () => {
   if (!collection.serialNumber || collection.serialNumber.length < 6) {
     showAlert(true, "Please enter a valid serial number", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch("setFlushMessageContext", `${collection.user}'s printer`);
+    store.dispatch("setTransitFormData", {
+      model: collection.model,
+      cartridge: collection.cartridge,
+      multipurpose: collection.multipurpose,
+      networked: collection.networked,
+      duplex: collection.duplex,
+      serialNumber: collection.serialNumber,
+    });
 
-      const res = await axios.post(
-        `/torsk/office_equipment/printer/${collection.machineId}`,
-        {
-          model: collection.model,
-          cartridge: collection.cartridge,
-          multiPurpose: collection.multiPurpose,
-          networked: collection.networked,
-          duplex: collection.duplex,
-          serialNumber: collection.serialNumber,
-        }
-      );
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "added",
-        context: `${collection.model} printer`,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/office-equipment/printers");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      console.log(err);
-      showAlert(true, err.response.data.err, "danger");
-      removeAlert();
-    }
+    await postData(
+      "/office-equipment/printers",
+      `/torsk/office_equipment/printers/${collection.machineId}`
+    );
   }
 };
 

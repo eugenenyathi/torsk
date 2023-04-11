@@ -4,6 +4,9 @@ const useToken = () => {
   const { getAuthUser } = useAuth();
   const user = getAuthUser();
 
+
+  // console.log(user);
+  
   return user.token;
 };
 

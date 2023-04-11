@@ -35,5 +35,5 @@ const store = useStore();
 
 //TODO fix general icons
 
-const data = computed(() => store.getters.getRouteData);
+const data = computed(() => store.getters.getDashboardData);
 </script>

@@ -1,5 +1,6 @@
 <template>
-  <table class="tabular">
+  <Loader v-if="isLoading" />
+  <table v-else class="tabular">
     <thead>
       <tr>
         <!-- <th class="checkbox">
@@ -58,28 +59,42 @@
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
 
+import Loader from "../Loader";
+
 import { useStore } from "vuex";
 import { ref, watch, computed } from "vue";
 
+import useFetchRouteData from "@/composables/useFetchRouteData";
+
+import { useRoute } from "vue-router";
+
+const currentRoute = computed(() => useRoute().name.toLowerCase());
+
 const props = defineProps({
-  machines: Array,
   showReloadIcon: Boolean,
 });
 
-const emit = defineEmits(["open", "openFilterList", "reload"]);
+const emit = defineEmits(["openFilterList", "reload"]);
 const store = useStore();
+store.dispatch("setBaseApiRoute", "/torsk/devices/machines");
 
 const isActiveId = ref(0);
-const checkbox = ref([]);
 
-watch(checkbox, (newValue, oldValue) => console.log(newValue));
+const machines = ref(computed(() => store.getters.getPaginatedData));
+const { isLoading, fetchRouteData } = useFetchRouteData();
+
+fetchRouteData(currentRoute.value.substring(0, currentRoute.value.length - 1));
 
 const selectMachine = (machineId) => {
   isActiveId.value = machineId;
-  const data = props.machines.find((machine) => machine._id === machineId);
-  store.dispatch("setTransitData", { route: "devices/machine", ...data });
-
-  emit("open");
+  const data = machines.value.find((machine) => machine._id === machineId);
+  store.dispatch("setShowActionsMenu", true);
+  store.dispatch("flushTransitFormData");
+  store.dispatch("setTransitData", {
+    context: `${data.user} machine`,
+    route: "devices/machine",
+    ...data,
+  });
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

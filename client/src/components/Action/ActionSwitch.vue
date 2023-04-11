@@ -60,13 +60,9 @@ import Loader from "../BtnLoader";
 import Alert from "../Alert.vue";
 import AlertFn from "../../helpers/AlertFn.js";
 
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-
-import axios from "axios";
-
-//TODO we still have to fix re-routing to show effect of update
+import usePushData from "@/composables/usePushData";
 
 const page = ref(1);
 
@@ -76,10 +72,8 @@ const props = defineProps({
 });
 
 const store = useStore();
-const router = useRouter();
 const data = computed(() => store.getters.getTransitData);
 
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
@@ -111,43 +105,32 @@ const next = () => {
   }
 };
 
+const { isLoading, axiosError, putData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
+
 const handleSubmit = async () => {
   if (!collection.serialNumber || collection.serialNumber.length < 6) {
     showAlert(true, "Please enter a valid serial number", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch("setFlushMessageContext", `${collection.location} switch`);
+    store.dispatch("setTransitFormData", {
+      location: collection.location,
+      model: collection.model,
+      ports: collection.ports,
+      deadPorts: collection.deadPorts,
+      serialNumber: collection.serialNumber,
+    });
 
-      const res = await axios.put(
-        `/torsk/networking/switch/${collection.deviceId}`,
-        {
-          location: collection.location,
-          model: collection.model,
-          ports: collection.ports,
-          deadPorts: collection.deadPorts,
-          serialNumber: collection.serialNumber,
-        }
-      );
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "updated",
-        context: `${collection.location} switch`,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/networking/switches");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      console.log(err);
-      showAlert(true, err.response.data.err, "danger");
-      removeAlert();
-    }
+    await putData(`/torsk/networking/switches/${collection.deviceId}`);
   }
 };
 

@@ -1,5 +1,6 @@
 <template>
-  <table class="tabular">
+  <Loader v-if="isLoading" />
+  <table v-else class="tabular">
     <thead>
       <tr>
         <!-- <th class="checkbox">
@@ -13,12 +14,12 @@
     </thead>
     <tbody>
       <tr
-        v-for="machine in machines"
-        :key="machine._id"
+        v-for="network in networks"
+        :key="network._id"
         :class="{
-          isActive: isActiveId === machine._id,
+          isActive: isActiveId === network._id,
         }"
-        @click="selectMachine(machine._id)"
+        @click="selectNetwork(network._id)"
       >
         <!-- <td>
           <input
@@ -30,41 +31,45 @@
           />
         </td> -->
         <td></td>
-        <td :class="{ 'upper-case': machine.location === 'it' }">
-          {{ machine.location }}
+        <td :class="{ 'upper-case': network.location === 'it' }">
+          {{ network.location }}
         </td>
-        <td class="upper-case">{{ machine.ssid }}</td>
-        <td class="lower-case">{{ machine.password }}</td>
+        <td class="upper-case">{{ network.ssid }}</td>
+        <td class="lower-case">{{ network.password }}</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script setup>
+import Loader from "../Loader";
+
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref, watch, computed } from "vue";
 
-const props = defineProps({
-  machines: Array,
-  showReloadIcon: Boolean,
-});
+import useFetchRouteData from "@/composables/useFetchRouteData";
 
-const emit = defineEmits(["open", "openFilterList", "reload"]);
 const store = useStore();
 const router = useRouter();
 
 const isActiveId = ref(0);
-const checkbox = ref([]);
 
-const selectMachine = (machineId) => {
-  const data = props.machines.find((machine) => machine._id === machineId);
-  store.dispatch("setTransitData", { route: "/networking/wifi", ...data });
+const networks = ref(computed(() => store.getters.getPaginatedData));
+const { isLoading, fetchRouteData } = useFetchRouteData();
 
-  const route = `/networking/wifi/${machineId}`;
-  router.push(route);
+fetchRouteData("wifi");
 
+const selectNetwork = (networkId) => {
+  isActiveId.value = networkId;
+  const data = networks.value.find((network) => network._id === networkId);
   store.dispatch("setShowDeleteBtn", true);
+  store.dispatch("setTransitData", {
+    context: `${data.ssid} wifi`,
+    route: "networking/wifi",
+    ...data,
+  });
+  router.push(`/networking/wifi/${data._id}`);
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

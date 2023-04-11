@@ -7,54 +7,39 @@
           <input type="checkbox" class="checkbox" />
         </th> -->
         <th></th>
-        <th>
-          User
-          <Search
-            v-if="!showReloadIcon"
-            class="filter-icon"
-            @click="$emit('openFilterList')"
-          />
-          <Reload
-            v-if="showReloadIcon"
-            class="filter-icon"
-            @click="$emit('reload')"
-          />
-        </th>
+        <th>Location</th>
         <th>Model</th>
         <th>Serial Number</th>
       </tr>
     </thead>
     <tbody>
       <tr
-        v-for="scanner in scanners"
-        :key="scanner._id"
+        v-for="converter in converters"
+        :key="converter._id"
         :class="{
-          isActive: isActiveId === scanner._id,
+          isActive: isActiveId === converter._id,
         }"
-        @click="selectScanner(scanner._id)"
+        @click="selectConverter(converter._id)"
       >
         <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
-            :value="scanner.id"
-            :checked="isActiveId === scanner.id"
+            :value="machine.id"
+            :checked="isActiveId === machine.id"
             v-model="checkbox"
           />
         </td> -->
         <td></td>
-        <td>{{ scanner.user }}</td>
-        <td>{{ scanner.model }}</td>
-        <td>{{ scanner.serialNumber }}</td>
+        <td>{{ converter.location }}</td>
+        <td>{{ converter.model }}</td>
+        <td>{{ converter.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script setup>
-import Search from "vue-material-design-icons/FilterOutline.vue";
-import Reload from "vue-material-design-icons/Reload.vue";
-
 import Loader from "../Loader";
 
 import { useStore } from "vuex";
@@ -62,27 +47,24 @@ import { ref, watch, computed } from "vue";
 
 import useFetchRouteData from "@/composables/useFetchRouteData";
 
-const props = defineProps({
-  showReloadIcon: Boolean,
-});
-
-const emit = defineEmits(["openFilterList", "reload"]);
 const store = useStore();
 
 const isActiveId = ref(0);
 
-const scanners = ref(computed(() => store.getters.getPaginatedData));
+const converters = ref(computed(() => store.getters.getPaginatedData));
 const { isLoading, fetchRouteData } = useFetchRouteData();
 
-fetchRouteData("scanners");
+fetchRouteData("converters");
 
-const selectScanner = (scannerId) => {
-  isActiveId.value = scannerId;
-  const data = scanners.value.find((scanner) => scanner._id === scannerId);
+const selectConverter = (converterId) => {
+  isActiveId.value = converterId;
+  const data = converters.value.find(
+    (converter) => converter._id === converterId
+  );
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("setTransitData", {
-    context: `${data.user} scanner`,
-    route: "networking/scanners",
+    context: `${data.location} converter`,
+    route: "networking/converters",
     ...data,
   });
   store.dispatch("setGreyOutAction", true);

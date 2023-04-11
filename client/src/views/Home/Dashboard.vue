@@ -22,6 +22,8 @@ import { useStore } from "vuex";
 
 import axios from "axios";
 
+//TODO add a loader
+
 const store = useStore();
 store.commit("setShowDeleteBtn", false);
 store.commit("closeActionsMenu", false);
@@ -32,7 +34,7 @@ const fetchStats = async () => {
   try {
     const { data } = await axios("/torsk/dashboard");
     //add to the global state
-    store.dispatch("setRouteData", data);
+    store.dispatch("setDashboardData", data);
   } catch (err) {
     console.log(err);
   }

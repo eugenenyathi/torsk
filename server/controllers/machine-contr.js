@@ -17,14 +17,14 @@ const getAllMachines = async (req, res) => {
   const machineType = req.params.machineType;
   const machines = await Machine.find();
 
-  return res.status(StatusCodes.OK).json({ machines });
+  return res.status(StatusCodes.OK).json({ data: machines });
 };
 
 const getMachines = async (req, res) => {
   const machineType = req.params.machineType;
   const machines = await Machine.find({ machineType });
 
-  return res.status(StatusCodes.OK).json({ machines });
+  return res.status(StatusCodes.OK).json({ data: machines });
 };
 
 const getMachine = async (req, res) => {

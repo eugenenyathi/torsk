@@ -123,10 +123,10 @@ import Loader from "@/components/BtnLoader";
 import SelectBox from "@/base/SearchableSelectBx.vue";
 import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";
+import usePushData from "@/composables/usePushData";
 
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 
 import axios from "axios";
 
@@ -136,11 +136,8 @@ const props = defineProps({
 });
 
 const store = useStore();
-const router = useRouter();
-
 const data = computed(() => store.getters.getTransitData);
 
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
@@ -152,7 +149,7 @@ const collection = reactive({
   user: data.value.user,
   model: data.value.model,
   cartridge: data.value.cartridge,
-  multiPurpose: data.value.multipurpose,
+  multipurpose: data.value.multipurpose,
   networked: data.value.networked,
   duplex: data.value.duplex,
   serialNumber: data.value.serialNumber,
@@ -161,7 +158,7 @@ const collection = reactive({
 const fetchMachines = async () => {
   try {
     const res = await axios("/torsk/devices/machines");
-    machines.value = res.data.machines;
+    machines.value = res.data.data;
   } catch (err) {
     console.log(err);
   }
@@ -169,9 +166,20 @@ const fetchMachines = async () => {
 
 fetchMachines();
 
-const setMachineId = (id) => {
-  collection.machineId = id;
+const setMachineId = (option) => {
+  collection.machineId = option._id;
 };
+
+const { isLoading, axiosError, putData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
 
 const handleSubmit = async () => {
   if (!collection.model || collection.model.length < 2) {
@@ -187,39 +195,18 @@ const handleSubmit = async () => {
     showAlert(true, "Please enter a valid serial number", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch("setFlushMessageContext", `${collection.user} printer's`);
+    store.dispatch("setTransitFormData", {
+      machineId: collection.machineId,
+      model: collection.model,
+      cartridge: collection.cartridge,
+      multipurpose: collection.multipurpose,
+      networked: collection.networked,
+      duplex: collection.duplex,
+      serialNumber: collection.serialNumber,
+    });
 
-      const res = await axios.put(
-        `/torsk/office_equipment/printer/${collection.printerId}`,
-        {
-          model: collection.model,
-          cartridge: collection.cartridge,
-          multiPurpose: collection.multiPurpose,
-          networked: collection.networked,
-          duplex: collection.duplex,
-          serialNumber: collection.serialNumber,
-        }
-      );
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "updated",
-        context: `${collection.model} printer`,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/office-equipment/printers");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      console.log(err);
-      showAlert(true, err.response.data.err, "danger");
-      removeAlert();
-    }
+    await putData(`/torsk/office_equipment/printers/${collection.printerId}`);
   }
 };
 </script>
