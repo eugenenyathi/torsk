@@ -63,25 +63,22 @@ import Loader from "../BtnLoader";
 import Alert from "../Alert.vue";
 import AlertFn from "../../helpers/AlertFn.js";
 
-import { ref, reactive, computed } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import usePushData from "@/composables/usePushData";
 
-import axios from "axios";
+import { ref, reactive, computed, watch } from "vue";
+import { useStore } from "vuex";
 
 const store = useStore();
-const router = useRouter();
-
-const isLoading = ref(false);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
 const data = computed(() => store.getters.getTransitData);
+const formData = computed(() => store.getters.getTransitFormData);
 
 const collective = reactive({
-  user: data.value.user,
-  email: data.value.email,
-  password: data.value.password,
+  user: formData.value.user || data.value.user,
+  email: formData.value.email ||  data.value.email,
+  password: formData.value.password || data.value.password,
 });
 
 const showPassword = ref(false);
@@ -94,6 +91,18 @@ const togglePassword = () => {
   else pwdType.value = "password";
 };
 
+const { isLoading, axiosError, putData } = usePushData();
+
+watch(axiosError, (currentValue, oldValue) => {
+  if (currentValue) {
+    showAlert(true, currentValue, "danger");
+    removeAlert();
+  }
+
+  axiosError.value = null;
+});
+
+
 const handleSubmit = async () => {
   if (!collective.user) {
     showAlert(true, "User field is empty", "danger");
@@ -105,32 +114,17 @@ const handleSubmit = async () => {
     showAlert(true, "Password field is empty", "danger");
     removeAlert();
   } else {
-    try {
-      isLoading.value = true;
+    store.dispatch(
+      "setFlushMessageContext",
+      `${data.value.user}'s email`
+    );
+    store.dispatch("setTransitFormData", {
+      user: collective.user,
+      email: collective.email,
+      password: collective.password,
+    });
 
-      const res = await axios.put(`/torsk/email/${data.value._id}`, {
-        user: collective.user,
-        email: collective.email,
-        password: collective.password,
-      });
-
-      isLoading.value = false;
-
-      store.dispatch("setShowFlushMessage", {
-        state: true,
-        action: "updated",
-        context: collective.email,
-      });
-
-      setTimeout(() => {
-        store.dispatch("setShowFlushMessage", { state: false });
-        router.push("/emails");
-      }, 3000);
-    } catch (err) {
-      isLoading.value = false;
-      showAlert(true, err.response.data.err, "danger");
-      removeAlert();
-    }
-  }
+    await putData(`/torsk/email/${data.value._id}`, "/emails");
+  } 
 };
 </script>

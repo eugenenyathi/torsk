@@ -118,14 +118,14 @@ const handleSubmit = async () => {
     showAlert(true, "Password field is empty", "danger");
     removeAlert();
   } else {
-    store.dispatch("setFlushMessageContext", `${collective.email}'s email`);
+    store.dispatch("setFlushMessageContext", `${collective.user}'s email`);
     store.dispatch("setTransitFormData", {
       user: collective.user,
       email: collective.email,
       password: collective.password,
     });
 
-    await postData("/email", `/torsk/email/`);
+    await postData("/emails", `/torsk/email/`);
   }
 };
 </script>

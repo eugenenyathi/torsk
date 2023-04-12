@@ -6,6 +6,9 @@ const useNewEntry = () => {
   const navigateToRoute = (currentRoute) => {
     switch (currentRoute) {
       //DEVICES
+      case "Servers":
+        router.push("/devices/servers/add");
+        break;
       case "Desktops":
         router.push("/devices/desktops/add");
         break;

@@ -20,6 +20,10 @@ store.commit("setGreyOutAction", false);
 
 const routes = ref([
   {
+    path: "/devices/servers",
+    name: "Servers",
+  },
+  {
     path: "/devices/desktops",
     name: "Desktops",
   },

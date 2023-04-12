@@ -6,7 +6,7 @@
 
 <script setup>
 import Specs from "./Fragments/MachineSpecs.vue";
-import Update from "./Fragments/UpdateMachine.vue";
+import Update from "./Fragments/UpdateServer.vue";
 import State from "./ActionState.vue";
 
 const props = defineProps({

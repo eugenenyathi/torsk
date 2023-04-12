@@ -13,7 +13,7 @@
         </li>
         <li class="menu-link">
           <router-link
-            to="/devices/desktops"
+            to="/devices/servers"
             :class="{
               'parent-link-exact-active': subIsActive('/devices'),
             }"
@@ -77,7 +77,7 @@
             Emails
           </router-link>
         </li>
-        <li class="menu-link">
+        <!-- <li class="menu-link">
           <router-link
             to="/software"
             :class="{
@@ -86,6 +86,18 @@
           >
             <CodeBrackets class="icon" />
             Software
+          </router-link>
+        </li>        </li>
+   -->
+        <li class="menu-link">
+          <router-link
+            to="/software"
+            :class="{
+              'parent-link-exact-active': subIsActive('/stock'),
+            }"
+          >
+            <CodeBrackets class="icon" />
+            Stock
           </router-link>
         </li>
       </ul>

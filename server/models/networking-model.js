@@ -5,12 +5,10 @@ const RouterSchema = new Schema({
   location: {
     type: String,
     required: [true, "The location can not be empty."],
-    // lowercase: true,
   },
   model: {
     type: String,
     required: [true, "The model can not be empty."],
-    // lowercase: true,
   },
   wireless: {
     type: Boolean,

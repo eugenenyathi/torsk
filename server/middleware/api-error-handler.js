@@ -1,7 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 
 const apiErrorHandler = (err, req, res, next) => {
-  // console.log(err);
+  console.log(err);
 
   let customError = {
     statusCode: err.code || StatusCodes.INTERNAL_SERVER_ERROR,

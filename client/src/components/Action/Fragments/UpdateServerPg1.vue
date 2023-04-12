@@ -5,8 +5,8 @@
         <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
       </Transition>
       <div class="update-control">
-        <label for="user">User</label>
-        <input type="text" class="update-input" v-model="collection.user" />
+        <label for="user">Location</label>
+        <input type="text" class="update-input" v-model="collection.location" />
       </div>
       <div class="update-control">
         <label for="machine">Machine</label>
@@ -20,7 +20,6 @@
         <label>Operating system</label>
         <input type="text" class="update-input" v-model="collection.os" />
       </div>
-
       <button class="update-btn">Continue</button>
     </form>
   </div>
@@ -40,8 +39,7 @@ const data = computed(() => store.getters.getTransitData);
 const formData = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  machineType: formData.value.machineType || data.value.machineType,
-  user: formData.value.user || data.value.user,
+  location: formData.value.location || data.value.location,
   machine: formData.value.machine || data.value.machine,
   model: formData.value.model || data.value.model,
   os: formData.value.os || data.value.os,
@@ -51,8 +49,8 @@ const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
 const next = () => {
-  if (!collection.machineType) {
-    showAlert(true, "Please select a machine type", "danger");
+  if (!collection.location || collection.location.length < 2) {
+    showAlert(true, "Please enter a valid location", "danger");
     removeAlert();
   } else if (!collection.model || collection.model.length < 6) {
     showAlert(true, "Please enter a valid model", "danger");
@@ -65,8 +63,7 @@ const next = () => {
     removeAlert();
   } else {
     store.dispatch("setTransitFormData", {
-      user: collection.user,
-      machineType: collection.machineType,
+      location: collection.location,
       model: collection.model,
       machine: collection.machine,
       os: collection.os,

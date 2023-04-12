@@ -1,44 +1,51 @@
 <template>
+  <ActionServer
+    v-if="currentRoute === 'Servers'"
+    :action="action"
+    context="server"
+  />
+
   <ActionMachine
-    v-if="currentRoute === 'Desktops' || currentRoute === 'Laptops'"
+    v-else-if="currentRoute === 'Desktops' || currentRoute === 'Laptops'"
     :action="action"
     context="machine"
   />
   <ActionMobile
-    v-if="currentRoute === 'Tablets' || currentRoute === 'Cellphones'"
+    v-else-if="currentRoute === 'Tablets' || currentRoute === 'Cellphones'"
     :action="action"
     :context="context"
   />
 
   <ActionPrinter
-    v-if="currentRoute === 'Printers'"
+    v-else-if="currentRoute === 'Printers'"
     :action="action"
     context="printer"
   />
   <ActionScanner
-    v-if="currentRoute === 'Scanners'"
+    v-else-if="currentRoute === 'Scanners'"
     :action="action"
     context="scanner"
   />
   <ActionRouter
-    v-if="currentRoute === 'Routers'"
+    v-else-if="currentRoute === 'Routers'"
     :action="action"
     context="router"
   />
   <ActionSwitch
-    v-if="currentRoute === 'Switches'"
+    v-else-if="currentRoute === 'Switches'"
     :action="action"
     context="switch"
   />
   <ActionConverter
-    v-if="currentRoute === 'Converters'"
+    v-else-if="currentRoute === 'Converters'"
     :action="action"
     context="converter"
   />
-  <ActionWiFi v-if="currentRoute === 'WiFi'" :action="action" context="wifi" />
+  <ActionWiFi v-else :action="action" context="wifi" />
 </template>
 
 <script setup>
+import ActionServer from "./ActionServer";
 import ActionMachine from "./ActionMachine";
 import ActionMobile from "./ActionMobile";
 import ActionPrinter from "./ActionPrinter";

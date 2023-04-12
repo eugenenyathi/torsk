@@ -44,11 +44,11 @@
             <label
               for="multi-purpose"
               :class="{
-                'checkbox-visual': !collection.multiPurpose,
-                'checkbox-visual active': collection.multiPurpose,
+                'checkbox-visual': !collection.multipurpose,
+                'checkbox-visual active': collection.multipurpose,
               }"
             >
-              <Plus class="plus-icon" v-if="!collection.multiPurpose" />
+              <Plus class="plus-icon" v-if="!collection.multipurpose" />
               <Check class="plus-icon" v-else />
 
               multi-purpose
@@ -57,7 +57,7 @@
               type="checkbox"
               id="multi-purpose"
               class="checkbox-input"
-              v-model="collection.multiPurpose"
+              v-model="collection.multipurpose"
             />
           </div>
           <div class="checkbox-wrapper">

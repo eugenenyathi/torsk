@@ -10,6 +10,14 @@ const stats = require("../controllers/dashboard-contr");
 
 /* ==== Devices-controllers ==== */
 const {
+  addServer,
+  getServer,
+  getServers,
+  updateServer,
+  deleteServer,
+} = require("../controllers/server-contr");
+
+const {
   addMachine,
   getMachine,
   getAllMachines,
@@ -86,6 +94,12 @@ router.route("/settings/:username").patch(updatePassword);
 router.route("/dashboard").get(stats);
 
 /* ======= DEVICES ROUTES ===== */
+
+router.route("/devices/server/").post(addServer);
+router.route("/devices/server/:serverId").get(getServer);
+router.route("/devices/server/").get(getServers);
+router.route("/devices/server/:serverId").put(updateServer);
+router.route("/devices/server/:serverId").delete(deleteServer);
 
 router.route("/devices/machine/:machineType").post(addMachine);
 router.route("/devices/machine/:machineId").get(getMachine);

@@ -1,5 +1,87 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
+const validate = require("ip-validator");
+const mac = require("mac-regex");
+
+const ServerSchema = new Schema({
+  machine: {
+    type: String,
+    unique: true,
+    required: [true, "Machine name not be empty"],
+  },
+  location: {
+    type: String,
+    required: [true, "The location can not be empty."],
+  },
+  serves: {
+    type: [String],
+    required: [true, "The server can not ."],
+  },
+  os: {
+    type: String,
+    required: [true, "The Os can not be empty."],
+  },
+  model: {
+    type: String,
+    required: [true, "The model can not be empty."],
+  },
+  cpu: {
+    type: String,
+    required: [true, "The CPU can not be empty."],
+  },
+  cpuGen: {
+    type: Number,
+    required: [true, "The cpu generation can not be empty."],
+  },
+  ram: {
+    type: Number,
+    required: [true, "RAM can not be empty."],
+  },
+  storageType: {
+    type: String,
+    required: [true, "The storage type can not be empty"],
+    enum: ["HDD", "SSD"],
+  },
+  storageGigs: {
+    type: Number,
+    required: [true, "Storage can not be empty."],
+  },
+  ipAddress: {
+    type: String,
+    unique: true,
+    required: [true, "The ip address can not be empty."],
+    // required: true,
+    validate: {
+      validator: (ipAddress) => validate.ipv4(ipAddress),
+      message: (props) => `${props.value} is not a valid ip address.`,
+    },
+  },
+  macAddress: {
+    type: String,
+    unique: true,
+    lowercase: true,
+    required: [true, "The mac address can not be empty."],
+    validate: {
+      validator: (macAddress) => mac({ exact: true }).test(macAddress),
+      message: (props) => `${props.value} is not a valid mac address.`,
+    },
+  },
+  serialNumber: {
+    type: String,
+    unique: true,
+    lowercase: true,
+    minLength: 6,
+    required: [true, "Serial number can not be empty."],
+  },
+  monitorSerialNumber: {
+    type: String,
+  },
+  antivirus: {
+    type: String,
+    required: [true, "The antivirus can not be empty."],
+    lowercase: true,
+  },
+});
 
 const MachineSchema = new Schema({
   machineType: {
@@ -65,8 +147,10 @@ const MachineSchema = new Schema({
     type: String,
     unique: true,
     lowercase: true,
-    minLength: 17,
-    maxLength: 17,
+    validate: {
+      validator: (macAddress) => mac({ exact: true }).test(macAddress),
+      message: (props) => `${props.value} is not a valid mac address.`,
+    },
   },
   serialNumber: {
     type: String,
@@ -112,10 +196,6 @@ const MobileSchema = new Schema({
   },
   macAddress: {
     type: String,
-    unique: true,
-    lowercase: true,
-    minLength: 17,
-    maxLength: 17,
   },
   serialNumber: {
     type: String,
@@ -133,7 +213,8 @@ const MobileSchema = new Schema({
   },
 });
 
+const ServerModel = model("servers", ServerSchema);
 const Machine = model("computers", MachineSchema);
 const MobileDevice = model("mobile_devices", MobileSchema);
 
-module.exports = { Machine, MobileDevice };
+module.exports = { ServerModel, Machine, MobileDevice };

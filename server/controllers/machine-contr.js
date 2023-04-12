@@ -1,4 +1,4 @@
-const { Machine } = require("../models/devices-model");
+const { ServerModel, Machine } = require("../models/devices-model");
 const RemoteDesktop = require("../models/remote-desktop-model");
 const { StatusCodes } = require("http-status-codes");
 

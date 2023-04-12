@@ -1,26 +1,33 @@
 <template>
-  <TabularC
-    v-if="currentRoute === 'desktops'"
+  <ServerTable
+    v-if="currentRoute === 'servers'"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open', 'user')"
     @reload="reloadData"
   />
 
-  <TabularC
+  <ComputerTable
+    v-else-if="currentRoute === 'desktops'"
+    :showReloadIcon="showReloadIcon"
+    @openFilterList="toggleFilterMenu('open', 'user')"
+    @reload="reloadData"
+  />
+
+  <ComputerTable
     v-else-if="currentRoute === 'laptops'"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open', 'user')"
     @reload="reloadData"
   />
 
-  <TabularM
+  <MobileDeviceTable
     v-else-if="currentRoute === 'tablets'"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open', 'user')"
     @reload="reloadData"
   />
 
-  <TabularM
+  <MobileDeviceTable
     v-else-if="currentRoute === 'cellphones'"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open', 'user')"
@@ -43,8 +50,9 @@
 </template>
 
 <script setup>
-import TabularC from "./Tabular-C.vue";
-import TabularM from "./Tabular-M.vue";
+import ServerTable from "./ServerTable.vue";
+import ComputerTable from "./ComputerTable.vue";
+import MobileDeviceTable from "./MobileDeviceTable.vue";
 import Pagination from "../Pagination";
 import FilterList from "../FilterList";
 

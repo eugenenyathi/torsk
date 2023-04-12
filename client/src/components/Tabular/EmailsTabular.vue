@@ -75,12 +75,12 @@ const selectEmail = (emailId) => {
   const data = emails.value.find((email) => email._id === emailId);
   store.dispatch("flushTransitFormData");
   store.dispatch("setTransitData", {
-    context: `${data.user} remote address`,
-    route: "remote_desktop",
+    context: `${data.user} `,
+    route: "email",
     ...data,
   });
 
-  const route = `/remote/${emailId}`;
+  const route = `/emails/${emailId}`;
   router.push(route);
 
   store.dispatch("setShowDeleteBtn", true);

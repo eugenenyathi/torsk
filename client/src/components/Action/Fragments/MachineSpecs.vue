@@ -35,7 +35,10 @@
       <Devices class="icon" />
       <div class="spec">
         <p>Storage</p>
-        <p>{{ data.storageType }} {{ data.storageGigs }}GB</p>
+        <p v-if="data.storageGigs < 1000">
+          {{ data.storageType }} {{ data.storageGigs }}GB
+        </p>
+        <p v-else>{{ data.storageType }} {{ data.storageGigs / 1000 }} Tera</p>
       </div>
     </div>
     <div class="info">
@@ -48,11 +51,11 @@
     <div class="info">
       <Devices class="icon" />
       <div class="spec uppercase">
-        <p>Desktop Serial Number</p>
+        <p>Serial Number</p>
         <p>{{ data.serialNumber }}</p>
       </div>
     </div>
-    <div class="info">
+    <div class="info" v-if="data.monitorSerialNumber">
       <Devices class="icon" />
       <div class="spec uppercase">
         <p>Monitor Serial Number</p>

@@ -26,6 +26,7 @@ import OfficeEquipRoutes from "../components/OfficeEquipment/OfficeEquipRoutes.v
 import NetworkingRoutes from "../components/Networking/NetworkingRoutes.vue";
 
 //Files to with adding a new device
+import AddServer from "../components/AddRecord/Choices/AddServer.vue";
 import AddComputer from "../components/AddRecord/Choices/AddMachine.vue";
 import AddMobile from "../components/AddRecord/Choices/AddMobile.vue";
 import AddPrinter from "../components/AddRecord/Choices/AddPrinter.vue";
@@ -70,6 +71,11 @@ const routes = [
         component: Devices,
         name: "Devices",
         children: [
+          {
+            path: "servers",
+            component: DevicesRoutes,
+            name: "Servers",
+          },
           {
             path: "desktops",
             component: DevicesRoutes,
@@ -175,6 +181,10 @@ const routes = [
       {
         path: "software/:id",
         component: EditSoftware,
+      },
+      {
+        path: "/devices/servers/add",
+        component: AddServer,
       },
       {
         path: "/devices/desktops/add",

@@ -52,13 +52,15 @@ import { ref, watch, computed } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 
-//TODO clean-up all files that load the manifesto
-
 const currentRoute = computed(() => useRoute().name.toLowerCase());
 
 console.log("Current route:", currentRoute.value);
 
 const store = useStore();
+store.commit("setShowDeleteBtn", false);
+store.commit("closeActionsMenu", false);
+store.commit("setGreyOutAction", false);
+
 const { pagination, rowsPerPage } = usePagination();
 
 const filterInput = ref("");
