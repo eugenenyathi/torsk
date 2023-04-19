@@ -3,16 +3,19 @@ const RemoteDesktop = require("../models/remote-desktop-model");
 const { StatusCodes } = require("http-status-codes");
 
 const addServer = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const server = await ServerModel.create({ ...req.body });
 
   return res
     .status(StatusCodes.CREATED)
-    .json({ message: "server added successfully", data: "server" });
+    .json({ message: "server added successfully", data: server });
 };
 
 const getServers = async (req, res) => {
-  const servers = await ServerModel.find();
+  const servers = await ServerModel.find({
+    faulty: false,
+    decommissioned: false,
+  });
   return res.status(StatusCodes.OK).json({ data: servers });
 };
 

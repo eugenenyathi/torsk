@@ -14,13 +14,6 @@
       @reload="reloadData"
     />
 
-    <EmailsTabular
-      v-else-if="currentRoute === 'emails'"
-      :showReloadIcon="showReloadIcon"
-      @openFilterList="toggleFilterMenu('open', 'user')"
-      @reload="reloadData"
-    />
-
     <SoftwareTabular v-else-if="currentRoute === 'desktops'" />
 
     <Pagination />
@@ -38,10 +31,9 @@
 </template>
 
 <script setup>
-import TelephoneTabular from "./Tabular/TelephoneTabular.vue";
-import EmailsTabular from "./Tabular/EmailsTabular.vue";
-import RDTabular from "./Tabular/RDTabular.vue";
-import SoftwareTabular from "./Tabular/SoftwareTabular.vue";
+import TelephoneTabular from "./Tabular/TelephoneTable.vue";
+import RDTabular from "./Tabular/RDTable.vue";
+import SoftwareTabular from "./Tabular/SoftwareTable.vue";
 import Pagination from "./Pagination";
 import FilterList from "./FilterList";
 
@@ -57,9 +49,9 @@ const currentRoute = computed(() => useRoute().name.toLowerCase());
 console.log("Current route:", currentRoute.value);
 
 const store = useStore();
-store.commit("setShowDeleteBtn", false);
+store.dispatch("switchHeaderBtn", { showEditBtn: true, showDeleteBtn: false });
 store.commit("closeActionsMenu", false);
-store.commit("setGreyOutAction", false);
+store.commit("setGreyOutAction", { specs: false });
 
 const { pagination, rowsPerPage } = usePagination();
 

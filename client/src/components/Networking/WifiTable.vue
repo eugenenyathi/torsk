@@ -1,5 +1,6 @@
 <template>
   <Loader v-if="isLoading" />
+  <NoData v-else-if="!isLoading && networks.length === 0" />
   <table v-else class="tabular">
     <thead>
       <tr>
@@ -42,7 +43,8 @@
 </template>
 
 <script setup>
-import Loader from "../Loader";
+import Loader from "@/components/Loader";
+import NoData from "@/components/NoData";
 
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -51,6 +53,8 @@ import { ref, watch, computed } from "vue";
 import useFetchRouteData from "@/composables/useFetchRouteData";
 
 const store = useStore();
+store.dispatch("switchHeaderBtn", { showEditBtn: true });
+
 const router = useRouter();
 
 const isActiveId = ref(0);
@@ -63,7 +67,7 @@ fetchRouteData("wifi");
 const selectNetwork = (networkId) => {
   isActiveId.value = networkId;
   const data = networks.value.find((network) => network._id === networkId);
-  store.dispatch("setShowDeleteBtn", true);
+  store.dispatch("switchHeaderBtn", { showDeleteBtn: true });
   store.dispatch("setTransitData", {
     context: `${data.ssid} wifi`,
     route: "networking/wifi",

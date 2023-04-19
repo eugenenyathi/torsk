@@ -13,9 +13,14 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-store.commit("setShowDeleteBtn", false);
-store.commit("closeActionsMenu", false);
-store.commit("setGreyOutAction", false);
+
+store.dispatch("switchHeaderBtn", {
+  showAddBtn: true,
+  showEditBtn: false,
+  showDeleteBtn: false,
+});
+store.dispatch("closeActionsMenu", false);
+store.dispatch("setGreyOutAction", false);
 
 const routes = ref([
   {
@@ -33,6 +38,10 @@ const routes = ref([
   {
     path: "/networking/wifi",
     name: "WiFi",
+  },
+  {
+    path: "/networking/config",
+    name: "Config",
   },
 ]);
 </script>

@@ -1,14 +1,12 @@
 <template>
   <Loader v-if="isLoading" />
+  <NoData v-else-if="!isLoading && machines.length === 0" />
   <table v-else class="tabular">
     <thead>
       <tr>
-        <!-- <th class="checkbox">
-          <input type="checkbox" class="checkbox" />
-        </th> -->
         <th></th>
         <th>
-          Location
+          User
           <Search
             v-if="!showReloadIcon"
             class="filter-icon"
@@ -20,36 +18,21 @@
             @click="$emit('reload')"
           />
         </th>
-        <th>Model</th>
-        <th>Ports</th>
-        <th>Dead ports</th>
-        <th>Serial Number</th>
+        <th>Remote Address</th>
       </tr>
     </thead>
     <tbody>
       <tr
-        v-for="device in switches"
-        :key="device._id"
+        v-for="machine in machines"
+        :key="machine._id"
         :class="{
-          isActive: isActiveId === device._id,
+          isActive: isActiveId === machine._id,
         }"
-        @click="selectSwitch(device._id)"
+        @click="selectMachine(machine._id)"
       >
-        <!-- <td>
-          <input
-            type="checkbox"
-            class="checkbox"
-            :value="machine._id"
-            :checked="isActiveId === machine._id"
-            v-model="checkbox"
-          />
-        </td> -->
         <td></td>
-        <td>{{ device.location }}</td>
-        <td>{{ device.model }}</td>
-        <td>{{ device.ports }}</td>
-        <td>{{ device.deadPorts }}</td>
-        <td>{{ device.serialNumber }}</td>
+        <td>{{ machine.user }}</td>
+        <td>{{ machine.address }}</td>
       </tr>
     </tbody>
   </table>
@@ -59,9 +42,11 @@
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
 
-import Loader from "../Loader";
+import Loader from "@/components/Loader";
+import NoData from "@/components/NoData";
 
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { ref, watch, computed } from "vue";
 
 import useFetchRouteData from "@/composables/useFetchRouteData";
@@ -71,25 +56,33 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["openFilterList", "reload"]);
+
 const store = useStore();
+const router = useRouter();
+
+store.dispatch("setBaseApiRoute", "/torsk/remote_desktop");
 
 const isActiveId = ref(0);
 
-const switches = ref(computed(() => store.getters.getPaginatedData));
+const machines = ref(computed(() => store.getters.getPaginatedData));
 const { isLoading, fetchRouteData } = useFetchRouteData();
 
-fetchRouteData("switches");
+fetchRouteData();
 
-const selectSwitch = (switchId) => {
-  isActiveId.value = switchId;
-  const data = switches.value.find((device) => device._id === switchId);
-  store.dispatch("setShowActionsMenu", true);
+const selectMachine = (machineId) => {
+  isActiveId.value = machineId;
+  const data = machines.value.find((machine) => machine._id === machineId);
+  store.dispatch("flushTransitFormData");
   store.dispatch("setTransitData", {
-    context: `${data.location} switch`,
-    route: "networking/switches",
+    context: `${data.user} remote address`,
+    route: "remote_desktop",
     ...data,
   });
-  store.dispatch("setGreyOutAction", true);
+
+  const route = `/remote/${machineId}`;
+  router.push(route);
+
+  store.dispatch("switchHeaderBtn", { showDeleteBtn: true });
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

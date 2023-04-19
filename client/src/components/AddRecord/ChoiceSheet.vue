@@ -10,17 +10,20 @@
           <li class="list-item" @click="loadChoice('Printers')">Printer</li>
           <li class="list-item" @click="loadChoice('Scanners')">Scanner</li>
           <li class="list-item" @click="loadChoice('Routers')">Router</li>
+          <li class="list-item" @click="loadChoice('Switches')">Switch</li>
         </ul>
         <div class="ul-container">
-          <li class="list-item" @click="loadChoice('Switches')">Switch</li>
           <li class="list-item" @click="loadChoice('Transceivers')">
             Transceiver
           </li>
           <li class="list-item" @click="loadChoice('WiFi')">WiFi</li>
+          <li class="list-item" @click="loadChoice('Telephones')">
+            Telephones
+          </li>
           <li class="list-item" @click="loadChoice('Remote Desktop')">
             Remote Desktop
           </li>
-          <li class="list-item" @click="loadChoice('Emails')">Email</li>
+          <li class="list-item" @click="loadChoice('EmailList')">Email</li>
           <li class="list-item" @click="loadChoice('Software')">Software</li>
         </div>
       </div>

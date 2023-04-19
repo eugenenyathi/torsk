@@ -1,12 +1,12 @@
 <template>
-  <PrinterTabular
+  <PrinterTable
     v-if="currentRoute === 'printers'"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open', 'user')"
     @reload="reloadData"
   />
 
-  <ScannerTabular
+  <ScannerTable
     v-else-if="currentRoute === 'scanners'"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open', 'user')"
@@ -29,8 +29,8 @@
 </template>
 
 <script setup>
-import PrinterTabular from "./PrinterTabular.vue";
-import ScannerTabular from "./ScannerTabular.vue";
+import PrinterTable from "./PrinterTable.vue";
+import ScannerTable from "./ScannerTable.vue";
 import Pagination from "../Pagination";
 import FilterList from "../FilterList";
 

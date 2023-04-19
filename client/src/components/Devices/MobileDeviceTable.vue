@@ -1,5 +1,6 @@
 <template>
   <Loader v-if="isLoading" />
+  <NoData v-else-if="!isLoading && devices.length === 0" />
   <table v-else class="tabular">
     <thead>
       <tr>
@@ -58,7 +59,8 @@
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
 
-import Loader from "../Loader";
+import Loader from "@/components/Loader";
+import NoData from "@/components/NoData";
 
 import { useStore } from "vuex";
 import { ref, watch, computed } from "vue";

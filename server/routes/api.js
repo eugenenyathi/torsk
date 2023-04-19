@@ -27,6 +27,14 @@ const {
 } = require("../controllers/machine-contr");
 
 const {
+  addUps,
+  getUps,
+  getUPSuppliers,
+  updateUps,
+  deleteUps,
+} = require("../controllers/ups-contr");
+
+const {
   addMobileDevice,
   getMobileDevices,
   getMobileDevice,
@@ -82,6 +90,17 @@ const {
   deleteSoftware,
 } = require("../controllers/software-contr");
 
+const {
+  addConfig,
+  getConfig,
+  updateConfig,
+} = require("../controllers/config-contr");
+
+const {
+  getFaultyDevices,
+  getDecommissionedDevices,
+} = require("../controllers/asset-state-contr");
+
 //TODO  Dashboard
 //TODO  Faulty & Decommission
 //TODO default case switch
@@ -107,6 +126,12 @@ router.route("/devices/machines/").get(getAllMachines);
 router.route("/devices/machines/:machineType").get(getMachines);
 router.route("/devices/machine/:machineId").put(updateMachine);
 router.route("/devices/machine/:machineId").delete(deleteMachine);
+
+router.route("/devices/ups/").post(addUps);
+router.route("/devices/ups/:upsId").get(getUps);
+router.route("/devices/ups/").get(getUPSuppliers);
+router.route("/devices/ups/:upsId").put(updateUps);
+router.route("/devices/ups/:upsId").delete(deleteUps);
 
 router.route("/devices/mobile/:deviceType").post(addMobileDevice);
 router.route("/devices/mobiles/:deviceType").get(getMobileDevices);
@@ -169,5 +194,14 @@ router
   .route("/software/:softwareId")
   .put(updateSoftware)
   .delete(deleteSoftware);
+
+/* ======= CONFIG ROUTES ===== */
+router.route("/config/:configType/").post(addConfig);
+router.route("/config/:configType/").get(getConfig);
+router.route("/config/:configType/:configId").put(updateConfig);
+
+/* ======= FAULTY STATE ROUTES ===== */
+router.route("/faulty/:category/").get(getFaultyDevices);
+router.route("/decommissioned/:category/").get(getDecommissionedDevices);
 
 module.exports = router;

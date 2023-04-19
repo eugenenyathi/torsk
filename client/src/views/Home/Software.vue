@@ -13,5 +13,5 @@ const store = useStore();
 
 store.commit("setShowDeleteBtn", false);
 store.commit("closeActionsMenu", false);
-store.commit("setGreyOutAction", false);
+store.commit("setGreyOutAction", { specs: false });
 </script>

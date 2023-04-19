@@ -1,4 +1,5 @@
 import usePagination from "./usePagination";
+import usePushData from "./usePushData";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref, computed } from "vue";
@@ -6,13 +7,14 @@ import axios from "axios";
 
 //TODO update in the tabular to include the full context
 
-const useDeleteEntry = () => {
+const useAction = () => {
   const store = useStore();
   const router = useRouter();
   const isLoading = ref(false);
   const data = computed(() => store.getters.getTransitData);
 
   const { paginate, pagination } = usePagination();
+  const { runUpdateEffects } = usePushData();
 
   const deleteEntry = async () => {
     try {
@@ -34,6 +36,43 @@ const useDeleteEntry = () => {
       }, 3000);
     } catch (err) {
       console.log(err.response.data);
+    }
+  };
+
+  //state parameter -> faulty/decommission/in-repair
+  const updateAssetState = async (assetState) => {
+    let reqBody = {};
+
+    if (assetState.action === "faulty") {
+      reqBody["faulty"] = assetState.value;
+    } else if (assetState.action === "decommission") {
+      reqBody["decommissioned"] = assetState.value;
+    }
+
+    try {
+      isLoading.value = true;
+
+      const res = await axios.put(
+        `/torsk/${data.value.route}/${data.value._id}`,
+        reqBody
+      );
+
+      isLoading.value = false;
+
+      store.dispatch("setShowFlushMessage", {
+        state: true,
+        action: assetState.action,
+        context: data.value.context,
+      });
+
+      setTimeout(() => {
+        store.dispatch("setShowFlushMessage", { state: false });
+        store.commit("closeActionsMenu", false);
+        runUpdateEffects(res);
+      }, 3000);
+    } catch (err) {
+      // console.log(err.response.data);
+      console.log(err);
     }
   };
 
@@ -78,7 +117,7 @@ const useDeleteEntry = () => {
     store.dispatch("setPageNumbers", pageNumbers);
   };
 
-  return { isLoading, deleteEntry };
+  return { isLoading, deleteEntry, updateAssetState };
 };
 
-export default useDeleteEntry;
+export default useAction;

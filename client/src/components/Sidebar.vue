@@ -6,7 +6,12 @@
     <div class="menu-wrapper">
       <ul class="menu-ul-wrapper">
         <li class="menu-link">
-          <router-link to="/">
+          <router-link
+            to="/dashboard/decommissioned/devices"
+            :class="{
+              'parent-link-exact-active': subIsActive('/dashboard'),
+            }"
+          >
             <Dashboard class="icon" />
             Dashboard
           </router-link>
@@ -63,12 +68,12 @@
             }"
           >
             <RemoteDesktop class="icon" />
-            Anydesk
+            Remote Desktop
           </router-link>
         </li>
         <li class="menu-link">
           <router-link
-            to="/emails"
+            to="/emails/list"
             :class="{
               'parent-link-exact-active': subIsActive('/emails'),
             }"
@@ -89,7 +94,7 @@
           </router-link>
         </li>        </li>
    -->
-        <li class="menu-link">
+        <!-- <li class="menu-link">
           <router-link
             to="/software"
             :class="{
@@ -99,7 +104,7 @@
             <CodeBrackets class="icon" />
             Stock
           </router-link>
-        </li>
+        </li> -->
       </ul>
     </div>
   </aside>

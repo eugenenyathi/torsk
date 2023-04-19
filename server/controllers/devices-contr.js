@@ -25,10 +25,10 @@ const getMachines = async (req, res) => {
 
   switch (req.params.assetType) {
     case "machine":
-      asset = await Machine.find({});
+      asset = await Machine.find({ faulty: false, decommissioned: false });
       break;
     case "mobile":
-      asset = await MobileDevice.find({});
+      asset = await MobileDevice.find({ faulty: false, decommissioned: false });
       break;
   }
 

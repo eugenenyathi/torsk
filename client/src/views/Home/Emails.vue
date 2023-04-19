@@ -1,16 +1,37 @@
 <template>
-  <section class="single-view-position-container">
-    <Layout anchor="emails" tabular="emails" device="email" />
+  <section class="nested-views-position-container">
+    <SelectionBar :routes="routes" />
+    <router-view />
   </section>
 </template>
 
 <script setup>
-import Layout from "../../components/Manifesto.vue";
+//TODO: fix add new email button
 
+//components
+import SelectionBar from "@/components/SelectionBar.vue";
+
+import { ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-store.commit("setShowDeleteBtn", false);
-store.commit("closeActionsMenu", false);
-store.commit("setGreyOutAction", false);
+
+store.dispatch("switchHeaderBtn", {
+  showAddBtn: true,
+  showEditBtn: false,
+  showDeleteBtn: false,
+});
+store.dispatch("closeActionsMenu", false);
+store.dispatch("setGreyOutAction", false);
+
+const routes = ref([
+  {
+    path: "/emails/list",
+    name: "Emails",
+  },
+  {
+    path: "/emails/config",
+    name: "Config",
+  },
+]);
 </script>

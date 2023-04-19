@@ -3,20 +3,29 @@
     <div class="update-content action-state">
       <form @submit.prevent="handleSubmit">
         <h2 class="context-heading">
-          {{ data.machine || data.user || data.location }} {{ context }}
+          {{ data.context }}
         </h2>
-        <p v-if="action === 'faulty'">
+
+        <div v-if="action === 'faulty'" class="text-wrapper">
           <ChevronRight />
-          Confirm adding this {{ context }} as faulty.
-        </p>
-        <p v-else-if="action === 'dec'">
+          <p v-if="!data.faulty">
+            Confirm adding this {{ context }} as faulty.
+          </p>
+          <p v-else>Confirm removing this {{ context }} as faulty.</p>
+        </div>
+
+        <div v-else-if="action === 'dec'" class="text-wrapper">
           <ChevronRight />
-          Confirm you want to decommission this {{ context }}.
-        </p>
-        <p v-else-if="action === 'delete'">
+          <p v-if="!data.decommission">
+            Confirm you want to decommission this {{ context }}.
+          </p>
+          <p v-else>Confirm you want to re-commission this {{ context }}.</p>
+        </div>
+
+        <div v-else-if="action === 'delete'" class="text-wrapper">
           <ChevronRight />
-          Confirm you want to <span>delete </span> this {{ context }}
-        </p>
+          Confirm you want to <b>delete </b> this {{ context }}
+        </div>
 
         <button
           v-if="!isLoading"
@@ -43,9 +52,9 @@
 <script setup>
 import ChevronRight from "vue-material-design-icons/ChevronRight.vue";
 import Loader from "@/components/BtnLoader.vue";
-import useDeleteEntry from "@/composables/useDeleteEntry";
+import useAction from "@/composables/useAction";
 
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -56,13 +65,24 @@ const props = defineProps({
 });
 
 const data = computed(() => store.getters.getTransitData);
-const { isLoading, deleteEntry } = useDeleteEntry();
+const { isLoading, deleteEntry, updateAssetState } = useAction();
 
 const handleAction = () => {
   switch (props.action) {
     case "delete":
       deleteEntry();
       break;
+    case "faulty":
+      updateAssetState({ action: "faulty", value: !data.value.faulty });
+      break;
+    case "dec":
+      updateAssetState({
+        action: "decommission",
+        value: !data.value.decommission,
+      });
+      break;
+    default:
+      console.log("action not found");
   }
 };
 </script>

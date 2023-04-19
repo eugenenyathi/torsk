@@ -10,7 +10,12 @@ import Layout from "../../components/Manifesto.vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-store.commit("setShowDeleteBtn", false);
-store.commit("closeActionsMenu", false);
-store.commit("setGreyOutAction", false);
+
+store.dispatch("switchHeaderBtn", {
+  showAddBtn: true,
+  showEditBtn: false,
+  showDeleteBtn: false,
+});
+store.dispatch("closeActionsMenu", false);
+store.dispatch("setGreyOutAction", false);
 </script>

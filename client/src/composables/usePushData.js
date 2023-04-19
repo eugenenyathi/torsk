@@ -6,7 +6,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref, computed } from "vue";
 
-const usePostData = () => {
+const usePushData = () => {
   const isLoading = ref(false);
   const axiosError = ref(null);
   const store = useStore();
@@ -91,7 +91,7 @@ const usePostData = () => {
     store.dispatch("closeActionsMenu", false);
   };
 
-  return { isLoading, axiosError, postData, putData };
+  return { isLoading, axiosError, postData, putData, runUpdateEffects };
 };
 
-export default usePostData;
+export default usePushData;

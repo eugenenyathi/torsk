@@ -226,10 +226,13 @@
       border-bottom: 1px solid $color-grey-3;
     }
 
-    p {
+    .text-wrapper {
       @include flexAlign;
       gap: 3px;
-      font-size: 17px;
+
+      p {
+        font-size: 17px;
+      }
 
       span {
         font-weight: bold;

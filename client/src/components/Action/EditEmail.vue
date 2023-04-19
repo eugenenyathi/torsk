@@ -6,18 +6,18 @@
         <form @submit.prevent="handleSubmit()">
           <div class="entry-control">
             <label for="">User</label>
-            <input type="text" class="entry-input" v-model="collective.user" />
+            <input type="text" class="entry-input" v-model="collection.user" />
           </div>
           <div class="entry-control">
             <label for="">Email</label>
-            <input type="text" class="entry-input" v-model="collective.email" />
+            <input type="text" class="entry-input" v-model="collection.email" />
           </div>
           <div class="entry-control">
             <label for="">Password</label>
             <input
               :type="pwdType"
               class="entry-input"
-              v-model="collective.password"
+              v-model="collection.password"
             />
             <button
               v-if="!showPassword"
@@ -75,9 +75,9 @@ const { showAlert, removeAlert } = AlertFn(alert);
 const data = computed(() => store.getters.getTransitData);
 const formData = computed(() => store.getters.getTransitFormData);
 
-const collective = reactive({
+const collection = reactive({
   user: formData.value.user || data.value.user,
-  email: formData.value.email ||  data.value.email,
+  email: formData.value.email || data.value.email,
   password: formData.value.password || data.value.password,
 });
 
@@ -102,29 +102,25 @@ watch(axiosError, (currentValue, oldValue) => {
   axiosError.value = null;
 });
 
-
 const handleSubmit = async () => {
-  if (!collective.user) {
+  if (!collection.user) {
     showAlert(true, "User field is empty", "danger");
     removeAlert();
-  } else if (!collective.email) {
+  } else if (!collection.email) {
     showAlert(true, "Email field is empty", "danger");
     removeAlert();
-  } else if (!collective.password) {
+  } else if (!collection.password) {
     showAlert(true, "Password field is empty", "danger");
     removeAlert();
   } else {
-    store.dispatch(
-      "setFlushMessageContext",
-      `${data.value.user}'s email`
-    );
+    store.dispatch("setFlushMessageContext", `${data.value.user}'s email`);
     store.dispatch("setTransitFormData", {
-      user: collective.user,
-      email: collective.email,
-      password: collective.password,
+      user: collection.user,
+      email: collection.email,
+      password: collection.password,
     });
 
     await putData(`/torsk/email/${data.value._id}`, "/emails");
-  } 
+  }
 };
 </script>

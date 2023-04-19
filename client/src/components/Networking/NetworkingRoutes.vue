@@ -1,21 +1,23 @@
 <template>
-  <RouterTabular
+  <RouterTable
     v-if="currentRoute === 'routers'"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open', 'location')"
     @reload="reloadData"
   />
 
-  <SwitchTabular
+  <SwitchTable
     v-else-if="currentRoute === 'switches'"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open', 'location')"
     @reload="reloadData"
   />
 
-  <ConverterTabular v-else-if="currentRoute === 'converters'" />
+  <ConverterTable v-else-if="currentRoute === 'converters'" />
 
-  <WifiTabular v-else-if="currentRoute === 'wifi'" />
+  <WifiTable v-else-if="currentRoute === 'wifi'" />
+
+  <NetworkingConfig v-else />
 
   <Pagination />
 
@@ -33,10 +35,11 @@
 </template>
 
 <script setup>
-import RouterTabular from "./RouterTabular.vue";
-import SwitchTabular from "./SwitchTabular.vue";
-import ConverterTabular from "./ConverterTabular.vue";
-import WifiTabular from "./WifiTabular.vue";
+import RouterTable from "./RouterTable.vue";
+import SwitchTable from "./SwitchTable.vue";
+import ConverterTable from "./ConverterTable.vue";
+import WifiTable from "./WifiTable.vue";
+import NetworkingConfig from "./NetworkingConfig.vue";
 import Pagination from "../Pagination";
 import FilterList from "../FilterList";
 
@@ -50,6 +53,7 @@ import { useRoute } from "vue-router";
 const currentRoute = computed(() => useRoute().name.toLowerCase());
 
 const store = useStore();
+store.dispatch("switchHeaderBtn", { showEditBtn: true });
 store.dispatch("setBaseApiRoute", "/torsk/networking/device");
 
 const { pagination, rowsPerPage } = usePagination();

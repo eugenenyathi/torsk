@@ -14,7 +14,11 @@ const addMobileDevice = async (req, res) => {
 
 const getMobileDevices = async (req, res) => {
   const deviceType = req.params.deviceType;
-  const devices = await MobileDevice.find({ deviceType });
+  const devices = await MobileDevice.find({
+    deviceType,
+    faulty: false,
+    decommissioned: false,
+  });
 
   return res.status(StatusCodes.OK).json({ data: devices });
 };

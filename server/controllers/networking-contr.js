@@ -45,16 +45,16 @@ const getNetworkDevices = async (req, res) => {
 
   switch (req.params.deviceType) {
     case "routers":
-      devices = await Router.find();
+      devices = await Router.find({ faulty: false, decommissioned: false });
       break;
     case "switches":
-      devices = await Switch.find();
+      devices = await Switch.find({ faulty: false, decommissioned: false });
       break;
     case "converters":
-      devices = await Converter.find();
+      devices = await Converter.find({ faulty: false, decommissioned: false });
       break;
     case "wifi":
-      devices = await WiFi.find();
+      devices = await WiFi.find({ faulty: false, decommissioned: false });
       break;
   }
   return res.status(StatusCodes.OK).json({ data: devices });
@@ -83,6 +83,7 @@ const getNetworkDevice = async (req, res) => {
 
 const updateNetworkDevice = async (req, res) => {
   let device;
+  console.log(req.body);
 
   switch (req.params.deviceType) {
     case "routers":

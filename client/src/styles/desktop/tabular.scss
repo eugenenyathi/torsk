@@ -90,6 +90,17 @@
     }
   }
 
+  &.faulty {
+    tbody tr {
+      cursor: default;
+
+      &:hover {
+        border-color: $color-grey-3;
+        background-color: $color-grey-1;
+      }
+    }
+  }
+
   .filter-icon {
     color: $color-dark-4;
     cursor: pointer;

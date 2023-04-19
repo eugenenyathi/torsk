@@ -1,0 +1,42 @@
+.config-view-container {
+  margin-top: 20px;
+  @include flexCenter;
+}
+
+.config-view-content {
+  padding: 25px;
+  width: 40vw;
+  border-radius: 6px;
+  // background-color: $color-light-1;
+}
+
+.config-list-item {
+  @include flexAlign;
+  gap: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background-color: $color-light-1;
+
+  .info-wrapper {
+    width: 100%;
+    @include flexSpaceBtw;
+
+    .info-text {
+      font-size: 14px;
+      color: $color-dark-3;
+      @include flexAlign;
+      gap: 10px;
+
+      .cool-span {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .material-design-icon__svg {
+    color: $color-dark-3;
+    width: 20px;
+    height: 20px;
+  }
+}

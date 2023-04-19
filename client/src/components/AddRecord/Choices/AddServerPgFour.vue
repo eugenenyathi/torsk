@@ -58,7 +58,7 @@ import Loader from "@/components/BtnLoader";
 import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";
 
-import validate from "ip-validator";
+import ipValidator from "@/helpers/ipValidator.js";
 import mac from "mac-regex";
 
 import usePushData from "@/composables/usePushData";
@@ -93,7 +93,7 @@ watch(axiosError, (currentValue, oldValue) => {
 });
 
 const handleSubmit = async () => {
-  if (!collection.ipAddress || !validate.ipv4(collection.ipAddress)) {
+  if (!collection.ipAddress || !ipValidator(collection.ipAddress)) {
     showAlert(true, "Please enter a valid ip address", "danger");
     removeAlert();
   } else if (

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
-const validate = require("ip-validator");
+const ipValidator = require("../helpers/ipValidator");
 const mac = require("mac-regex");
 
 const ServerSchema = new Schema({
@@ -52,7 +52,7 @@ const ServerSchema = new Schema({
     required: [true, "The ip address can not be empty."],
     // required: true,
     validate: {
-      validator: (ipAddress) => validate.ipv4(ipAddress),
+      validator: (ipAddress) => ipValidator(ipAddress),
       message: (props) => `${props.value} is not a valid ip address.`,
     },
   },
@@ -80,6 +80,18 @@ const ServerSchema = new Schema({
     type: String,
     required: [true, "The antivirus can not be empty."],
     lowercase: true,
+  },
+  faulty: {
+    type: Boolean,
+    default: false,
+  },
+  decommissioned: {
+    type: Boolean,
+    default: false,
+  },
+  inRepair: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -166,6 +178,18 @@ const MachineSchema = new Schema({
     minLength: 6,
     required: [true, "The monitor serial number can not be empty."],
   },
+  faulty: {
+    type: Boolean,
+    default: false,
+  },
+  decommissioned: {
+    type: Boolean,
+    default: false,
+  },
+  inRepair: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const MobileSchema = new Schema({
@@ -210,6 +234,18 @@ const MobileSchema = new Schema({
     required: [true, "The IMEI can not be empty."],
     minLength: 15,
     maxLength: 15,
+  },
+  faulty: {
+    type: Boolean,
+    default: false,
+  },
+  decommissioned: {
+    type: Boolean,
+    default: false,
+  },
+  inRepair: {
+    type: Boolean,
+    default: false,
   },
 });
 

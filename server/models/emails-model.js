@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
-const bcrypt = require("bcryptjs");
 
 const EmailsSchema = new Schema({
   user: {
@@ -24,10 +23,5 @@ const EmailsSchema = new Schema({
     required: [true, "The password can not be empty."],
   },
 });
-
-// EmailsSchema.pre("save", async function () {
-//   const salt = bcrypt.genSalt(10);
-//   this.password = bcrypt.hash(this.password, salt);
-// });
 
 module.exports = model("emails", EmailsSchema);

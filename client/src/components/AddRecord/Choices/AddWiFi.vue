@@ -72,7 +72,7 @@ import Loader from "../../BtnLoader";
 import Alert from "../../Alert.vue";
 import AlertFn from "../../../helpers/AlertFn.js";
 import usePushData from "@/composables/usePushData";
-import useFetch from "@/composables/useFetch";
+import useFetch from "@/composables/useFetchData";
 
 import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";

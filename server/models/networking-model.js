@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
+const ipValidator = require("../helpers/ipValidator");
 
 const RouterSchema = new Schema({
   location: {
@@ -27,8 +28,11 @@ const RouterSchema = new Schema({
     type: String,
     unique: true,
     required: [true, "The ip address can not be empty."],
-    minLength: 8,
-    maxLength: 16,
+    // required: true,
+    validate: {
+      validator: (ipAddress) => ipValidator(ipAddress),
+      message: (props) => `${props.value} is not a valid ip address.`,
+    },
   },
   serialNumber: {
     type: String,
@@ -36,6 +40,18 @@ const RouterSchema = new Schema({
     required: [true, "The serial number can not be empty."],
     lowercase: true,
     minLength: 6,
+  },
+  faulty: {
+    type: Boolean,
+    default: false,
+  },
+  decommissioned: {
+    type: Boolean,
+    default: false,
+  },
+  inRepair: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -66,6 +82,18 @@ const SwitchSchema = new Schema({
     lowercase: true,
     minLength: 6,
   },
+  faulty: {
+    type: Boolean,
+    default: false,
+  },
+  decommissioned: {
+    type: Boolean,
+    default: false,
+  },
+  inRepair: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const ConverterSchema = new Schema({
@@ -85,6 +113,18 @@ const ConverterSchema = new Schema({
     required: [true, "The serial number can not be empty."],
     lowercase: true,
     minLength: 6,
+  },
+  faulty: {
+    type: Boolean,
+    default: false,
+  },
+  decommissioned: {
+    type: Boolean,
+    default: false,
+  },
+  inRepair: {
+    type: Boolean,
+    default: false,
   },
 });
 

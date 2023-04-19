@@ -38,7 +38,7 @@ import ChevronRight from "vue-material-design-icons/ChevronRight.vue";
 
 import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";
-import validate from "ip-validator";
+import ipValidator from "@/helpers/ipValidator.js";
 
 import { useStore } from "vuex";
 import { ref, computed, reactive } from "vue";
@@ -65,7 +65,7 @@ const next = () => {
   } else if (!collection.antivirus && collection.antivirus.length < 3) {
     showAlert(true, "Please enter valid antivirus", "danger");
     removeAlert();
-  } else if (!collection.ipAddress || !validate.ipv4(collection.ipAddress)) {
+  } else if (!collection.ipAddress || !ipValidator(collection.ipAddress)) {
     showAlert(true, "Please enter a valid ip address", "danger");
     removeAlert();
   } else {

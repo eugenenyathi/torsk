@@ -1,5 +1,6 @@
 <template>
   <Loader v-if="isLoading" />
+  <NoData v-else-if="!isLoading && switches.length === 0" />
   <table v-else class="tabular">
     <thead>
       <tr>
@@ -20,8 +21,7 @@
             @click="$emit('reload')"
           />
         </th>
-        <th>IP Address</th>
-        <th>Antennas</th>
+        <th>Model</th>
         <th>Ports</th>
         <th>Dead ports</th>
         <th>Serial Number</th>
@@ -29,36 +29,28 @@
     </thead>
     <tbody>
       <tr
-        v-for="router in routers"
-        :key="router.id"
+        v-for="device in switches"
+        :key="device._id"
         :class="{
-          isActive: isActiveId === router._id,
+          isActive: isActiveId === device._id,
         }"
-        @click="selectRouter(router._id)"
+        @click="selectSwitch(device._id)"
       >
         <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
-            :value="router._id"
-            :checked="isActiveId === router._id"
+            :value="machine._id"
+            :checked="isActiveId === machine._id"
             v-model="checkbox"
           />
         </td> -->
         <td></td>
-        <td>{{ router.location }}</td>
-        <td>{{ router.ipAddress }}</td>
-
-        <td v-if="router.wireless">
-          <Check class="filter-icon dark" />
-        </td>
-        <td v-else>
-          <Close class="filter-icon dark" />
-        </td>
-
-        <td>{{ router.ports }}</td>
-        <td>{{ router.deadPorts }}</td>
-        <td>{{ router.serialNumber }}</td>
+        <td>{{ device.location }}</td>
+        <td>{{ device.model }}</td>
+        <td>{{ device.ports }}</td>
+        <td>{{ device.deadPorts }}</td>
+        <td>{{ device.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
@@ -67,10 +59,9 @@
 <script setup>
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
-import Check from "vue-material-design-icons/Check.vue";
-import Close from "vue-material-design-icons/Close.vue";
 
-import Loader from "../Loader";
+import Loader from "@/components/Loader";
+import NoData from "@/components/NoData";
 
 import { useStore } from "vuex";
 import { ref, watch, computed } from "vue";
@@ -83,24 +74,25 @@ const props = defineProps({
 
 const emit = defineEmits(["openFilterList", "reload"]);
 const store = useStore();
+store.dispatch("switchHeaderBtn", { showEditBtn: true });
 
 const isActiveId = ref(0);
 
-const routers = ref(computed(() => store.getters.getPaginatedData));
+const switches = ref(computed(() => store.getters.getPaginatedData));
 const { isLoading, fetchRouteData } = useFetchRouteData();
 
-fetchRouteData("routers");
+fetchRouteData("switches");
 
-const selectRouter = (routerId) => {
-  isActiveId.value = routerId;
-  const data = routers.value.find((router) => router._id === routerId);
+const selectSwitch = (switchId) => {
+  isActiveId.value = switchId;
+  const data = switches.value.find((device) => device._id === switchId);
+  store.dispatch("setGreyOutAction", { specs: true });
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("setTransitData", {
-    context: `${data.location} router`,
-    route: "networking/routers",
+    context: `${data.location} switch`,
+    route: "networking/switches",
     ...data,
   });
-  store.dispatch("setGreyOutAction", true);
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

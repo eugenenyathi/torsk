@@ -15,6 +15,9 @@ const useNewEntry = () => {
       case "Laptops":
         router.push("/devices/laptops/add");
         break;
+      case "UPSuppliers":
+        router.push("/devices/ups/add");
+        break;
       case "Tablets":
         router.push("/devices/tablets/add");
         break;
@@ -43,6 +46,9 @@ const useNewEntry = () => {
       case "WiFi":
         router.push("/networking/wifi/add");
         break;
+      case "NetworkConfig":
+        router.push("/networking/config/add");
+        break;
 
       //OTHERS
       case "Telephones":
@@ -51,8 +57,11 @@ const useNewEntry = () => {
       case "Remote Desktop":
         router.push("/remote/add");
         break;
-      case "Emails":
+      case "EmailList":
         router.push("/emails/add");
+        break;
+      case "EmailConfig":
+        router.push("/emails/config/add");
         break;
       case "Software":
         router.push("/software/add");

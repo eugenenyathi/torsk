@@ -1,21 +1,21 @@
 <template>
   <h2>General</h2>
   <div class="segment-wrapper red">
-    <router-link to="/replacement" class="card">
+    <router-link to="/telephones" class="card">
       <div class="icon-container">
         <Devices class="card-icon" />
       </div>
       <p class="statistic">{{ data.extensions }}</p>
       <p class="category">Extensions</p>
     </router-link>
-    <router-link to="/" class="card">
+    <router-link to="/telephones" class="card">
       <div class="icon-container">
         <Devices class="card-icon" />
       </div>
       <p class="statistic">{{ data.directLines }}</p>
       <p class="category">Direct Lines</p>
     </router-link>
-    <router-link to="/" class="card">
+    <router-link to="/emails/list" class="card">
       <div class="icon-container">
         <Devices class="card-icon" />
       </div>

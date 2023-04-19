@@ -3,9 +3,13 @@
   <table v-else class="tabular">
     <thead>
       <tr>
+        <!-- <th class="checkbox">
+          <input type="checkbox" class="checkbox" />
+        </th> -->
         <th></th>
         <th>
           User
+
           <Search
             v-if="!showReloadIcon"
             class="filter-icon"
@@ -17,21 +21,34 @@
             @click="$emit('reload')"
           />
         </th>
-        <th>Remote Address</th>
+        <th>Model</th>
+        <th>OS</th>
+        <th>Storage</th>
       </tr>
     </thead>
     <tbody>
       <tr
-        v-for="machine in machines"
-        :key="machine._id"
+        v-for="device in devices"
+        :key="device._id"
         :class="{
-          isActive: isActiveId === machine._id,
+          isActive: isActiveId === device._id,
         }"
-        @click="selectMachine(machine._id)"
+        @click="selectDevice(device._id)"
       >
+        <!-- <td>
+          <input
+            type="checkbox"
+            class="checkbox"
+            :value="device.id"
+            :checked="isActiveId === device._id"
+            v-model="checkbox"
+          />
+        </td> -->
         <td></td>
-        <td>{{ machine.user }}</td>
-        <td>{{ machine.address }}</td>
+        <td>{{ device.user }}</td>
+        <td>{{ device.model }}</td>
+        <td>{{ device.os }}</td>
+        <td>{{ device.storage }}</td>
       </tr>
     </tbody>
   </table>
@@ -44,43 +61,38 @@ import Reload from "vue-material-design-icons/Reload.vue";
 import Loader from "../Loader";
 
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import { ref, watch, computed } from "vue";
 
 import useFetchRouteData from "@/composables/useFetchRouteData";
+
+import { useRoute } from "vue-router";
+
+const currentRoute = computed(() => useRoute().name.toLowerCase());
 
 const props = defineProps({
   showReloadIcon: Boolean,
 });
 
 const emit = defineEmits(["openFilterList", "reload"]);
-
 const store = useStore();
-const router = useRouter();
-
-store.dispatch("setBaseApiRoute", "/torsk/remote_desktop");
+store.dispatch("setBaseApiRoute", "/torsk/devices/mobiles");
 
 const isActiveId = ref(0);
 
-const machines = ref(computed(() => store.getters.getPaginatedData));
+const devices = ref(computed(() => store.getters.getPaginatedData));
 const { isLoading, fetchRouteData } = useFetchRouteData();
 
-fetchRouteData();
+fetchRouteData(currentRoute.value.substring(0, currentRoute.value.length - 1));
 
-const selectMachine = (machineId) => {
-  isActiveId.value = machineId;
-  const data = machines.value.find((machine) => machine._id === machineId);
-  store.dispatch("flushTransitFormData");
+const selectDevice = (deviceId) => {
+  isActiveId.value = deviceId;
+  const data = devices.value.find((device) => device._id === deviceId);
+  store.dispatch("setShowActionsMenu", true);
   store.dispatch("setTransitData", {
-    context: `${data.user} remote address`,
-    route: "remote_desktop",
+    context: `${data.user} device`,
+    route: "devices/mobile",
     ...data,
   });
-
-  const route = `/remote/${machineId}`;
-  router.push(route);
-
-  store.dispatch("setShowDeleteBtn", true);
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

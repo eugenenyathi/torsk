@@ -10,6 +10,13 @@
     :action="action"
     context="machine"
   />
+
+  <ActionUPS
+    v-else-if="currentRoute === 'UPSuppliers'"
+    :action="action"
+    context="ups"
+  />
+
   <ActionMobile
     v-else-if="currentRoute === 'Tablets' || currentRoute === 'Cellphones'"
     :action="action"
@@ -47,6 +54,7 @@
 <script setup>
 import ActionServer from "./ActionServer";
 import ActionMachine from "./ActionMachine";
+import ActionUPS from "./ActionUPS";
 import ActionMobile from "./ActionMobile";
 import ActionPrinter from "./ActionPrinter";
 import ActionScanner from "./ActionScanner";

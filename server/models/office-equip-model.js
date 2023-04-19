@@ -33,6 +33,18 @@ const PrinterSchema = new Schema({
     lowercase: true,
     minLength: 6,
   },
+  faulty: {
+    type: Boolean,
+    default: false,
+  },
+  decommissioned: {
+    type: Boolean,
+    default: false,
+  },
+  inRepair: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const ScannerSchema = new Schema({
@@ -50,6 +62,18 @@ const ScannerSchema = new Schema({
     required: [true, "The serial number can not be empty."],
     lowercase: true,
     minLength: 6,
+  },
+  faulty: {
+    type: Boolean,
+    default: false,
+  },
+  decommissioned: {
+    type: Boolean,
+    default: false,
+  },
+  inRepair: {
+    type: Boolean,
+    default: false,
   },
 });
 

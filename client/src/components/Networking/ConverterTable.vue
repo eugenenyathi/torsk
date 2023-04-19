@@ -1,5 +1,6 @@
 <template>
   <Loader v-if="isLoading" />
+  <NoData v-else-if="!isLoading && converters.length === 0" />
   <table v-else class="tabular">
     <thead>
       <tr>
@@ -40,7 +41,8 @@
 </template>
 
 <script setup>
-import Loader from "../Loader";
+import Loader from "@/components/Loader";
+import NoData from "@/components/NoData";
 
 import { useStore } from "vuex";
 import { ref, watch, computed } from "vue";
@@ -48,6 +50,7 @@ import { ref, watch, computed } from "vue";
 import useFetchRouteData from "@/composables/useFetchRouteData";
 
 const store = useStore();
+store.dispatch("switchHeaderBtn", { showEditBtn: true });
 
 const isActiveId = ref(0);
 
@@ -67,7 +70,7 @@ const selectConverter = (converterId) => {
     route: "networking/converters",
     ...data,
   });
-  store.dispatch("setGreyOutAction", true);
+  store.dispatch("setGreyOutAction", { specs: true });
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

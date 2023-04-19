@@ -1,5 +1,6 @@
 <template>
   <Loader v-if="isLoading" />
+  <NoData v-else-if="!isLoading && upSuppliers.length === 0" />
   <table v-else class="tabular">
     <thead>
       <tr>
@@ -8,7 +9,7 @@
         </th> -->
         <th></th>
         <th>
-          User
+          Connected Device
           <Search
             v-if="!showReloadIcon"
             class="filter-icon"
@@ -21,58 +22,32 @@
           />
         </th>
         <th>Model</th>
-        <th>Multi-purpose</th>
-        <th>Duplex</th>
-        <th>Networked</th>
-        <th>Cartridge</th>
+        <th>Watts</th>
         <th>Serial Number</th>
       </tr>
     </thead>
     <tbody>
       <tr
-        v-for="printer in printers"
-        :key="printer._id"
-        :class="{
-          isActive: isActiveId === printer._id,
-        }"
-        @click="selectPrinter(printer._id)"
+        v-for="(ups, index) in upSuppliers"
+        :key="ups._id"
+        :data-index="index"
+        :class="{ isActive: isActiveId === ups._id }"
+        @click="selectUps(ups._id)"
       >
         <!-- <td>
           <input
             type="checkbox"
             class="checkbox"
-            :value="printer.id"
-            :checked="isActiveId === printer.id"
+            :value="ups.id"
+            :checked="isActiveId === ups.id"
             v-model="checkbox"
           />
         </td> -->
         <td></td>
-        <td>{{ printer.user }}</td>
-        <td>{{ printer.model }}</td>
-
-        <td v-if="printer.multipurpose">
-          <Check class="filter-icon dark" />
-        </td>
-        <td v-else>
-          <Close class="filter-icon dark" />
-        </td>
-
-        <td v-if="printer.duplex">
-          <Check class="filter-icon dark" />
-        </td>
-        <td v-else>
-          <Close class="filter-icon dark" />
-        </td>
-
-        <td v-if="printer.networked">
-          <Check class="filter-icon dark" />
-        </td>
-        <td v-else>
-          <Close class="filter-icon dark" />
-        </td>
-
-        <td>{{ printer.cartridge }}</td>
-        <td>{{ printer.serialNumber }}</td>
+        <td>{{ ups.connectedDevice }}</td>
+        <td>{{ ups.model }}</td>
+        <td>{{ ups.watts }}</td>
+        <td>{{ ups.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
@@ -81,10 +56,9 @@
 <script setup>
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
-import Check from "vue-material-design-icons/Check.vue";
-import Close from "vue-material-design-icons/Close.vue";
 
-import Loader from "../Loader";
+import Loader from "@/components/Loader";
+import NoData from "@/components/NoData";
 
 import { useStore } from "vuex";
 import { ref, watch, computed } from "vue";
@@ -97,24 +71,26 @@ const props = defineProps({
 
 const emit = defineEmits(["openFilterList", "reload"]);
 const store = useStore();
+store.dispatch("setBaseApiRoute", "/torsk/devices/ups");
 
 const isActiveId = ref(0);
 
-const printers = ref(computed(() => store.getters.getPaginatedData));
+const upSuppliers = ref(computed(() => store.getters.getPaginatedData));
 const { isLoading, fetchRouteData } = useFetchRouteData();
 
-fetchRouteData("printers");
+fetchRouteData();
 
-const selectPrinter = (printerId) => {
-  isActiveId.value = printerId;
-  const data = printers.value.find((printer) => printer._id === printerId);
+const selectUps = (upsId) => {
+  isActiveId.value = upsId;
+  const data = upSuppliers.value.find((ups) => ups._id === upsId);
+  store.dispatch("setGreyOutAction", { specs: true });
   store.dispatch("setShowActionsMenu", true);
+  store.dispatch("flushTransitFormData");
   store.dispatch("setTransitData", {
-    context: `${data.user}'s printer`,
-    route: "networking/printers",
+    context: `${data.connectedDevice} ups`,
+    route: "devices/ups",
     ...data,
   });
-  store.dispatch("setGreyOutAction", true);
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

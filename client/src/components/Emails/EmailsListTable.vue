@@ -1,5 +1,6 @@
 <template>
   <Loader v-if="isLoading" />
+  <NoData v-else-if="!isLoading && emails.length === 0" />
   <table v-else class="tabular">
     <thead>
       <tr class="no-flex-second-child">
@@ -44,7 +45,8 @@
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
 
-import Loader from "../Loader";
+import Loader from "@/components/Loader";
+import NoData from "@/components/NoData";
 
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -61,6 +63,7 @@ const emit = defineEmits(["openFilterList", "reload"]);
 const store = useStore();
 const router = useRouter();
 
+store.dispatch("switchHeaderBtn", { showEditBtn: true });
 store.dispatch("setBaseApiRoute", "/torsk/email");
 
 const isActiveId = ref(0);
@@ -80,10 +83,10 @@ const selectEmail = (emailId) => {
     ...data,
   });
 
-  const route = `/emails/${emailId}`;
+  const route = `/emails/edit/${emailId}`;
   router.push(route);
 
-  store.dispatch("setShowDeleteBtn", true);
+  store.dispatch("switchHeaderBtn", { showDeleteBtn: true });
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

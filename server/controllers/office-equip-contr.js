@@ -31,10 +31,10 @@ const getOfficeDevices = async (req, res) => {
 
   switch (req.params.deviceType) {
     case "printers":
-      devices = await Printer.find();
+      devices = await Printer.find({ faulty: false, decommissioned: false });
       break;
     case "scanners":
-      devices = await Scanner.find();
+      devices = await Scanner.find({ faulty: false, decommissioned: false });
       break;
   }
   return res.status(StatusCodes.OK).json({ data: devices });

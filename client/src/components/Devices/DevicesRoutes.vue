@@ -20,6 +20,13 @@
     @reload="reloadData"
   />
 
+  <UPSTable
+    v-else-if="currentRoute === 'upsuppliers'"
+    :showReloadIcon="showReloadIcon"
+    @openFilterList="toggleFilterMenu('open', 'user')"
+    @reload="reloadData"
+  />
+
   <MobileDeviceTable
     v-else-if="currentRoute === 'tablets'"
     :showReloadIcon="showReloadIcon"
@@ -52,6 +59,7 @@
 <script setup>
 import ServerTable from "./ServerTable.vue";
 import ComputerTable from "./ComputerTable.vue";
+import UPSTable from "./UPSTable.vue";
 import MobileDeviceTable from "./MobileDeviceTable.vue";
 import Pagination from "../Pagination";
 import FilterList from "../FilterList";

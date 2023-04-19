@@ -48,7 +48,7 @@ const selectMachine = (machineId) => {
   const route = `/software/${machineId}`;
   router.push(route);
 
-  store.dispatch("setShowDeleteBtn", true);
+  store.dispatch("switchHeaderBtn", { showDeleteBtn: true });
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

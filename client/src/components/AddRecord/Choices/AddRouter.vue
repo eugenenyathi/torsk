@@ -118,11 +118,11 @@ import Plus from "vue-material-design-icons/Plus.vue";
 import Check from "vue-material-design-icons/Check.vue";
 import ChevronRight from "vue-material-design-icons/ChevronRight.vue";
 
-import Loader from "../../BtnLoader";
-import Alert from "../../Alert.vue";
-import AlertFn from "../../../helpers/AlertFn.js";
+import Loader from "@/components/BtnLoader";
+import Alert from "@/components/Alert.vue";
+import AlertFn from "@/helpers/AlertFn.js";
+import ipValidator from "@/helpers/ipValidator.js";
 
-import validate from "ip-validator";
 import usePushData from "@/composables/usePushData";
 
 import { ref, reactive, computed, watch } from "vue";
@@ -140,7 +140,7 @@ const data = computed(() => store.getters.getTransitFormData);
 const collection = reactive({
   location: data.value.location || "test",
   model: data.value.model || "trendnet",
-  ipAddress: data.value.ipAddress || "192.168.1.23",
+  ipAddress: data.value.ipAddress || "5.11.11.5",
   serialNumber: data.value.serialNumber || "12354-5689",
   ports: data.value.ports || 8,
   deadPorts: data.value.deadPorts || 0,
@@ -154,7 +154,7 @@ const next = async () => {
   } else if (!collection.model || collection.model.length < 2) {
     showAlert(true, "Please enter a valid model", "danger");
     removeAlert();
-  } else if (!collection.ipAddress || !validate.ipv4(collection.ipAddress)) {
+  } else if (!collection.ipAddress || !ipValidator(collection.ipAddress)) {
     showAlert(true, "Please enter a valid ip address", "danger");
     removeAlert();
   } else {

@@ -1,21 +1,21 @@
 <template>
   <h2>Asset States</h2>
   <div class="segment-wrapper red">
-    <router-link to="/replacement" class="card">
+    <router-link to="/dashboard/faulty/devices" class="card">
       <div class="icon-container">
         <Devices class="card-icon" />
       </div>
       <p class="statistic">0</p>
       <p class="category">Faulty</p>
     </router-link>
-    <router-link to="/" class="card">
+    <router-link to="/dashboard/decommissioned/devices" class="card">
       <div class="icon-container">
         <Devices class="card-icon" />
       </div>
       <p class="statistic">10</p>
       <p class="category">Decommissioned Equip</p>
     </router-link>
-    <router-link to="/" class="card">
+    <router-link to="/dashboard/in-repair/devices" class="card">
       <div class="icon-container">
         <Devices class="card-icon" />
       </div>

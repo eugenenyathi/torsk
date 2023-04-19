@@ -1,8 +1,12 @@
 <template>
   <Loader v-if="isLoading" />
+  <NoData v-else-if="!isLoading && scanners.length === 0" />
   <table v-else class="tabular">
     <thead>
-      <tr class="no-flex-second-child">
+      <tr>
+        <!-- <th class="checkbox">
+          <input type="checkbox" class="checkbox" />
+        </th> -->
         <th></th>
         <th>
           User
@@ -17,28 +21,32 @@
             @click="$emit('reload')"
           />
         </th>
-        <th>Extension</th>
-        <th>Direct Line</th>
         <th>Model</th>
         <th>Serial Number</th>
-        <!-- <th>Purchased</th> -->
       </tr>
     </thead>
     <tbody>
       <tr
-        v-for="telephone in telephones"
-        :key="telephone._id"
+        v-for="scanner in scanners"
+        :key="scanner._id"
         :class="{
-          isActive: isActiveId === telephone._id,
+          isActive: isActiveId === scanner._id,
         }"
-        @click="selectTelephone(telephone._id)"
+        @click="selectScanner(scanner._id)"
       >
+        <!-- <td>
+          <input
+            type="checkbox"
+            class="checkbox"
+            :value="scanner.id"
+            :checked="isActiveId === scanner.id"
+            v-model="checkbox"
+          />
+        </td> -->
         <td></td>
-        <td>{{ telephone.user }}</td>
-        <td>{{ telephone.extension }}</td>
-        <td>{{ telephone.directLine }}</td>
-        <td>{{ telephone.model }}</td>
-        <td>{{ telephone.serialNumber }}</td>
+        <td>{{ scanner.user }}</td>
+        <td>{{ scanner.model }}</td>
+        <td>{{ scanner.serialNumber }}</td>
       </tr>
     </tbody>
   </table>
@@ -48,10 +56,10 @@
 import Search from "vue-material-design-icons/FilterOutline.vue";
 import Reload from "vue-material-design-icons/Reload.vue";
 
-import Loader from "../Loader";
+import Loader from "@/components/Loader";
+import NoData from "@/components/NoData";
 
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import { ref, watch, computed } from "vue";
 
 import useFetchRouteData from "@/composables/useFetchRouteData";
@@ -61,35 +69,25 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["openFilterList", "reload"]);
-
 const store = useStore();
-const router = useRouter();
-
-store.dispatch("setBaseApiRoute", "/torsk/telephone");
 
 const isActiveId = ref(0);
 
-const telephones = ref(computed(() => store.getters.getPaginatedData));
+const scanners = ref(computed(() => store.getters.getPaginatedData));
 const { isLoading, fetchRouteData } = useFetchRouteData();
 
-fetchRouteData();
+fetchRouteData("scanners");
 
-const selectTelephone = (telephoneId) => {
-  isActiveId.value = telephoneId;
-  const data = telephones.value.find(
-    (telephone) => telephone._id === telephoneId
-  );
-  store.dispatch("flushTransitFormData");
+const selectScanner = (scannerId) => {
+  isActiveId.value = scannerId;
+  const data = scanners.value.find((scanner) => scanner._id === scannerId);
+  store.dispatch("setShowActionsMenu", true);
   store.dispatch("setTransitData", {
-    context: `${data.user} telephone line`,
-    route: "telephone",
+    context: `${data.user} scanner`,
+    route: "office_equipment/scanners",
     ...data,
   });
-
-  const route = `/telephones/${telephoneId}`;
-  router.push(route);
-
-  store.dispatch("setShowDeleteBtn", true);
+  store.dispatch("setGreyOutAction", { specs: true });
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

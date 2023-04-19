@@ -31,6 +31,22 @@ const TelephoneSchema = new Schema({
     lowercase: true,
     minLength: 6,
   },
+  extensionIsFaulty: {
+    type: Boolean,
+    default: false,
+  },
+  directLineIsFaulty: {
+    type: Boolean,
+    default: false,
+  },
+  extensionDecommissioned: {
+    type: Boolean,
+    default: false,
+  },
+  directLineDecommissioned: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = model("telephones", TelephoneSchema);

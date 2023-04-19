@@ -4,7 +4,11 @@ const store = createStore({
   state() {
     return {
       user: null,
-      showDeleteBtn: false,
+      switchHeaderBtn: {
+        showAddBtn: true,
+        showDeleteBtn: false,
+        showEditBtn: false,
+      },
       flusMessageContext: null,
       showFlushMessage: {
         state: false,
@@ -20,12 +24,16 @@ const store = createStore({
         backUpData: [],
         paginatedData: [],
       },
+      dbData: {},
       transitData: {},
       transitFormData: {},
       rows: 7,
       pageNumbers: [],
       currentPage: 1,
-      greyOutAction: false,
+      greyOutAction: {
+        specs: false,
+        update: false,
+      },
     };
   },
   getters: {
@@ -56,11 +64,17 @@ const store = createStore({
     getPaginatedData(state) {
       return state.routeData.paginatedData;
     },
+    getDbData(state) {
+      return state.dbData;
+    },
     getTransitData(state) {
       return state.transitData;
     },
     getTransitFormData(state) {
       return state.transitFormData;
+    },
+    getRouteData(state) {
+      return state.routeData.data;
     },
     getFlushMessageContext(state) {
       return state.flushMessageContext;
@@ -68,8 +82,8 @@ const store = createStore({
     greyOutAction(state) {
       return state.greyOutAction;
     },
-    showDeleteBtn(state) {
-      return state.showDeleteBtn;
+    switchHeaderBtn(state) {
+      return state.switchHeaderBtn;
     },
     showFlushMessage(state) {
       return state.showFlushMessage;
@@ -106,6 +120,9 @@ const store = createStore({
     setPaginatedData(state, payload) {
       state.routeData.paginatedData = payload;
     },
+    setDbData(state, payload) {
+      state.dbData = payload;
+    },
     flushRouteData(state) {
       state.routeData = {
         data: [],
@@ -123,7 +140,7 @@ const store = createStore({
       state.transitFormData = {};
     },
     setGreyOutAction(state, payload) {
-      state.greyOutAction = payload;
+      state.greyOutAction = { ...state, payload };
     },
     setRowsPerPage(state, payload) {
       if (payload === "increase") {
@@ -138,8 +155,8 @@ const store = createStore({
     setCurrentPage(state, payload) {
       state.currentPage = payload;
     },
-    setShowDeleteBtn(state, payload) {
-      state.showDeleteBtn = payload;
+    switchHeaderBtn(state, payload) {
+      state.switchHeaderBtn = { ...state.switchHeaderBtn, payload };
     },
     setFlushMessageContext(state, payload) {
       state.flushMessageContext = payload;
@@ -184,6 +201,9 @@ const store = createStore({
     setPaginatedData(context, payload) {
       context.commit("setPaginatedData", payload);
     },
+    setDbData(context, payload) {
+      context.commit("setDbData", payload);
+    },
     flushRouteData(context) {
       context.commit("flushRouteData");
     },
@@ -211,8 +231,8 @@ const store = createStore({
     setCurrentPage(context, payload) {
       context.commit("setCurrentPage", payload);
     },
-    setShowDeleteBtn(context, payload) {
-      context.commit("setShowDeleteBtn", payload);
+    switchHeaderBtn(context, payload) {
+      context.commit("switchHeaderBtn", payload);
     },
     setFlushMessageContext(context, payload) {
       context.commit("setFlushMessageContext", payload);

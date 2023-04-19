@@ -3,12 +3,25 @@
     <div class="header-content">
       <h2 class="route-name">{{ currentRoute }}</h2>
       <div class="flow-right">
-        <button class="add-btn" v-if="!showDeleteBtn" @click="addNewEntry()">
+        <button
+          class="add-btn"
+          v-if="switchHeaderBtn.showAddBtn"
+          @click="addNewEntry()"
+        >
           <Plus class="plus-icon" />
           Add
         </button>
 
-        <div class="btn-container" v-else>
+        <button
+          class="add-btn"
+          v-else-if="switchHeaderBtn.showEditBtn"
+          @click="EditEntry()"
+        >
+          <Pencil class="plus-icon" />
+          Edit
+        </button>
+
+        <div class="btn-container" v-else-if="switchHeaderBtn.showDeleteBtn">
           <button
             v-if="!isLoading"
             class="delete-btn"
@@ -53,12 +66,13 @@
 import UserDropdown from "./UserDropdown.vue";
 import Plus from "vue-material-design-icons/Plus.vue";
 import Arrow from "vue-material-design-icons/AccountArrowDown.vue";
+import Pencil from "vue-material-design-icons/Pencil.vue";
 
 //composables & helpers
 import useLogin from "@/composables/useLogin.js";
 import useNewEntry from "@/composables/useNewEntry.js";
 import useAuth from "@/composables/useAuth.js";
-import useDeleteEntry from "@/composables/useDeleteEntry";
+import useAction from "@/composables/useAction";
 
 //components
 import ChoiceSheet from "./AddRecord/ChoiceSheet.vue";
@@ -72,6 +86,7 @@ import { useStore } from "vuex";
 //TODO red loader for the delete btn
 
 const store = useStore();
+const router = useRouter();
 
 const showSheet = ref(false);
 const showChoice = ref(false);
@@ -81,9 +96,9 @@ const showMenu = ref(false);
 
 const { getAuthUser } = useAuth();
 const { navigateToRoute } = useNewEntry();
-const { isLoading, deleteEntry } = useDeleteEntry();
+const { isLoading, deleteEntry } = useAction();
 
-const showDeleteBtn = computed(() => store.getters.showDeleteBtn);
+const switchHeaderBtn = computed(() => store.getters.switchHeaderBtn);
 const showFlushMessage = computed(() => store.getters.showFlushMessage.state);
 const currentRoute = computed(() => useRoute().name);
 
@@ -104,6 +119,17 @@ const addNewEntry = () => {
     showSheet.value = true;
   } else {
     navigateToRoute(currentRoute.value);
+  }
+};
+
+const EditEntry = () => {
+  switch (currentRoute.value) {
+    case "EmailConfig":
+      router.push("/emails/config/edit");
+      break;
+    case "NetworkConfig":
+      router.push("/networking/config/edit");
+      break;
   }
 };
 

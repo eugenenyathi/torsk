@@ -12,11 +12,11 @@
 
 <script setup>
 //components
-import DashboardDevices from "../../components/DashboardDevices.vue";
-import DashboardOfficeEquip from "../../components/DashboardOfficeEquip.vue";
-import DashboardNetworking from "../../components/DashboardNetworking.vue";
-import DashboardGeneral from "../../components/DashboardGeneral.vue";
-import DashboardAssetState from "../../components/DashboardAssetState.vue";
+import DashboardDevices from "@/components/Dashboard/DashboardDevices.vue";
+import DashboardOfficeEquip from "@/components/Dashboard/DashboardOfficeEquip.vue";
+import DashboardNetworking from "@/components/Dashboard/DashboardNetworking.vue";
+import DashboardGeneral from "@/components/Dashboard/DashboardGeneral.vue";
+import DashboardAssetState from "@/components/Dashboard/DashboardAssetState.vue";
 
 import { useStore } from "vuex";
 
@@ -27,7 +27,7 @@ import axios from "axios";
 const store = useStore();
 store.commit("setShowDeleteBtn", false);
 store.commit("closeActionsMenu", false);
-store.commit("setGreyOutAction", false);
+store.commit("setGreyOutAction", { specs: false });
 
 //fetch the data
 const fetchStats = async () => {

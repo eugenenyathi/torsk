@@ -90,7 +90,6 @@ import usePushData from "@/composables/usePushData";
 
 import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 
 const page = ref(1);
 

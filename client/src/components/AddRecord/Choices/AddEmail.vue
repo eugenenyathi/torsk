@@ -10,19 +10,19 @@
               type="text"
               class="entry-input"
               placeholder="e.g. IT Technician"
-              v-model="collective.user"
+              v-model="collection.user"
             />
           </div>
           <div class="entry-control">
             <label for="">Email</label>
-            <input type="text" class="entry-input" v-model="collective.email" />
+            <input type="text" class="entry-input" v-model="collection.email" />
           </div>
           <div class="entry-control">
             <label for="">Password</label>
             <input
               :type="pwdType"
               class="entry-input"
-              v-model="collective.password"
+              v-model="collection.password"
             />
             <button
               v-if="!showPassword"
@@ -80,7 +80,7 @@ const data = computed(() => store.getters.getTransitFormData);
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
-const collective = reactive({
+const collection = reactive({
   user: data.value.user || "",
   email: data.value.email || "",
   password: data.value.password || "",
@@ -108,21 +108,21 @@ watch(axiosError, (currentValue, oldValue) => {
 });
 
 const handleSubmit = async () => {
-  if (!collective.user) {
+  if (!collection.user) {
     showAlert(true, "User field is empty", "danger");
     removeAlert();
-  } else if (!collective.email) {
+  } else if (!collection.email) {
     showAlert(true, "Email field is empty", "danger");
     removeAlert();
-  } else if (!collective.password) {
+  } else if (!collection.password) {
     showAlert(true, "Password field is empty", "danger");
     removeAlert();
   } else {
-    store.dispatch("setFlushMessageContext", `${collective.user}'s email`);
+    store.dispatch("setFlushMessageContext", `${collection.user}'s email`);
     store.dispatch("setTransitFormData", {
-      user: collective.user,
-      email: collective.email,
-      password: collective.password,
+      user: collection.user,
+      email: collection.email,
+      password: collection.password,
     });
 
     await postData("/emails", `/torsk/email/`);
