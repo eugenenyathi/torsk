@@ -1,0 +1,40 @@
+version: "1"
+services:
+  frontend:
+    container_name: torsk-ui
+    build: "./client/"
+    restart: always
+    ports:
+      - "8081:8080"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+    networks:
+      - torsk-network
+
+  backend:
+    container_name: torsk-api
+    build: "./server/"
+    restart: always
+    ports:
+      - "8083:8083"
+    depends_on:
+      - database
+    networks:
+      - torsk-network
+
+  database:
+    container_name: mongo-db
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - "C:/mongo-backup:/data/db"
+    networks:
+      - torsk-network
+
+networks:
+  torsk-network:
+    driver: bridge
