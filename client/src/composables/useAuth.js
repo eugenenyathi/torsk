@@ -4,7 +4,7 @@ const useAuth = () => {
   const setAuthUser = (user) => {
     user = JSON.stringify(user);
     Cookies.set("planet-torsk", user, {
-      expires: 14,
+      expires: 5,
       path: "/",
       domain: "localhost",
       sameSite: "strict",

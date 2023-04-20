@@ -39,7 +39,7 @@ const stats = async (req, res) => {
 };
 
 const totalDevices = async () => {
-  const servers = await Machine.countDocuments({
+  const servers = await ServerModel.countDocuments({
     faulty: false,
     decommissioned: false,
   });
