@@ -53,6 +53,14 @@
     box-shadow: none;
     text-transform: capitalize;
 
+    &.next-btn {
+      background-color: $color-secondary;
+    }
+
+    &.update-btn {
+      background-color: $color-tertiary-1;
+    }
+
     img {
       margin-top: -4px;
     }
@@ -115,7 +123,7 @@
     margin: 0;
     cursor: pointer;
     border-radius: 35px;
-    border: 1px solid $color-grey-3;
+    border: 2px solid $color-grey-3;
     background-color: $color-light-1;
     transition: $transition-1;
 
@@ -127,13 +135,18 @@
     &.active {
       border-color: transparent;
       color: $color-light-1;
-      background-color: $color-primary-1;
+      background-color: $color-tertiary-1;
+    }
+
+    &.active:hover {
+      border-color: transparent;
+      color: $color-light-1;
+      background-color: $color-tertiary-1;
     }
 
     &:hover {
-      border-color: transparent;
-      color: $color-light-1;
-      background-color: $color-primary-1;
+      color: $color-tertiary-1;
+      border-color: $color-tertiary-1;
     }
   }
 }

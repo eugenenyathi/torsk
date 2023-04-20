@@ -29,6 +29,7 @@
 
   .route-name {
     font-weight: normal;
+    color: $color-black-1;
   }
 }
 
@@ -83,10 +84,15 @@
     @extend .header-btn;
   }
 
+  .edit-btn {
+    @extend .header-btn;
+    background-color: $color-secondary;
+  }
+
   .delete-btn {
     @extend .header-btn;
     padding: 13px 25px;
-    background-color: $color-danger-2;
+    background-color: $color-danger;
 
     &:hover {
       background-color: $color-danger;

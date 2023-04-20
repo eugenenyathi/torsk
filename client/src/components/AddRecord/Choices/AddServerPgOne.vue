@@ -32,7 +32,7 @@
           v-model="collection.model"
         />
       </div>
-      <button class="add-btn">Continue</button>
+      <button class="add-btn next-btn">Continue</button>
     </form>
   </div>
 </template>

@@ -5,6 +5,15 @@
     </Transition>
     <form @submit.prevent="handleSubmit()">
       <div class="entry-control">
+        <label for="">User Account Password</label>
+        <input
+          type="text"
+          class="entry-input"
+          placeholder="Optional field"
+          v-model="collection.userAccPassword"
+        />
+      </div>
+      <div class="entry-control">
         <label for="">MAC Address</label>
         <input
           type="text"
@@ -65,6 +74,7 @@ const emit = defineEmits(["pop"]);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
+  userAccPassword: data.value.userAccPassword || "@enyathi123.",
   macAddress: data.value.macAddress || "b8:03:05:41:89:dd",
   serialNumber: data.value.serialNumber || "123456-8942",
   monitorSerialNumber: data.value.monitorSerialNumber || "44356-8942",
@@ -106,6 +116,7 @@ const handleSubmit = async () => {
       `${data.value.user} ${data.value.machineType} `
     );
     store.dispatch("setTransitFormData", {
+      userAccPassword: collection.userAccPassword,
       macAddress: collection.macAddress,
       serialNumber: collection.serialNumber,
       monitorSerialNumber: collection.monitorSerialNumber,

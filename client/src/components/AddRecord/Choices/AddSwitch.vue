@@ -35,7 +35,7 @@
                   v-model="collection.ports"
                 />
               </div>
-              <button class="add-btn" :disabled="isLoading">continue</button>
+              <button class="add-btn next-btn">continue</button>
             </form>
           </div>
           <div v-else>

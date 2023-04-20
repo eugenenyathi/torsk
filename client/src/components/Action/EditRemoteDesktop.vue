@@ -17,10 +17,14 @@
             <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
           </Transition>
 
-          <button v-if="!isLoading" class="add-btn" :disabled="isLoading">
+          <button
+            v-if="!isLoading"
+            class="add-btn update-btn"
+            :disabled="isLoading"
+          >
             update
           </button>
-          <button v-else class="add-btn" :disabled="isLoading">
+          <button v-else class="add-btn update-btn" :disabled="isLoading">
             update
             <Loader />
           </button>

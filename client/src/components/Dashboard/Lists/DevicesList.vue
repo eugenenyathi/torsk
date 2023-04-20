@@ -131,6 +131,8 @@
 </template>
 
 <script setup>
+//TODO change them icons
+
 import Loader from "@/components/Loader";
 import Email from "vue-material-design-icons/EmailOutline.vue";
 

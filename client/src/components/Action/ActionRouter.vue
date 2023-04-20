@@ -31,7 +31,7 @@
                 v-model="collection.ipAddress"
               />
             </div>
-            <button class="update-btn">continue</button>
+            <button class="update-btn next-btn">continue</button>
           </form>
         </div>
         <div v-else>

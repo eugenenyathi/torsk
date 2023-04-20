@@ -101,9 +101,7 @@ const {
   getDecommissionedDevices,
 } = require("../controllers/asset-state-contr");
 
-//TODO  Dashboard
-//TODO  Faulty & Decommission
-//TODO default case switch
+//TODO clear log errors on deploy
 
 //User routes
 router.route("/validate/:username").post(validateIdentity);

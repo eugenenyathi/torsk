@@ -13,7 +13,7 @@
         </button>
 
         <button
-          class="add-btn"
+          class="edit-btn"
           v-else-if="switchHeaderBtn.showEditBtn"
           @click="EditEntry()"
         >
@@ -37,7 +37,7 @@
             @click="deleteEntry()"
           >
             Delete
-            <Loader />
+            <RedLoader />
           </button>
         </div>
 
@@ -77,13 +77,11 @@ import useAction from "@/composables/useAction";
 //components
 import ChoiceSheet from "./AddRecord/ChoiceSheet.vue";
 import FlushMessage from "./FlushMessage.vue";
-import Loader from "./BtnLoader";
+import RedLoader from "./RedBtnLoader";
 
 import { ref, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
-
-//TODO red loader for the delete btn
 
 const store = useStore();
 const router = useRouter();

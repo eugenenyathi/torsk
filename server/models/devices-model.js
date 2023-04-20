@@ -155,6 +155,7 @@ const MachineSchema = new Schema({
     type: Number,
     required: [true, "Storage can not be empty."],
   },
+  userAccPassword: String,
   macAddress: {
     type: String,
     unique: true,

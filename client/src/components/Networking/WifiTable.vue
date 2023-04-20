@@ -67,7 +67,11 @@ fetchRouteData("wifi");
 const selectNetwork = (networkId) => {
   isActiveId.value = networkId;
   const data = networks.value.find((network) => network._id === networkId);
-  store.dispatch("switchHeaderBtn", { showDeleteBtn: true });
+  store.dispatch("switchHeaderBtn", {
+    showDeleteBtn: true,
+    showEditBtn: false,
+    showAddBtn: false,
+  });
   store.dispatch("setTransitData", {
     context: `${data.ssid} wifi`,
     route: "networking/wifi",

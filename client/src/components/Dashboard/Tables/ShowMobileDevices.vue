@@ -1,5 +1,6 @@
 <template>
   <Loader v-if="isLoading" />
+  <NoData v-else-if="!isLoading && devices.length === 0" />
   <table v-else class="tabular faulty">
     <thead>
       <tr>
@@ -24,6 +25,8 @@
 
 <script setup>
 import Loader from "@/components/Loader";
+import NoData from "@/components/NoData";
+
 import useFetchData from "@/composables/useFetchData";
 import { useStore } from "vuex";
 import { computed } from "vue";

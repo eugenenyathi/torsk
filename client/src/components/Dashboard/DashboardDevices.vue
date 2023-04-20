@@ -1,6 +1,13 @@
 <template>
   <h2>Devices</h2>
   <div class="segment-wrapper green">
+    <router-link to="/devices/servers" class="card">
+      <div class="icon-container">
+        <Devices class="card-icon" />
+      </div>
+      <p class="statistic">{{ data.servers }}</p>
+      <p class="category">Servers</p>
+    </router-link>
     <router-link to="/devices/desktops" class="card">
       <div class="icon-container">
         <Devices class="card-icon" />
@@ -44,5 +51,5 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
-const data = computed(() => store.getters.getDashboardData);
+const data = computed(() => store.getters.getDbData);
 </script>

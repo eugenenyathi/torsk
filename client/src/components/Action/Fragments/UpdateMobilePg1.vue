@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <button class="update-btn">continue</button>
+      <button class="update-btn next-btn">continue</button>
     </form>
   </div>
 </template>

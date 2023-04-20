@@ -82,7 +82,11 @@ const selectMachine = (machineId) => {
   const route = `/remote/${machineId}`;
   router.push(route);
 
-  store.dispatch("switchHeaderBtn", { showDeleteBtn: true });
+  store.dispatch("switchHeaderBtn", {
+    showDeleteBtn: true,
+    showEditBtn: false,
+    showAddBtn: false,
+  });
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

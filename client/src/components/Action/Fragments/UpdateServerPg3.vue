@@ -24,7 +24,7 @@
           v-model="collection.ipAddress"
         />
       </div>
-      <button class="update-btn">continue</button>
+      <button class="update-btn next-btn">continue</button>
       <div class="go-back" @click="$emit('pop', 2)">
         <ChevronRight />
         <span>Back</span>

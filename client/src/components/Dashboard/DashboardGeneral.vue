@@ -1,23 +1,23 @@
 <template>
   <h2>General</h2>
-  <div class="segment-wrapper red">
+  <div class="segment-wrapper">
     <router-link to="/telephones" class="card">
       <div class="icon-container">
-        <Devices class="card-icon" />
+        <Phone class="card-icon" />
       </div>
       <p class="statistic">{{ data.extensions }}</p>
       <p class="category">Extensions</p>
     </router-link>
     <router-link to="/telephones" class="card">
       <div class="icon-container">
-        <Devices class="card-icon" />
+        <Phone class="card-icon" />
       </div>
       <p class="statistic">{{ data.directLines }}</p>
       <p class="category">Direct Lines</p>
     </router-link>
     <router-link to="/emails/list" class="card">
       <div class="icon-container">
-        <Devices class="card-icon" />
+        <Email class="card-icon" />
       </div>
       <p class="statistic">{{ data.emails }}</p>
       <p class="category">Emails</p>
@@ -26,14 +26,13 @@
 </template>
 
 <script setup>
-import Devices from "vue-material-design-icons/Devices.vue";
+import Phone from "vue-material-design-icons/PhoneOutline.vue";
+import Email from "vue-material-design-icons/EmailOutline.vue";
 
 import { computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
 
-//TODO fix general icons
-
-const data = computed(() => store.getters.getDashboardData);
+const data = computed(() => store.getters.getDbData);
 </script>

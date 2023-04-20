@@ -8,7 +8,6 @@
 <script setup>
 //components
 import SelectionBar from "../SelectionBar.vue";
-//TODO: Add UPS feature
 
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
@@ -36,9 +35,9 @@ const routes = ref([
     path: `/dashboard/${routeType}/networking`,
     name: "Networking",
   },
-  {
-    path: `/dashboard/${routeType}/telephones`,
-    name: "Telephones",
-  },
+  // {
+  //   path: `/dashboard/${routeType}/telephones`,
+  //   name: "Telephones",
+  // },
 ]);
 </script>

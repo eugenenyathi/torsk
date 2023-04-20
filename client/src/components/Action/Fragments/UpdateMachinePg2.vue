@@ -94,7 +94,7 @@
         </div>
       </div>
 
-      <button class="update-btn">continue</button>
+      <button class="update-btn next-btn">continue</button>
       <div class="go-back" @click="$emit('pop', 1)">
         <ChevronRight />
         <span>Back</span>

@@ -38,7 +38,7 @@
                 />
               </div>
 
-              <button class="add-btn">continue</button>
+              <button class="add-btn next-btn">continue</button>
             </form>
           </div>
           <div v-else>
@@ -66,10 +66,14 @@
                 />
               </div>
 
-              <button v-if="!isLoading" class="add-btn" :disabled="isLoading">
+              <button
+                v-if="!isLoading"
+                class="add-btn update-btn"
+                :disabled="isLoading"
+              >
                 update
               </button>
-              <button v-else class="add-btn" :disabled="isLoading">
+              <button v-else class="add-btn update-btn" :disabled="isLoading">
                 update
                 <Loader />
               </button>

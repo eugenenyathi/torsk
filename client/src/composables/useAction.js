@@ -5,8 +5,6 @@ import { useRouter } from "vue-router";
 import { ref, computed } from "vue";
 import axios from "axios";
 
-//TODO update in the tabular to include the full context
-
 const useAction = () => {
   const store = useStore();
   const router = useRouter();

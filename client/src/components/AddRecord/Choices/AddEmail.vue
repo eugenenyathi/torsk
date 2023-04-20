@@ -125,7 +125,7 @@ const handleSubmit = async () => {
       password: collection.password,
     });
 
-    await postData("/emails", `/torsk/email/`);
+    await postData("/emails/list", `/torsk/email/`);
   }
 };
 </script>

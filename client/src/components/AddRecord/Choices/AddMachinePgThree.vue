@@ -22,7 +22,7 @@
           v-model="collection.antivirus"
         />
       </div>
-      <button class="add-btn">continue</button>
+      <button class="add-btn next-btn">continue</button>
       <div class="go-back" @click="$emit('pop', 2)">
         <ChevronRight />
         <span>Back</span>

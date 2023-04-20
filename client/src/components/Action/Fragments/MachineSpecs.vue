@@ -66,6 +66,7 @@
 </template>
 
 <script setup>
+//TODO add proper icons
 import { computed } from "vue";
 import { useStore } from "vuex";
 

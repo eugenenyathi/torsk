@@ -1,5 +1,6 @@
 <template>
   <Loader v-if="isLoading" />
+  <NoData v-else-if="!isLoading && machines.length === 0" />
   <table v-else class="tabular">
     <thead>
       <tr>
@@ -31,6 +32,7 @@ import Check from "vue-material-design-icons/Check.vue";
 import Close from "vue-material-design-icons/Close.vue";
 
 import Loader from "@/components/Loader";
+import NoData from "@/components/NoData";
 
 import useFetchData from "@/composables/useFetchData";
 import { useStore } from "vuex";

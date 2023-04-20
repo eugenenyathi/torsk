@@ -296,9 +296,14 @@
     border-radius: 6px;
     box-shadow: none;
     text-transform: capitalize;
+    background-color: $color-tertiary-1;
 
     img {
       margin-top: -4px;
+    }
+
+    &.next-btn {
+      background-color: $color-secondary;
     }
   }
 }

@@ -8,7 +8,6 @@
 <script setup>
 //components
 import SelectionBar from "../../components/SelectionBar.vue";
-//TODO: Add UPS feature
 
 import { ref } from "vue";
 import { useStore } from "vuex";

@@ -92,7 +92,7 @@
           v-model="collection.machine"
         />
       </div>
-      <button class="add-btn">Continue</button>
+      <button class="add-btn next-btn">continue</button>
     </form>
   </div>
 </template>

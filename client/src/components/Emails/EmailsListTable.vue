@@ -83,10 +83,14 @@ const selectEmail = (emailId) => {
     ...data,
   });
 
+  store.dispatch("switchHeaderBtn", {
+    showDeleteBtn: true,
+    showEditBtn: false,
+    showAddBtn: false,
+  });
+
   const route = `/emails/edit/${emailId}`;
   router.push(route);
-
-  store.dispatch("switchHeaderBtn", { showDeleteBtn: true });
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

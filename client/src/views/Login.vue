@@ -49,20 +49,20 @@
         </div>
         <button class="login-btn" :disabled="isLoading">let's go</button>
 
-        <router-link
+        <!-- <router-link
           :to="{ name: 'Signup' }"
           class="link-login link link-center"
         >
           Join the planet. Sign up.
-        </router-link>
+        </router-link> -->
       </form>
     </section>
   </main>
 </template>
 
 <script setup>
-//TODO fix the /login issue
-//TODO change the favicon
+//TODO add secret signup page
+//TODO add ipAddress Management
 
 //components
 import BaseInput from "../base/BaseInput.vue";
@@ -85,8 +85,6 @@ import { ref, reactive, watch } from "vue";
 
 //assets
 const loginImg = require("../assets/krynn-1.webp");
-
-//TODO fix users to be redirected to home when they visit login
 
 const username = ref("superadmin");
 const password = ref("Trish15122010!");

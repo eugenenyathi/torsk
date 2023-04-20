@@ -20,7 +20,7 @@
         <label>Operating system</label>
         <input type="text" class="update-input" v-model="collection.os" />
       </div>
-      <button class="update-btn">Continue</button>
+      <button class="update-btn next-btn">continue</button>
     </form>
   </div>
 </template>

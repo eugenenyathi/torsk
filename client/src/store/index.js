@@ -156,7 +156,7 @@ const store = createStore({
       state.currentPage = payload;
     },
     switchHeaderBtn(state, payload) {
-      state.switchHeaderBtn = { ...state.switchHeaderBtn, payload };
+      state.switchHeaderBtn = { ...state.switchHeaderBtn, ...payload };
     },
     setFlushMessageContext(state, payload) {
       state.flushMessageContext = payload;

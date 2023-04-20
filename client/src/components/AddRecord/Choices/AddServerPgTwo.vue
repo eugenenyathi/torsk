@@ -105,7 +105,7 @@
           </div>
         </div>
       </div>
-      <button class="add-btn">continue</button>
+      <button class="add-btn next-btn">continue</button>
       <div class="go-back" @click="$emit('pop', 1)">
         <ChevronRight />
         <span>Back</span>

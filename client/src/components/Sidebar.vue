@@ -7,7 +7,7 @@
       <ul class="menu-ul-wrapper">
         <li class="menu-link">
           <router-link
-            to="/dashboard/decommissioned/devices"
+            to="/"
             :class="{
               'parent-link-exact-active': subIsActive('/dashboard'),
             }"
@@ -113,23 +113,21 @@
 <script setup>
 //icons
 import Dashboard from "vue-material-design-icons/HomeOutline.vue";
-import DashboardAlt from "vue-material-design-icons/Home.vue";
 import Devices from "vue-material-design-icons/Monitor.vue";
 import Printer from "vue-material-design-icons/PrinterOutline.vue";
-import PrinterAlt from "vue-material-design-icons/Printer.vue";
 import RemoteDesktop from "vue-material-design-icons/RemoteDesktop.vue";
 import Lan from "vue-material-design-icons/Lan.vue";
-import LanAlt from "vue-material-design-icons/LanConnect.vue";
 import Email from "vue-material-design-icons/EmailOutline.vue";
-import EmailAlt from "vue-material-design-icons/Email.vue";
-import Settings from "vue-material-design-icons/CogOutline.vue";
-import SettingsAlt from "vue-material-design-icons/Cog.vue";
-import CodeBrackets from "vue-material-design-icons/CodeBrackets.vue";
-import Users from "vue-material-design-icons/AccountMultiple.vue";
 import Phone from "vue-material-design-icons/PhoneOutline.vue";
+// import PrinterAlt from "vue-material-design-icons/Printer.vue";
+// import DashboardAlt from "vue-material-design-icons/Home.vue";
+// import LanAlt from "vue-material-design-icons/LanConnect.vue";
+// import EmailAlt from "vue-material-design-icons/Email.vue";
+// import Settings from "vue-material-design-icons/CogOutline.vue";
+// import SettingsAlt from "vue-material-design-icons/Cog.vue";
+// import CodeBrackets from "vue-material-design-icons/CodeBrackets.vue";
+// import Users from "vue-material-design-icons/AccountMultiple.vue";
 
 import ActiveChildRoute from "../helpers/ActiveChildRoute.js";
 const { subIsActive } = ActiveChildRoute();
-
-//TODO additional features, servers, stock, ip-address, network config, email custom settings
 </script>

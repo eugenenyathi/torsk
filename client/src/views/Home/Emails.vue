@@ -6,8 +6,6 @@
 </template>
 
 <script setup>
-//TODO: fix add new email button
-
 //components
 import SelectionBar from "@/components/SelectionBar.vue";
 
