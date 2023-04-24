@@ -6,7 +6,7 @@ const useAuth = () => {
     Cookies.set("planet-torsk", user, {
       expires: 5,
       path: "/",
-      domain: "localhost",
+      domain: "localhost:8081",
       sameSite: "strict",
       secure: true,
     });
