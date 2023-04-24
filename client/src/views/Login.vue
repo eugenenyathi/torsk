@@ -47,7 +47,10 @@
             <EyeOffOutline />
           </button>
         </div>
-        <button class="login-btn" :disabled="isLoading">let's go</button>
+
+        <button class="login-btn" :disabled="isLoading">
+          let's go <Loader />
+        </button>
 
         <router-link
           v-if="!userExists"
@@ -64,6 +67,7 @@
 <script setup>
 //TODO add secret signup page
 //TODO add ipAddress Management
+import Loader from "@/components/ClearLoader.vue";
 import Alert from "@/components/Alert.vue";
 
 //icons
