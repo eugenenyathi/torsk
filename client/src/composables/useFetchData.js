@@ -52,13 +52,17 @@ const useFetchData = () => {
         },
       });
 
+      if (Object.keys(data).length > 0) {
+        if (showEditBtn)
+          store.dispatch("switchHeaderBtn", { showEditBtn: true });
+        store.dispatch("setDbData", data);
+      }
+
       //first clear any pre-existing data to remove possible pagination errors
       store.dispatch("flushRouteData");
       store.dispatch("setRouteData", []);
       store.dispatch("setPageNumbers", []);
       store.dispatch("setDbData", data);
-
-      if (showEditBtn) store.dispatch("switchHeaderBtn", { showEditBtn: true });
 
       isLoading.value = false;
     } catch (err) {
