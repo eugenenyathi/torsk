@@ -123,7 +123,9 @@ import Loader from "@/components/BtnLoader";
 import SelectBox from "@/base/SearchableSelectBx.vue";
 import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";
+
 import usePushData from "@/composables/usePushData";
+import useAuth from "@/composables/useAuth";
 
 import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
@@ -134,6 +136,9 @@ const props = defineProps({
   action: String,
   context: String,
 });
+
+const { getAuthUser } = useAuth();
+const user = getAuthUser();
 
 const store = useStore();
 const data = computed(() => store.getters.getTransitData);
@@ -157,7 +162,11 @@ const collection = reactive({
 
 const fetchMachines = async () => {
   try {
-    const res = await axios("/torsk/devices/machines");
+    const res = await axios("/torsk/devices/machines", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
     machines.value = res.data.data;
   } catch (err) {
     console.log(err);

@@ -83,6 +83,7 @@ const selectScanner = (scannerId) => {
   const data = scanners.value.find((scanner) => scanner._id === scannerId);
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("setTransitData", {
+    assetStateReq: false,
     context: `${data.user} scanner`,
     route: "office_equipment/scanners",
     ...data,

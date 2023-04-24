@@ -1,0 +1,27 @@
+.list-view-container {
+  margin-top: 20px;
+  @include flexCenter;
+}
+
+.list-view-content {
+  padding: 25px;
+  width: 40vw;
+  border-radius: 6px;
+  // background-color: $color-light-1;
+}
+
+.list-view-item {
+  @include flexSpaceBtw;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  color: $color-black-1;
+  text-decoration: none;
+  background-color: $color-light-1;
+
+  .material-design-icon__svg {
+    color: $color-dark-3;
+    width: 20px;
+    height: 20px;
+  }
+}

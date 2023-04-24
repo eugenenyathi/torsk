@@ -12,23 +12,23 @@ const { StatusCodes } = require("http-status-codes");
 const getFaultyDevices = async (req, res) => {
   switch (req.params.category) {
     case "devices":
-      faultyDevices(res, req);
+      faultyDevices(req, res);
       break;
-    case "office-equipment":
-      faultyOfficeEquipment(res, req);
+    case "office_equipment":
+      faultyOfficeEquipment(req, res);
       break;
     case "networking":
-      faultyNetworkingDevices(res, req);
+      faultyNetworkingDevices(req, res);
       break;
     case "telephones":
-      faultyTelephoneLines(res, req);
+      faultyTelephoneLines(req, res);
       break;
     default:
       return res.status(StatusCodes.BAD_REQUEST).send("Category not found");
   }
 };
 
-const faultyDevices = async (res, req) => {
+const faultyDevices = async (req, res) => {
   const servers = await ServerModel.find({ faulty: true });
 
   const desktops = await Machine.find({
@@ -51,31 +51,36 @@ const faultyDevices = async (res, req) => {
     faulty: true,
   });
 
-  return res.status(StatusCodes.OK).json({
-    data: { servers, desktops, laptops, upSuppliers, tablets, cellphones },
+  return devicesResponse(req, res, {
+    servers,
+    desktops,
+    laptops,
+    upSuppliers,
+    tablets,
+    cellphones,
   });
 };
 
-const faultyOfficeEquipment = async (res, req) => {
+const faultyOfficeEquipment = async (req, res) => {
   const printers = await Printer.find({ faulty: true });
   const scanners = await Scanner.find({ faulty: true });
 
-  return res.status(StatusCodes.OK).json({
-    data: { printers, scanners },
-  });
+  return officeEquipmentResponse(req, res, { printers, scanners });
 };
 
-const faultyNetworkingDevices = async (res, req) => {
+const faultyNetworkingDevices = async (req, res) => {
   const routers = await Router.find({ faulty: true });
   const switches = await Switch.find({ faulty: true });
   const converters = await Converter.find({ faulty: true });
 
-  return res.status(StatusCodes.OK).json({
-    data: { routers, switches, converters },
+  return networkingDevicesResponse(req, res, {
+    routers,
+    switches,
+    converters,
   });
 };
 
-const faultyTelephoneLines = async (res, req) => {
+const faultyTelephoneLines = async (req, res) => {
   const telephones = await Telephone.find({ faulty: true });
 
   return res.status(StatusCodes.OK).json({
@@ -83,26 +88,28 @@ const faultyTelephoneLines = async (res, req) => {
   });
 };
 
+/* ================= DECOMMISSIONED ======================== */
+
 const getDecommissionedDevices = async (req, res) => {
   switch (req.params.category) {
     case "devices":
-      decommissionedDevices(res, req);
+      decommissionedDevices(req, res);
       break;
     case "office-equipment":
-      decommissionedOfficeEquipment(res, req);
+      decommissionedOfficeEquipment(req, res);
       break;
     case "networking":
-      decommissionedNetworkingDevices(res, req);
+      decommissionedNetworkingDevices(req, res);
       break;
     case "telephones":
-      decommissionedTelephoneLines(res, req);
+      decommissionedTelephoneLines(req, res);
       break;
     default:
       return res.status(StatusCodes.BAD_REQUEST).send("Category not found");
   }
 };
 
-const decommissionedDevices = async (res, req) => {
+const decommissionedDevices = async (req, res) => {
   const servers = await ServerModel.find({ decommissioned: true });
 
   const desktops = await Machine.find({
@@ -125,35 +132,140 @@ const decommissionedDevices = async (res, req) => {
     decommissioned: true,
   });
 
-  return res.status(StatusCodes.OK).json({
-    data: { servers, desktops, laptops, upSuppliers, tablets, cellphones },
+  return devicesResponse(req, res, {
+    servers,
+    desktops,
+    laptops,
+    upSuppliers,
+    tablets,
+    cellphones,
   });
 };
 
-const decommissionedOfficeEquipment = async (res, req) => {
+const decommissionedOfficeEquipment = async (req, res) => {
   const printers = await Printer.find({ decommissioned: true });
   const scanners = await Scanner.find({ decommissioned: true });
 
-  return res.status(StatusCodes.OK).json({
-    data: { printers, scanners },
+  return officeEquipmentResponse(req, res, {
+    printers,
+    scanners,
   });
 };
 
-const decommissionedNetworkingDevices = async (res, req) => {
+const decommissionedNetworkingDevices = async (req, res) => {
   const routers = await Router.find({ decommissioned: true });
   const switches = await Switch.find({ decommissioned: true });
   const converters = await Converter.find({ decommissioned: true });
 
-  return res.status(StatusCodes.OK).json({
-    data: { routers, switches, converters },
+  return networkingDevicesResponse(req, res, {
+    routers,
+    switches,
+    converters,
   });
 };
 
-const decommissionedTelephoneLines = async (res, req) => {
+const decommissionedTelephoneLines = async (req, res) => {
   const telephones = await Telephone.find({ decommissioned: true });
 
   return res.status(StatusCodes.OK).json({
     data: { telephones },
+  });
+};
+
+/* ======================= RESPONSES ================  */
+const devicesResponse = async (req, res, data) => {
+  switch (req.params.device) {
+    case "desktops":
+      return res.status(StatusCodes.OK).json({
+        data: data.desktops,
+      });
+    case "laptops":
+      return res.status(StatusCodes.OK).json({
+        data: data.laptops,
+      });
+    case "ups":
+      return res.status(StatusCodes.OK).json({
+        data: data.upSuppliers,
+      });
+    case "tablets":
+      return res.status(StatusCodes.OK).json({
+        data: data.tablets,
+      });
+    case "cellphones":
+      return res.status(StatusCodes.OK).json({
+        data: data.cellphones,
+      });
+    case "servers":
+      return res.status(StatusCodes.OK).json({
+        data: data.servers,
+      });
+  }
+
+  let countServers = data.servers.length;
+  let countDesktops = data.desktops.length;
+  let countLaptops = data.laptops.length;
+  let countUPS = data.upSuppliers.length;
+  let countTablets = data.tablets.length;
+  let countCellphones = data.cellphones.length;
+
+  return res.status(StatusCodes.OK).json({
+    data: {
+      servers: countServers,
+      desktops: countDesktops,
+      laptops: countLaptops,
+      upSuppliers: countUPS,
+      tablets: countTablets,
+      cellphones: countCellphones,
+    },
+  });
+};
+
+const officeEquipmentResponse = async (req, res, data) => {
+  switch (req.params.device) {
+    case "printers":
+      return res.status(StatusCodes.OK).json({
+        data: data.printers,
+      });
+    case "scanners":
+      return res.status(StatusCodes.OK).json({
+        data: data.scanners,
+      });
+  }
+
+  let countPrinters = data.printers.length;
+  let countScanners = data.scanners.length;
+
+  return res.status(StatusCodes.OK).json({
+    data: { printers: countPrinters, scanners: countScanners },
+  });
+};
+
+const networkingDevicesResponse = async (req, res, data) => {
+  switch (req.params.device) {
+    case "routers":
+      return res.status(StatusCodes.OK).json({
+        data: data.routers,
+      });
+    case "switches":
+      return res.status(StatusCodes.OK).json({
+        data: data.switches,
+      });
+    case "converters":
+      return res.status(StatusCodes.OK).json({
+        data: data.converters,
+      });
+  }
+
+  let countRouters = data.routers.length;
+  let countSwitches = data.switches.length;
+  let countConverters = data.converters.length;
+
+  return res.status(StatusCodes.OK).json({
+    data: {
+      routers: countRouters,
+      switches: countSwitches,
+      converters: countConverters,
+    },
   });
 };
 

@@ -89,6 +89,7 @@ const selectDevice = (deviceId) => {
   const data = devices.value.find((device) => device._id === deviceId);
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("setTransitData", {
+    assetStateReq: false,
     context: `${data.user} device`,
     route: "devices/mobile",
     ...data,

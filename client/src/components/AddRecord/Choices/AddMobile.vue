@@ -120,11 +120,13 @@
                 </div>
               </div>
               <div class="entry-control">
-                <label for="">MAC Address</label>
+                <label for="" class="label-with-span">
+                  MAC Address
+                  <span class="cool-span">optional</span>
+                </label>
                 <input
                   type="text"
                   class="entry-input"
-                  placeholder="Optional Field"
                   v-model="collection.macAddress"
                 />
               </div>

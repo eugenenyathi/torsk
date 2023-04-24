@@ -89,6 +89,7 @@ const selectSwitch = (switchId) => {
   store.dispatch("setGreyOutAction", { specs: true });
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("setTransitData", {
+    assetStateReq: false,
     context: `${data.location} switch`,
     route: "networking/switches",
     ...data,

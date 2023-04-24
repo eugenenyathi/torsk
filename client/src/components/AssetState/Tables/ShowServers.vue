@@ -41,25 +41,31 @@ import { ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 
 const store = useStore();
-const currentRoute = computed(() => useRoute().name.toLowerCase());
 const { isLoading, fetchData } = useFetchData();
+const currentRoute = computed(() => useRoute().name.toLowerCase());
 const routeType = currentRoute.value.split("-")[0];
+/*leverage the baseApiRoute for purpose of 
+getting an entire updated list after the
+individual update*/
+store.dispatch("setBaseApiRoute", `/torsk/${routeType}/devices/servers`);
 
-fetchData(`/torsk/${routeType}/devices`, false);
-const servers = computed(() => store.getters.getDbData.servers);
+fetchData(`/torsk/${routeType}/devices/servers`, false);
+const servers = computed(() => store.getters.getDbData);
 
 const isActiveId = ref(0);
 
 const selectServer = (serverId) => {
   isActiveId.value = serverId;
   const data = servers.value.find((server) => server._id === serverId);
-  store.dispatch("setShowActionsMenu", true);
   store.dispatch("flushTransitFormData");
   store.dispatch("setTransitData", {
-    context: `${data.machine} server`,
+    assetStateReq: true,
+    context: `${data.machine}`,
     route: "devices/server",
     ...data,
   });
+  store.dispatch("setGreyOutAction", { specs: true, update: true });
+  store.dispatch("setShowActionsMenu", true);
 };
 
 const showActionsMenu = computed(() => store.getters.showActionsMenu);

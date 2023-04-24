@@ -1,5 +1,5 @@
+import useAuth from "./useAuth.js";
 import usePagination from "./usePagination";
-import usePushData from "./usePushData";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref, computed } from "vue";
@@ -9,16 +9,23 @@ const useAction = () => {
   const store = useStore();
   const router = useRouter();
   const isLoading = ref(false);
+  const { getAuthUser } = useAuth();
+  const user = getAuthUser();
+
   const data = computed(() => store.getters.getTransitData);
+  const baseApiRoute = computed(() => store.getters.getBaseApiRoute);
 
   const { paginate, pagination } = usePagination();
-  const { runUpdateEffects } = usePushData();
 
   const deleteEntry = async () => {
     try {
       isLoading.value = true;
 
-      await axios.delete(`/torsk/${data.value.route}/${data.value._id}`);
+      await axios.delete(`/torsk/${data.value.route}/${data.value._id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
       isLoading.value = false;
       store.dispatch("setShowFlushMessage", {
@@ -52,8 +59,23 @@ const useAction = () => {
 
       const res = await axios.put(
         `/torsk/${data.value.route}/${data.value._id}`,
-        reqBody
+        reqBody,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
       );
+
+      //only send this request when it's an asset state req
+      if (data.value.assetStateReq) {
+        //make a request to get the whole list of the updated devices
+        const updatedDbData = await axios(baseApiRoute.value, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+      }
 
       isLoading.value = false;
 
@@ -66,7 +88,15 @@ const useAction = () => {
       setTimeout(() => {
         store.dispatch("setShowFlushMessage", { state: false });
         store.commit("closeActionsMenu", false);
-        runUpdateEffects(res);
+
+        if (data.value.assetStateReq) {
+          //update the db context so that when you change the asset state the faulty/decommissioned route
+          //it updates the list also like asset-state>faulty>servers
+          store.dispatch("setDbData", []);
+          store.commit("setDbData", updatedDbData.data.data);
+        }
+        //this updates the main routes like device>desktops
+        runDeleteEffects(res);
       }, 3000);
     } catch (err) {
       // console.log(err.response.data);

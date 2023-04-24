@@ -112,6 +112,7 @@ const selectPrinter = (printerId) => {
   const data = printers.value.find((printer) => printer._id === printerId);
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("setTransitData", {
+    assetStateReq: false,
     context: `${data.user}'s printer`,
     route: "office_equipment/printers",
     ...data,

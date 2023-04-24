@@ -93,6 +93,7 @@ const selectMachine = (machineId) => {
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("flushTransitFormData");
   store.dispatch("setTransitData", {
+    assetStateReq: false,
     context: `${data.user} machine`,
     route: "devices/machine",
     ...data,

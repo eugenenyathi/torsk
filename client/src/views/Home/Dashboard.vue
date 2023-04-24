@@ -13,7 +13,7 @@
 
 <script setup>
 //TODO redesign the dashboard
-
+//TODO add remove from faulty / decommission state
 import Loader from "@/components/Loader";
 //components
 import DashboardDevices from "@/components/Dashboard/DashboardDevices.vue";

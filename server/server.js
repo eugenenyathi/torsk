@@ -64,3 +64,4 @@ const start = async () => {
 };
 
 start();
+// taskkill /F /IM node.exe

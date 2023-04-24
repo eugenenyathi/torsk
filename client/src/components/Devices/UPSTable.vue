@@ -87,6 +87,7 @@ const selectUps = (upsId) => {
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("flushTransitFormData");
   store.dispatch("setTransitData", {
+    assetStateReq: false,
     context: `${data.connectedDevice} ups`,
     route: "devices/ups",
     ...data,

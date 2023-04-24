@@ -1,41 +1,66 @@
 <template>
-  <h2>Networking Components</h2>
-  <div class="segment-wrapper yellow">
-    <router-link to="/networking/routers" class="card">
-      <div class="icon-container">
-        <Router class="card-icon" />
-      </div>
-      <p class="statistic">{{ data.routers }}</p>
-      <p class="category">Routers</p>
-    </router-link>
-    <router-link to="/networking/switches" class="card">
-      <div class="icon-container">
-        <Switch class="card-icon" />
-      </div>
-      <p class="statistic">{{ data.switches }}</p>
-      <p class="category">Switches</p>
-    </router-link>
-    <router-link to="/networking/transceivers" class="card">
-      <div class="icon-container">
-        <Transmitters class="card-icon" />
-      </div>
-      <p class="statistic">{{ data.converters }}</p>
-      <p class="category">Converters</p>
-    </router-link>
+  <div class="chart-wrapper">
+    <Pie id="my-chart-id-3" :options="chartOptions" :data="chartData" />
   </div>
-  <!-- <router-view /> -->
 </template>
 
 <script setup>
-import Router from "vue-material-design-icons/Router.vue";
-import Switch from "vue-material-design-icons/Switch.vue";
-import Modem from "vue-material-design-icons/Wifi.vue";
-import Transmitters from "vue-material-design-icons/TransitConnection.vue";
-
 import { computed } from "vue";
 import { useStore } from "vuex";
 
-const store = useStore();
+import { Pie } from "vue-chartjs";
 
-const data = computed(() => store.getters.getDbData);
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale
+);
+
+const store = useStore();
+const dbData = computed(() => store.getters.getDbData);
+
+const chartData = {
+  labels: ["routers", "switches", "converters"],
+  datasets: [
+    {
+      data: [
+        dbData.value.routers,
+        dbData.value.switches,
+        dbData.value.converters,
+      ],
+      backgroundColor: [
+        "rgb(255, 99, 132)",
+        "rgb(54, 162, 235)",
+        "rgb(255, 205, 86)",
+      ],
+      hoverOffset: 4,
+    },
+  ],
+};
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    title: {
+      display: true,
+      text: "Networking Devices",
+    },
+    legend: {
+      display: false, //This will do the task
+    },
+  },
+};
 </script>

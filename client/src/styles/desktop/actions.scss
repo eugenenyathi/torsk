@@ -274,6 +274,16 @@
     font-size: 16px;
     margin-bottom: 10px;
     letter-spacing: 0.4px;
+
+    &.label-with-span {
+      @include flexAlign;
+      gap: 10px;
+
+      .cool-span {
+        font-size: 11px;
+        padding: 5px;
+      }
+    }
   }
 
   .update-input {
@@ -296,6 +306,7 @@
     border-radius: 6px;
     box-shadow: none;
     text-transform: capitalize;
+    background: none;
     background-color: $color-tertiary-1;
 
     img {

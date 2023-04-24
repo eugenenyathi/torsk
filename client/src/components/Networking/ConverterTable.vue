@@ -66,6 +66,7 @@ const selectConverter = (converterId) => {
   );
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("setTransitData", {
+    assetStateReq: false,
     context: `${data.location} converter`,
     route: "networking/converters",
     ...data,

@@ -33,6 +33,8 @@ const store = createStore({
       greyOutAction: {
         specs: false,
         update: false,
+        faulty: false,
+        decommission: false,
       },
     };
   },
@@ -140,7 +142,7 @@ const store = createStore({
       state.transitFormData = {};
     },
     setGreyOutAction(state, payload) {
-      state.greyOutAction = { ...state, payload };
+      state.greyOutAction = { ...state, ...payload };
     },
     setRowsPerPage(state, payload) {
       if (payload === "increase") {

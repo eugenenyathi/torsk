@@ -1,38 +1,66 @@
 <template>
-  <h2>General</h2>
-  <div class="segment-wrapper">
-    <router-link to="/telephones" class="card">
-      <div class="icon-container">
-        <Phone class="card-icon" />
-      </div>
-      <p class="statistic">{{ data.extensions }}</p>
-      <p class="category">Extensions</p>
-    </router-link>
-    <router-link to="/telephones" class="card">
-      <div class="icon-container">
-        <Phone class="card-icon" />
-      </div>
-      <p class="statistic">{{ data.directLines }}</p>
-      <p class="category">Direct Lines</p>
-    </router-link>
-    <router-link to="/emails/list" class="card">
-      <div class="icon-container">
-        <Email class="card-icon" />
-      </div>
-      <p class="statistic">{{ data.emails }}</p>
-      <p class="category">Emails</p>
-    </router-link>
+  <div class="chart-wrapper">
+    <Pie id="my-chart-id-3" :options="chartOptions" :data="chartData" />
   </div>
 </template>
 
 <script setup>
-import Phone from "vue-material-design-icons/PhoneOutline.vue";
-import Email from "vue-material-design-icons/EmailOutline.vue";
-
 import { computed } from "vue";
 import { useStore } from "vuex";
 
-const store = useStore();
+import { Pie } from "vue-chartjs";
 
-const data = computed(() => store.getters.getDbData);
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale
+);
+
+const store = useStore();
+const dbData = computed(() => store.getters.getDbData);
+
+const chartData = {
+  labels: ["emails", "extensions", "direct lines"],
+  datasets: [
+    {
+      data: [
+        dbData.value.emails,
+        dbData.value.extensions,
+        dbData.value.directLines,
+      ],
+      backgroundColor: [
+        "rgb(255, 99, 132)",
+        "rgb(54, 162, 235)",
+        "rgb(255, 205, 86)",
+      ],
+      hoverOffset: 4,
+    },
+  ],
+};
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    title: {
+      display: true,
+      text: "Mix",
+    },
+    legend: {
+      display: false, //This will do the task
+    },
+  },
+};
 </script>

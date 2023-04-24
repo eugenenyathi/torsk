@@ -1,3 +1,4 @@
+import useAuth from "./useAuth.js";
 import axios from "axios";
 import useAxiosError from "./useAxiosError.js";
 import usePagination from "./usePagination";
@@ -9,6 +10,8 @@ const useFetchRouteData = () => {
   const isLoading = ref(true);
   const axiosError = ref(null);
   const store = useStore();
+  const { getAuthUser } = useAuth();
+  const user = getAuthUser();
 
   const { paginate, pagination } = usePagination();
 
@@ -19,7 +22,11 @@ const useFetchRouteData = () => {
       //fetch data
       const {
         data: { data },
-      } = await axios(`${baseApiRoute.value}/${anchor}`);
+      } = await axios(`${baseApiRoute.value}/${anchor}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
       //first clear any pre-existing data
       store.dispatch("flushRouteData");

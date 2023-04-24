@@ -9,6 +9,13 @@
     </div>
     <div class="info">
       <Devices class="icon" />
+      <div class="spec">
+        <p>User Account Password</p>
+        <p>{{ data.userAccPassword }}</p>
+      </div>
+    </div>
+    <div class="info">
+      <Devices class="icon" />
       <div class="spec uppercase">
         <p>Model</p>
         <p>{{ data.model }}</p>
@@ -39,6 +46,13 @@
           {{ data.storageType }} {{ data.storageGigs }}GB
         </p>
         <p v-else>{{ data.storageType }} {{ data.storageGigs / 1000 }} Tera</p>
+      </div>
+    </div>
+    <div class="info">
+      <Devices class="icon" />
+      <div class="spec">
+        <p>Static IpAddress</p>
+        <p :style="{ textTransform: 'none' }">{{ data.staticIpAddress }}</p>
       </div>
     </div>
     <div class="info">

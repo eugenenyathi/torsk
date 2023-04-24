@@ -1,54 +1,41 @@
 import axios from "axios";
 import useAuth from "./useAuth";
 import useAxiosError from "./useAxiosError";
+
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 const useSignup = () => {
-	const isLoading = ref(false);
-	const axiosError = ref(null);
-	const store = useStore();
-	const router = useRouter();
-	const { setAuthUser } = useAuth();
+  const isLoading = ref(false);
+  const axiosError = ref(null);
+  const store = useStore();
+  const router = useRouter();
+  const { setAuthUser } = useAuth();
 
-	const signup = async (userInfo) => {
-		try {
-			isLoading.value = true;
+  const signup = async (data) => {
+    try {
+      isLoading.value = true;
+      //send data
+      const { data: user } = await axios.post("/auth/register", data);
+      //update global status
+      store.dispatch("login", user);
+      //update cookies
+      setAuthUser(user);
+      //enable the signup btn
+      isLoading.value = false;
+      //redirect to home/dashboard route
+      router.push({ name: "Dashboard" });
+    } catch (err) {
+      useAxiosError(err, axiosError, isLoading);
+    }
+  };
 
-			const { data: user } = await axios("/users/1");
-			//update global state
-			store.dispatch("login", user);
-			//update cookies
-			setAuthUser(user);
-
-			isLoading.value = false;
-
-			return user;
-		} catch (err) {
-			useAxiosError(err, axiosError, isLoading);
-		}
-	};
-
-	const rootPassword = async (password) => {
-		try {
-			isLoading.value = true;
-
-			await axios("/users/1");
-
-			//redirect to the home/dashboard route
-			router.push({ name: "Dashboard" });
-		} catch (err) {
-			useAxiosError(err, axiosError, isLoading);
-		}
-	};
-
-	return {
-		axiosError,
-		isLoading,
-		signup,
-		rootPassword,
-	};
+  return {
+    axiosError,
+    isLoading,
+    signup,
+  };
 };
 
 export default useSignup;

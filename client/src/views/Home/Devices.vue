@@ -7,7 +7,7 @@
 
 <script setup>
 //components
-import SelectionBar from "../../components/SelectionBar.vue";
+import SelectionBar from "@/components/SelectionBar.vue";
 
 import { ref } from "vue";
 import { useStore } from "vuex";
@@ -20,7 +20,7 @@ store.dispatch("switchHeaderBtn", {
   showDeleteBtn: false,
 });
 store.dispatch("closeActionsMenu", false);
-store.dispatch("setGreyOutAction", false);
+store.dispatch("setGreyOutAction", { specs: true, update: true });
 
 const routes = ref([
   {

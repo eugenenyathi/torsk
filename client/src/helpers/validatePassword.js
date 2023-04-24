@@ -24,13 +24,11 @@ const validatePassword = (password) => {
     .oneOf(["Password", "Passw0rd", "Password123"]);
 
   if (schema.validate(password)) {
-    return "ok";
+    return true;
   } else {
     const error = schema.validate(password, { details: true });
     return error[0].message;
   }
-
-  return false;
 };
 
 export default validatePassword;

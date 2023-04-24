@@ -6,7 +6,8 @@
           <Page1 v-if="page === 1" @next="next" />
           <Page2 v-else-if="page === 2" @pop="pop" @next="next" />
           <Page3 v-else-if="page === 3" @pop="pop" @next="next" />
-          <Page4 v-else @pop="pop" />
+          <Page4 v-else-if="page === 4" @pop="pop" @next="next" />
+          <Page5 v-else @pop="pop" />
         </Transition>
       </div>
     </div>
@@ -18,6 +19,7 @@ import Page1 from "./AddMachinePgOne.vue";
 import Page2 from "./AddMachinePgTwo.vue";
 import Page3 from "./AddMachinePgThree.vue";
 import Page4 from "./AddMachinePgFour.vue";
+import Page5 from "./AddMachinePgFive.vue";
 
 import { ref } from "vue";
 

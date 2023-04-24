@@ -49,12 +49,13 @@
         </div>
         <button class="login-btn" :disabled="isLoading">let's go</button>
 
-        <!-- <router-link
-          :to="{ name: 'Signup' }"
+        <router-link
+          v-if="!userExists"
+          to="/signup"
           class="link-login link link-center"
         >
-          Join the planet. Sign up.
-        </router-link> -->
+          Join the planet. Single Ticket Sign up.
+        </router-link>
       </form>
     </section>
   </main>
@@ -63,28 +64,24 @@
 <script setup>
 //TODO add secret signup page
 //TODO add ipAddress Management
-
-//components
-import BaseInput from "../base/BaseInput.vue";
-import BaseButton from "../base/BaseButton.vue";
-import Alert from "../components/Alert.vue";
+import Alert from "@/components/Alert.vue";
 
 //icons
 import EyeOutline from "vue-material-design-icons/EyeOutline.vue";
 import EyeOffOutline from "vue-material-design-icons/EyeOffOutline.vue";
 
 //composables
-import useLogin from "../composables/useLogin";
+import useLogin from "@/composables/useLogin";
 
 //helpers
-import AlertFn from "../helpers/AlertFn.js";
-import validatePassword from "../helpers/validatePassword.js";
+import AlertFn from "@/helpers/AlertFn.js";
+import validatePassword from "@/helpers/validatePassword.js";
 
 //vue
 import { ref, reactive, watch } from "vue";
 
 //assets
-const loginImg = require("../assets/krynn-1.webp");
+const loginImg = require("@/assets/krynn-1.webp");
 
 const username = ref("superadmin");
 const password = ref("Trish15122010!");
@@ -93,7 +90,7 @@ const pwdType = ref("password");
 
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
-const { isLoading, axiosError, login } = useLogin();
+const { isLoading, userExists, axiosError, login, checkUser } = useLogin();
 
 watch(axiosError, (currentValue, oldValue) => {
   if (currentValue) {
@@ -112,18 +109,18 @@ const togglePassword = () => {
 };
 
 const handleSubmit = async () => {
-  if (!username.value) {
-    showAlert(true, "Username field is empty", "danger");
+  if (!username.value || username.value.length < 3) {
+    showAlert(true, "Minimum username length is 3", "danger");
     removeAlert();
-  } else if (!password.value) {
-    showAlert(true, "Password field is empty", "danger");
-    removeAlert();
-  } else if (!validatePassword(password.value)) {
-    showAlert(true, "Invalid Credentials", "danger");
+  } else if (validatePassword(password.value) !== true) {
+    const error = validatePassword(password.value);
+    showAlert(true, "Password: " + error, "danger");
     removeAlert();
   } else {
     //send data to backend
     await login(username.value, password.value);
   }
 };
+
+checkUser();
 </script>

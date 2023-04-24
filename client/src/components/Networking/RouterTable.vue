@@ -99,6 +99,7 @@ const selectRouter = (routerId) => {
   const data = routers.value.find((router) => router._id === routerId);
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("setTransitData", {
+    assetStateReq: false,
     context: `${data.location} router`,
     route: "networking/routers",
     ...data,

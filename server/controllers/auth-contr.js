@@ -5,6 +5,16 @@ const {
 } = require("../errors/api-error");
 const { StatusCodes } = require("http-status-codes");
 
+const checkUser = async (req, res) => {
+  /* Check if a user exists already, 
+  otherwise if there is a user block this creation
+  */
+  const userExists = await User.countDocuments();
+
+  if (userExists) return res.status(StatusCodes.OK).json(true);
+  else return res.status(StatusCodes.OK).json(false);
+};
+
 const createUser = async (req, res) => {
   const { fullName, username, password } = req.body;
 
@@ -12,11 +22,24 @@ const createUser = async (req, res) => {
     throw new BadRequestError("Please provide a username and password");
   }
 
+  /* Check if a user exists already, 
+  otherwise if there is a user block this creation
+  */
+
+  const dbHasAUser = await User.countDocuments();
+
+  if (dbHasAUser)
+    throw new UnauthenticatedError(
+      "Insufficient permissions to create an account."
+    );
+
   const user = await User.create({ fullName, username, password });
 
   const token = user.createJWT();
 
-  return res.status(StatusCodes.CREATED).json({ username, token });
+  return res
+    .status(StatusCodes.CREATED)
+    .json({ username, name: fullName, token });
 };
 
 const login = async (req, res) => {
@@ -89,4 +112,10 @@ const updatePassword = async (req, res) => {
     .json({ message: "Password updated successfully" });
 };
 
-module.exports = { createUser, login, validateIdentity, updatePassword };
+module.exports = {
+  checkUser,
+  createUser,
+  login,
+  validateIdentity,
+  updatePassword,
+};

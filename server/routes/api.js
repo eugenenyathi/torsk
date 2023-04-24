@@ -200,6 +200,10 @@ router.route("/config/:configType/:configId").put(updateConfig);
 
 /* ======= FAULTY STATE ROUTES ===== */
 router.route("/faulty/:category/").get(getFaultyDevices);
+router.route("/faulty/:category/:device").get(getFaultyDevices);
 router.route("/decommissioned/:category/").get(getDecommissionedDevices);
+router
+  .route("/decommissioned/:category/:device/")
+  .get(getDecommissionedDevices);
 
 module.exports = router;

@@ -46,8 +46,9 @@
         </li>
         <li
           :class="{
-            'list-item': isActiveId !== 3,
-            'list-item active': isActiveId === 3,
+            'list-item': !greyOutAction.faulty || isActiveId !== 3,
+            'list-item active': !greyOutAction.faulty && isActiveId === 3,
+            'list-item grey-out': greyOutAction.faulty,
           }"
           @click="openAction('faulty', 3)"
         >
@@ -57,8 +58,9 @@
         </li>
         <li
           :class="{
-            'list-item': isActiveId !== 4,
-            'list-item active': isActiveId === 4,
+            'list-item': !greyOutAction.decommission || isActiveId !== 4,
+            'list-item active': !greyOutAction.decommission && isActiveId === 4,
+            'list-item grey-out': greyOutAction.decommission,
           }"
           @click="openAction('dec', 4)"
         >
@@ -93,11 +95,11 @@ import Trash from "vue-material-design-icons/TrashCanOutline.vue";
 import Close from "vue-material-design-icons/Close.vue";
 import List from "vue-material-design-icons/FormatListGroup.vue";
 import Update from "vue-material-design-icons/Update.vue";
-import ProgressQuestion from "vue-material-design-icons/ProgressQuestion.vue";
 import HelpCircle from "vue-material-design-icons/HelpCircleOutline.vue";
-import ProgressWrench from "vue-material-design-icons/ProgressWrench.vue";
 import ArchiveOutline from "vue-material-design-icons/ArchiveOutline.vue";
 import Check from "vue-material-design-icons/Check.vue";
+// import ProgressWrench from "vue-material-design-icons/ProgressWrench.vue";
+// import ProgressQuestion from "vue-material-design-icons/ProgressQuestion.vue";
 
 import { useStore } from "vuex";
 import { ref, computed, watch } from "vue";

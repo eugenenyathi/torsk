@@ -1,124 +1,132 @@
 .signup-container {
-	@extend .front-container;
+  @extend .front-container;
 }
 
 .signup-content {
-	@extend .front-content;
+  @extend .front-content;
 
-	&.email-page {
-		display: block;
-		width: 380px;
-		border-radius: 8px;
+  &.email-page {
+    display: block;
+    width: 380px;
+    border-radius: 8px;
 
-		.front-img-wrapper {
-			display: none;
-		}
-	}
+    .front-img-wrapper {
+      display: none;
+    }
+  }
 }
 
 .signup-email-wrapper,
 .signup-personal-info,
 .signup-root-password {
-	@extend .front-form;
+  @extend .front-form;
 }
 
 .signup-email-wrapper {
-	.krynn-logo {
-		font-size: 35px;
-		margin-bottom: 15px;
+  .krynn-logo {
+    font-size: 35px;
+    margin-bottom: 15px;
 
-		&.email-code {
-			margin-bottom: 30px;
-		}
-	}
+    &.email-code {
+      margin-bottom: 30px;
+    }
+  }
 
-	.header {
-		@extend .front-header;
-		color: $color-grey-2;
-		font-size: 18px;
-		margin-bottom: 10px;
+  .header {
+    @extend .front-header;
+    color: $color-grey-2;
+    font-size: 18px;
+    margin-bottom: 10px;
 
-		&.show-alert {
-			margin-bottom: 0px;
-		}
-	}
+    &.show-alert {
+      margin-bottom: 0px;
+    }
+  }
 
-	.alert {
-		margin-top: 0px;
-	}
+  .alert {
+    margin-top: 0px;
+  }
 }
 
 .signup-personal-info {
-	.krynn-logo {
-		font-size: 35px;
-		margin-bottom: 15px;
-	}
+  .krynn-logo {
+    font-size: 35px;
+    margin-bottom: 15px;
+  }
 
-	.header {
-		@extend .front-header;
-		color: $color-grey-2;
-		font-size: 18px;
-		margin-bottom: 15px;
+  .header {
+    @extend .front-header;
+    color: $color-grey-2;
+    font-size: 18px;
+    margin-bottom: 15px;
 
-		&.show-alert {
-			padding-bottom: 0px;
-		}
-	}
+    &.show-alert {
+      padding-bottom: 0px;
+    }
+  }
 
-	.alert {
-		margin-top: 0px;
-	}
+  .alert {
+    margin-top: 0px;
+  }
 }
 
 .signup-root-password {
-	.krynn-logo {
-		margin-bottom: 15px;
-		padding-bottom: 15px;
-	}
+  .krynn-logo {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+  }
 }
 
 .signup-control {
-	@extend .form-control;
+  @extend .form-control;
+  margin-bottom: 15px;
 
-	label {
-		display: block;
-		margin-bottom: 7px;
-		letter-spacing: 0.25px;
-	}
+  label {
+    display: block;
+    margin-bottom: 7px;
+    letter-spacing: 0.25px;
+  }
 
-	.signup-input {
-		@extend .form-input;
-	}
+  .signup-input {
+    @extend .form-input;
+    font-size: 16px;
+    height: 45px;
 
-	.eye-icon {
-		@include icon(77%, 4%);
-	}
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
 
-	&.email-page {
-		.signup-input {
-			height: 47px;
-		}
-	}
+  .eye-icon {
+    @include icon(77%, 4%);
+  }
 
-	&.fullName-control {
-		display: flex;
-		align-items: center;
+  &.email-page {
+    .signup-input {
+      height: 47px;
+    }
+  }
 
-		.firstName {
-			width: 50%;
-			border-top-right-radius: 0px;
-			border-bottom-right-radius: 0px;
-			border-right: 0px;
-		}
+  &.fullName-control {
+    display: flex;
+    align-items: center;
 
-		.lastName {
-			width: 50%;
-			border-top-left-radius: 0px;
-			border-bottom-left-radius: 0px;
-		}
-	}
+    .firstName {
+      width: 50%;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-right: 0px;
+    }
+
+    .lastName {
+      width: 50%;
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+  }
 }
 
 .signup-btn {
-	@extend .front-btn;
+  @extend .front-btn;
+  height: 47px;
 }

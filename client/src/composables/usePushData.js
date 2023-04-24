@@ -1,3 +1,4 @@
+import useAuth from "./useAuth.js";
 import axios from "axios";
 import useAxiosError from "./useAxiosError.js";
 import usePagination from "./usePagination";
@@ -11,6 +12,8 @@ const usePushData = () => {
   const axiosError = ref(null);
   const store = useStore();
   const router = useRouter();
+  const { getAuthUser } = useAuth();
+  const user = getAuthUser();
 
   const context = computed(() => store.getters.getFlushMessageContext);
   const { paginate, pagination } = usePagination();
@@ -21,7 +24,15 @@ const usePushData = () => {
 
     try {
       //send data
-      const { data } = await axios.post(apiRoute, { ...formData.value });
+      const { data } = await axios.post(
+        apiRoute,
+        { ...formData.value },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
 
       store.dispatch("setShowFlushMessage", {
         state: true,
@@ -47,7 +58,15 @@ const usePushData = () => {
 
     try {
       //send data
-      const res = await axios.put(apiRoute, { ...formData.value });
+      const res = await axios.put(
+        apiRoute,
+        { ...formData.value },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
 
       store.dispatch("setShowFlushMessage", {
         state: true,

@@ -1,5 +1,5 @@
 import axios from "axios";
-import useToken from "../composables/useToken";
+import useToken from "@/composables/useToken";
 
 const token = useToken();
 

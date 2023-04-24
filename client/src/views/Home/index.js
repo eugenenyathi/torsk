@@ -7,6 +7,7 @@ import Telephones from "./Telephones.vue";
 import RemoteDesktop from "./RemoteDesktop.vue";
 import Software from "./Software.vue";
 import Company from "./Company.vue";
+import AssetState from "./AssetState.vue";
 
 //from header
 import UserProfile from "./UserProfile";
@@ -24,4 +25,5 @@ export {
   Company,
   UserProfile,
   UserSettings,
+  AssetState,
 };

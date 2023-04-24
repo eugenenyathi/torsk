@@ -1,40 +1,62 @@
 <template>
-  <h2>Office Equipment</h2>
-  <div class="segment-wrapper blue">
-    <router-link to="/office-equipment/printers" class="card">
-      <div class="icon-container">
-        <Printer class="card-icon" />
-      </div>
-      <p class="statistic">{{ data.multiPurposePrinters }}</p>
-      <p class="category">All-in-one Printers</p>
-    </router-link>
-    <router-link to="/office-equipment/printers" class="card">
-      <div class="icon-container">
-        <Printer class="card-icon" />
-      </div>
-      <p class="statistic">{{ data.generalPrinters }}</p>
-      <p class="category">General Printers</p>
-    </router-link>
-
-    <router-link to="/office-equipment/scanners" class="card">
-      <div class="icon-container">
-        <Scanner class="card-icon" />
-      </div>
-      <p class="statistic">{{ data.scanners }}</p>
-      <p class="category">Scanners</p>
-    </router-link>
+  <div class="chart-wrapper">
+    <Doughnut id="my-chart-id-2" :options="chartOptions" :data="chartData" />
   </div>
-  <!-- <router-view /> -->
 </template>
 
 <script setup>
-import Printer from "vue-material-design-icons/Printer.vue";
-import Scanner from "vue-material-design-icons/Scanner.vue";
-
 import { computed } from "vue";
 import { useStore } from "vuex";
 
-const store = useStore();
+import { Doughnut } from "vue-chartjs";
 
-const data = computed(() => store.getters.getDbData);
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale
+);
+
+const store = useStore();
+const dbData = computed(() => store.getters.getDbData);
+
+const chartData = {
+  labels: ["printers", "scanners"],
+  datasets: [
+    {
+      data: [dbData.value.printers, dbData.value.scanners],
+      backgroundColor: [
+        "rgb(255, 99, 132)",
+        "rgb(54, 162, 235)",
+        "rgb(255, 205, 86)",
+      ],
+      hoverOffset: 4,
+    },
+  ],
+};
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    title: {
+      display: true,
+      text: "Office-Equipment",
+    },
+    legend: {
+      display: false, //This will do the task
+    },
+  },
+};
 </script>

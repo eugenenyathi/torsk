@@ -26,11 +26,12 @@
         />
       </div>
       <div class="entry-control">
-        <label>Monitor Serial Number</label>
+        <label class="label-with-span"
+          >Monitor Serial Number <span class="cool-span">optional</span></label
+        >
         <input
           type="text"
           class="entry-input"
-          placeholder="Optional field"
           v-model="collection.monitorSerialNumber"
         />
       </div>

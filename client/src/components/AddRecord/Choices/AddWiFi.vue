@@ -72,7 +72,9 @@ import Loader from "../../BtnLoader";
 import Alert from "../../Alert.vue";
 import AlertFn from "../../../helpers/AlertFn.js";
 import usePushData from "@/composables/usePushData";
+
 import useFetch from "@/composables/useFetchData";
+import useAuth from "@/composables/useAuth";
 
 import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
@@ -80,6 +82,8 @@ import { useStore } from "vuex";
 import axios from "axios";
 
 const store = useStore();
+const { getAuthUser } = useAuth();
+const user = getAuthUser();
 
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
@@ -108,7 +112,11 @@ const togglePassword = () => {
 
 const fetchRouters = async () => {
   try {
-    const res = await axios("/torsk/networking/device/routers");
+    const res = await axios("/torsk/networking/device/routers", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
     // console.log(res);
     routers.value = res.data.data;
   } catch (err) {

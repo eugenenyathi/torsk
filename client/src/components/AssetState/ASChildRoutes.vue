@@ -23,7 +23,9 @@
     "
   />
   <UPSTable
-    v-else-if="currentRoute === 'faulty-ups' || currentRoute === 'faulty-ups'"
+    v-else-if="
+      currentRoute === 'faulty-ups' || currentRoute === 'decommissioned-ups'
+    "
   />
 
   <!-- Office Equipment -->

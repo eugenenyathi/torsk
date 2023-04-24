@@ -15,6 +15,7 @@ import {
   UserProfile,
   UserSettings,
   Emails,
+  AssetState,
 } from "../views/Home/";
 
 import Manifesto from "@/components/Manifesto";
@@ -27,12 +28,18 @@ import OfficeEquipRoutes from "@/components/OfficeEquipment/OfficeEquipRoutes.vu
 import NetworkingRoutes from "@/components/Networking/NetworkingRoutes.vue";
 //Emails Routes
 import EmailsRoutes from "@/components/Emails/EmailsRoutes.vue";
-//Faulty State Routes
-import AssetStateRoutes from "@/components/Dashboard/AssetStateRoutes.vue";
-import ASChildRoutes from "@/components/Dashboard/ASChildRoutes.vue";
 
-//interface files
-import AssetState from "@/components/Dashboard/AssetState.vue";
+import AssetStateRoutes from "@/components/AssetState/AssetStateRoutes.vue";
+import ASChildRoutes from "@/components/AssetState/ASChildRoutes.vue";
+
+import FaultyDevicesRoutes from "@/components/AssetState/FaultyDevicesRoutes.vue";
+import DecommissionedDevicesRoutes from "@/components/AssetState/DecommissionedDevicesRoutes.vue";
+
+import FaultyOfficeEquipmentRoutes from "@/components/AssetState/FaultyOfficeEquipmentRoutes.vue";
+import DecOfficeEquipmentRoutes from "@/components/AssetState/DecOfficeEquipmentRoutes.vue";
+
+import FaultyNetworkingRoutes from "@/components/AssetState/FaultyNetworkingRoutes.vue";
+import DecommissionedNetworkingRoutes from "@/components/AssetState/DecommissionedNetworkingRoutes.vue";
 
 //Files to with adding a new device
 import AddServer from "@/components/AddRecord/Choices/AddServer.vue";
@@ -64,7 +71,7 @@ import EditWiFi from "@/components/Action/EditWiFi.vue";
 
 //composables
 import useRoute from "@/composables/useRoute.js";
-const { redirectRoute, closeRoute } = useRoute();
+const { redirectUser, closeRoute, closeSignup } = useRoute();
 
 //TODO split this router file
 
@@ -80,171 +87,6 @@ const routes = [
         component: Dashboard,
         name: "Dashboard",
       },
-      {
-        path: "/dashboard/faulty",
-        component: AssetState,
-        name: "Faulty",
-        children: [
-          {
-            path: "devices",
-            component: AssetStateRoutes,
-            name: "Faulty-Devices",
-          },
-          {
-            path: "office-equipment",
-            component: AssetStateRoutes,
-            name: "Faulty-OfficeEquipment",
-          },
-          {
-            path: "networking",
-            component: AssetStateRoutes,
-            name: "Faulty-NetworkingDevices",
-          },
-          {
-            path: "telephones",
-            component: AssetStateRoutes,
-            name: "Faulty-Telephones",
-          },
-          {
-            path: "devices/servers",
-            component: ASChildRoutes,
-            name: "Faulty-Servers",
-          },
-          {
-            path: "devices/desktops",
-            component: ASChildRoutes,
-            name: "Faulty-Desktops",
-          },
-          {
-            path: "devices/laptops",
-            component: ASChildRoutes,
-            name: "Faulty-Laptops",
-          },
-          {
-            path: "devices/ups",
-            component: ASChildRoutes,
-            name: "Faulty-Ups",
-          },
-          {
-            path: "devices/tablets",
-            component: ASChildRoutes,
-            name: "Faulty-Tablets",
-          },
-          {
-            path: "devices/cellphones",
-            component: ASChildRoutes,
-            name: "Faulty-Cellphones",
-          },
-          {
-            path: "office-equipment/printers",
-            component: ASChildRoutes,
-            name: "Faulty-Printers",
-          },
-          {
-            path: "office-equipment/scanners",
-            component: ASChildRoutes,
-            name: "Faulty-Scanners",
-          },
-          {
-            path: "networking/routers",
-            component: ASChildRoutes,
-            name: "Faulty-Routers",
-          },
-          {
-            path: "networking/switches",
-            component: ASChildRoutes,
-            name: "Faulty-Switches",
-          },
-          {
-            path: "networking/converters",
-            component: ASChildRoutes,
-            name: "Faulty-Converters",
-          },
-        ],
-      },
-      {
-        path: "/dashboard/decommissioned",
-        component: AssetState,
-        name: "Decommissioned",
-        children: [
-          {
-            path: "devices",
-            component: AssetStateRoutes,
-            name: "Decommissioned-Devices",
-          },
-          {
-            path: "office-equipment",
-            component: AssetStateRoutes,
-            name: "Decommissioned-OfficeEquipment",
-          },
-          {
-            path: "networking",
-            component: AssetStateRoutes,
-            name: "Decommissioned-NetworkingDevices",
-          },
-          {
-            path: "telephones",
-            component: AssetStateRoutes,
-            name: "Decommissioned-Telephones",
-          },
-          {
-            path: "devices/servers",
-            component: ASChildRoutes,
-            name: "Decommissioned-Servers",
-          },
-          {
-            path: "devices/desktops",
-            component: ASChildRoutes,
-            name: "Decommissioned-Desktops",
-          },
-          {
-            path: "devices/laptops",
-            component: ASChildRoutes,
-            name: "Decommissioned-Laptops",
-          },
-          {
-            path: "devices/ups",
-            component: ASChildRoutes,
-            name: "Decommissioned-Ups",
-          },
-          {
-            path: "devices/tablets",
-            component: ASChildRoutes,
-            name: "Decommissioned-Tablets",
-          },
-          {
-            path: "devices/cellphones",
-            component: ASChildRoutes,
-            name: "Decommissioned-Cellphones",
-          },
-          {
-            path: "office-equipment/printers",
-            component: ASChildRoutes,
-            name: "Decommissioned-Printers",
-          },
-          {
-            path: "office-equipment/scanners",
-            component: ASChildRoutes,
-            name: "Decommissioned-Scanners",
-          },
-          {
-            path: "networking/routers",
-            component: ASChildRoutes,
-            name: "Decommissioned-Routers",
-          },
-          {
-            path: "networking/switches",
-            component: ASChildRoutes,
-            name: "Decommissioned-Switches",
-          },
-          {
-            path: "networking/converters",
-            component: ASChildRoutes,
-            name: "Decommissioned-Converters",
-          },
-        ],
-      },
-
       {
         path: "devices",
         component: Devices,
@@ -383,6 +225,176 @@ const routes = [
         component: EditEmailConfig,
       },
       {
+        path: "asset-state",
+        component: AssetState,
+        name: "Asset States",
+        children: [
+          {
+            path: "faulty",
+            component: AssetStateRoutes,
+            name: "Faulty Assets",
+          },
+          {
+            path: "decommissioned",
+            component: AssetStateRoutes,
+            name: "Decommissioned Assets",
+          },
+        ],
+      },
+      //Asset Main Child routes
+      //Faulty Devices Routes
+      {
+        path: "/asset-state/faulty/devices",
+        component: FaultyDevicesRoutes,
+        children: [
+          {
+            path: "servers",
+            component: ASChildRoutes,
+            name: "Faulty-Servers",
+          },
+          {
+            path: "desktops",
+            component: ASChildRoutes,
+            name: "Faulty-Desktops",
+          },
+          {
+            path: "laptops",
+            component: ASChildRoutes,
+            name: "Faulty-Laptops",
+          },
+          {
+            path: "ups",
+            component: ASChildRoutes,
+            name: "Faulty-Ups",
+          },
+          {
+            path: "tablets",
+            component: ASChildRoutes,
+            name: "Faulty-Tablets",
+          },
+          {
+            path: "cellphones",
+            component: ASChildRoutes,
+            name: "Faulty-Cellphones",
+          },
+        ],
+      },
+      //Faulty Office Equipment Routes
+      {
+        path: "/asset-state/faulty/office-equipment",
+        component: FaultyOfficeEquipmentRoutes,
+        children: [
+          {
+            path: "printers",
+            component: ASChildRoutes,
+            name: "Faulty-Printers",
+          },
+          {
+            path: "scanners",
+            component: ASChildRoutes,
+            name: "Faulty-Scanners",
+          },
+        ],
+      },
+      //Faulty Networking Devices Routes
+      {
+        path: "/asset-state/faulty/networking",
+        component: FaultyNetworkingRoutes,
+        children: [
+          {
+            path: "routers",
+            component: ASChildRoutes,
+            name: "Faulty-Routers",
+          },
+          {
+            path: "switches",
+            component: ASChildRoutes,
+            name: "Faulty-Switches",
+          },
+          {
+            path: "converters",
+            component: ASChildRoutes,
+            name: "Faulty-Converters",
+          },
+        ],
+      },
+      //Decommissioned Devices Routes
+      {
+        path: "/asset-state/decommissioned/devices",
+        component: DecommissionedDevicesRoutes,
+        children: [
+          {
+            path: "servers",
+            component: ASChildRoutes,
+            name: "Decommissioned-Servers",
+          },
+          {
+            path: "desktops",
+            component: ASChildRoutes,
+            name: "Decommissioned-Desktops",
+          },
+          {
+            path: "laptops",
+            component: ASChildRoutes,
+            name: "Decommissioned-Laptops",
+          },
+          {
+            path: "ups",
+            component: ASChildRoutes,
+            name: "Decommissioned-Ups",
+          },
+          {
+            path: "tablets",
+            component: ASChildRoutes,
+            name: "Decommissioned-Tablets",
+          },
+          {
+            path: "cellphones",
+            component: ASChildRoutes,
+            name: "Decommissioned-Cellphones",
+          },
+        ],
+      },
+      //Decommissioned Office Equipment Routes
+      {
+        path: "/asset-state/decommissioned/office-equipment",
+        component: DecOfficeEquipmentRoutes,
+        children: [
+          {
+            path: "printers",
+            component: ASChildRoutes,
+            name: "Decommissioned-Printers",
+          },
+          {
+            path: "scanners",
+            component: ASChildRoutes,
+            name: "Decommissioned-Scanners",
+          },
+        ],
+      },
+      //Decommissioned Networking Devices Routes
+      {
+        path: "/asset-state/decommissioned/networking",
+        component: DecommissionedNetworkingRoutes,
+        children: [
+          {
+            path: "routers",
+            component: ASChildRoutes,
+            name: "Decommissioned-Routers",
+          },
+          {
+            path: "switches",
+            component: ASChildRoutes,
+            name: "Decommissioned-Switches",
+          },
+          {
+            path: "converters",
+            component: ASChildRoutes,
+            name: "Decommissioned-Converters",
+          },
+        ],
+      },
+      {
         path: "software",
         component: Manifesto,
         name: "Software",
@@ -490,14 +502,14 @@ const routes = [
     path: "/login",
     component: Login,
     name: "Login",
-    beforeEnter: redirectRoute,
+    beforeEnter: redirectUser,
   },
 
   {
     path: "/signup",
     component: Signup,
     name: "Signup",
-    beforeEnter: redirectRoute,
+    beforeEnter: closeSignup,
   },
 
   {

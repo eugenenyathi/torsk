@@ -105,7 +105,9 @@ const totalOfficeEquipment = async () => {
     decommissioned: false,
   });
 
-  return { multiPurposePrinters, generalPrinters, scanners };
+  const printers = multiPurposePrinters + generalPrinters;
+
+  return { printers, scanners };
 };
 
 const groupedCategories = async () => {

@@ -82,6 +82,17 @@
             Emails
           </router-link>
         </li>
+        <li class="menu-link">
+          <router-link
+            to="/asset-state/faulty"
+            :class="{
+              'parent-link-exact-active': subIsActive('/asset-state/'),
+            }"
+          >
+            <ProgressWrench class="icon" />
+            Malfunctioning
+          </router-link>
+        </li>
         <!-- <li class="menu-link">
           <router-link
             to="/software"
@@ -119,6 +130,7 @@ import RemoteDesktop from "vue-material-design-icons/RemoteDesktop.vue";
 import Lan from "vue-material-design-icons/Lan.vue";
 import Email from "vue-material-design-icons/EmailOutline.vue";
 import Phone from "vue-material-design-icons/PhoneOutline.vue";
+import ProgressWrench from "vue-material-design-icons/ProgressWrench.vue";
 // import PrinterAlt from "vue-material-design-icons/Printer.vue";
 // import DashboardAlt from "vue-material-design-icons/Home.vue";
 // import LanAlt from "vue-material-design-icons/LanConnect.vue";

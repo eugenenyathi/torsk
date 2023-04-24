@@ -7,15 +7,20 @@ body {
   top: 13%;
   left: $sidebar-width;
   width: calc(100% - $sidebar-width);
-  padding: 25px;
+  height: calc(100vh - $header-size);
+  padding: 0px 20px;
 }
 
 .dashboard-content {
-  h2 {
-    color: $color-dark-3;
-    font-size: 18px;
-    font-weight: normal;
-    margin-bottom: 10px;
+  height: 100%;
+  @include flexCenter;
+  flex-wrap: wrap;
+  gap: 13px;
+
+  .chart-wrapper {
+    position: relative;
+    max-width: auto;
+    max-height: 260px;
   }
 }
 

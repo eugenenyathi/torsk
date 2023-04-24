@@ -49,6 +49,7 @@ import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";
 
 import usePushData from "@/composables/usePushData";
+import useAuth from "@/composables/useAuth";
 
 import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
@@ -56,6 +57,8 @@ import { useStore } from "vuex";
 import axios from "axios";
 
 const store = useStore();
+const { getAuthUser } = useAuth();
+const user = getAuthUser();
 
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
@@ -71,7 +74,11 @@ const collection = reactive({
 
 const fetchMachines = async () => {
   try {
-    const res = await axios("/torsk/devices/machines");
+    const res = await axios("/torsk/devices/machines", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
     machines.value = res.data.data;
   } catch (err) {
     console.log(err);

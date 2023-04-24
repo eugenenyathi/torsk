@@ -203,7 +203,7 @@
 
 <script setup>
 //components
-import SelectionBar from "../../components/SelectionBar.vue";
+import SelectionBar from "@/components/SelectionBar.vue";
 
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";

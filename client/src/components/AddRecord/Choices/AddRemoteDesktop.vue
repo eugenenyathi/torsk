@@ -42,6 +42,7 @@ import Alert from "../../Alert.vue";
 import AlertFn from "../../../helpers/AlertFn.js";
 
 import usePushData from "@/composables/usePushData";
+import useAuth from "@/composables/useAuth";
 
 import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
@@ -49,6 +50,8 @@ import { useStore } from "vuex";
 import axios from "axios";
 
 const store = useStore();
+const { getAuthUser } = useAuth();
+const authUser = getAuthUser();
 
 const data = computed(() => store.getters.getTransitFormData);
 
@@ -62,7 +65,11 @@ const { showAlert, removeAlert } = AlertFn(alert);
 
 const fetchMachines = async () => {
   try {
-    const res = await axios("/torsk/devices/machines/");
+    const res = await axios("/torsk/devices/machines/", {
+      headers: {
+        Authorization: `Bearer ${authUser.token}`,
+      },
+    });
     machines.value = res.data.data;
   } catch (err) {
     console.log(err);

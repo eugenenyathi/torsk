@@ -77,6 +77,7 @@ const selectServer = (serverId) => {
   store.dispatch("setShowActionsMenu", true);
   store.dispatch("flushTransitFormData");
   store.dispatch("setTransitData", {
+    assetStateReq: false,
     context: `${data.machine} server`,
     route: "devices/server",
     ...data,

@@ -9,9 +9,21 @@ import { ref, computed } from "vue";
 const useLogin = () => {
   const isLoading = ref(false);
   const axiosError = ref(null);
+  const userExists = ref(false);
+
   const store = useStore();
   const router = useRouter();
   const { setAuthUser, getAuthUser } = useAuth();
+
+  //check if a user already exists in the db
+  const checkUser = async () => {
+    try {
+      const { data } = await axios("/auth/status");
+      userExists.value = data;
+    } catch (err) {
+      useAxiosError(err, axiosError, isLoading);
+    }
+  };
 
   const login = async (username, password) => {
     isLoading.value = true;
@@ -43,7 +55,7 @@ const useLogin = () => {
     }
   };
 
-  return { isLoading, axiosError, login, loggedIn };
+  return { isLoading, axiosError, login, loggedIn, userExists, checkUser };
 };
 
 export default useLogin;

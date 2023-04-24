@@ -1,41 +1,33 @@
 <template>
   <div>
-    <form @submit.prevent="handleSubmit">
-      <Transition name="fade">
-        <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
-      </Transition>
+    <Transition name="fade">
+      <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
+    </Transition>
+    <form @submit.prevent="next()">
       <div class="update-control">
-        <label for="">MAC Address</label>
+        <label for="" class="label-with-span">
+          User Account Password
+          <span class="cool-span">optional</span>
+        </label>
         <input
           type="text"
           class="update-input"
-          v-model="collection.macAddress"
+          v-model="collection.userAccPassword"
         />
       </div>
       <div class="update-control">
-        <label for="">Desktop Serial Number</label>
+        <label for="" class="label-with-span">
+          Static ipAddress
+          <span class="cool-span">optional</span>
+        </label>
         <input
           type="text"
           class="update-input"
-          v-model="collection.serialNumber"
-        />
-      </div>
-      <div class="update-control">
-        <label for="">Monitor Serial Number</label>
-        <input
-          type="text"
-          class="update-input"
-          v-model="collection.monitorSerialNumber"
+          v-model="collection.staticIpAddress"
         />
       </div>
 
-      <button v-if="!isLoading" class="update-btn" :disabled="isLoading">
-        update
-      </button>
-      <button v-else class="update-btn" :disabled="isLoading">
-        update
-        <Loader />
-      </button>
+      <button class="update-btn next-btn">continue</button>
 
       <div class="go-back" @click="$emit('pop', 3)">
         <ChevronRight />
@@ -47,63 +39,42 @@
 
 <script setup>
 import ChevronRight from "vue-material-design-icons/ChevronRight.vue";
-
-import Loader from "@/components/BtnLoader";
 import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";
-import mac from "mac-regex";
-
-import usePushData from "@/composables/usePushData";
+import ipValidator from "@/helpers/ipValidator.js";
 
 import { useStore } from "vuex";
-import { ref, computed, reactive } from "vue";
+import { computed, reactive } from "vue";
 
 const store = useStore();
-const emit = defineEmits(["pop"]);
+const emit = defineEmits(["next", "pop"]);
 
-const data = computed(() => store.getters.getTransitData);
-const formData = computed(() => store.getters.getTransitFormData);
+const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  macAddress: formData.value.macAddress || data.value.macAddress,
-  serialNumber: formData.value.serialNumber || data.value.serialNumber,
-  monitorSerialNumber:
-    formData.value.monitorSerialNumber || data.value.monitorSerialNumber,
+  userAccPassword: data.value.userAccPassword || "password123.",
+  staticIpAddress: data.value.staticIpAddress || "192.166.1.72",
 });
 
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
-const { isLoading, axiosError, putData } = usePushData();
-
-const handleSubmit = async () => {
-  if (
-    collection.macAddress &&
-    !mac({ exact: true }).test(collection.macAddress)
-  ) {
-    showAlert(true, "Please enter a valid mac address", "danger");
-    removeAlert();
-  } else if (!collection.serialNumber || collection.serialNumber.length < 3) {
-    showAlert(true, "Please enter a valid desktop serial number", "danger");
+const next = () => {
+  if (collection.userAccPassword && collection.userAccPassword.length < 3) {
+    showAlert(true, "Please enter a valid user account password", "danger");
     removeAlert();
   } else if (
-    !collection.monitorSerialNumber ||
-    collection.monitorSerialNumber.length < 6
+    !collection.staticIpAddress ||
+    !ipValidator(collection.staticIpAddress)
   ) {
-    showAlert(true, "Please enter a valid monitor serial number", "danger");
+    showAlert(true, "Please enter a valid ip address", "danger");
     removeAlert();
   } else {
-    store.dispatch(
-      "setFlushMessageContext",
-      `${data.value.user} ${data.value.machineType} `
-    );
     store.dispatch("setTransitFormData", {
-      macAddress: collection.macAddress,
-      serialNumber: collection.serialNumber,
-      monitorSerialNumber: collection.monitorSerialNumber,
+      userAccPassword: collection.userAccPassword,
+      staticIpAddress: collection.staticIpAddress,
     });
-
-    await putData(`/torsk/devices/machine/${data.value._id}`);
+    emit("next", 5);
   }
 };
 </script>

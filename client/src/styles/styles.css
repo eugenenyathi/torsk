@@ -118,7 +118,7 @@ body {
 
 .position-container, .nested-views-position-container, .single-view-position-container {
   position: absolute;
-  top: calc(80px + 2%);
+  top: calc(77px + 2%);
   left: 21vw;
   width: calc(100% - 21vw);
   height: 100%;
@@ -126,16 +126,16 @@ body {
 }
 
 .single-view-position-container {
-  top: calc(80px + 6%);
+  top: calc(77px + 6%);
   padding: 0;
 }
 
 .nested-views-position-container {
-  top: calc(80px + 6%);
+  top: calc(77px + 6%);
   padding: 0;
 }
 .nested-views-position-container.special {
-  top: calc(80px + 5%);
+  top: calc(77px + 5%);
 }
 
 .go-back {
@@ -185,7 +185,7 @@ body {
 
 .progress-loader {
   position: absolute;
-  top: calc(50% - 80px);
+  top: calc(50% - 77px);
   left: 50%;
   transform: translateX(-50%);
 }
@@ -486,6 +486,7 @@ body {
 }
 .login-form .krynn-logo {
   display: block;
+  color: #25232e;
   text-align: center;
   font-weight: bold;
   font-size: 40px;
@@ -560,6 +561,7 @@ body {
 
 .link-login {
   margin-top: 13px;
+  font-size: 14px;
 }
 .link-login:hover {
   text-decoration: none;
@@ -614,10 +616,20 @@ body {
   padding-bottom: 15px;
 }
 
+.signup-control {
+  margin-bottom: 15px;
+}
 .signup-control label {
   display: block;
   margin-bottom: 7px;
   letter-spacing: 0.25px;
+}
+.signup-control .signup-input {
+  font-size: 16px;
+  height: 45px;
+}
+.signup-control .signup-input::placeholder {
+  font-size: 16px;
 }
 .signup-control .eye-icon {
   position: absolute;
@@ -648,6 +660,10 @@ body {
   width: 50%;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
+}
+
+.signup-btn {
+  height: 47px;
 }
 
 .sidebar-wrapper {
@@ -731,7 +747,7 @@ body {
   left: 21vw;
   width: calc(100% - 21vw);
   z-index: 5;
-  height: 80px;
+  height: 77px;
   padding: 0 15px;
   display: flex;
   align-items: center;
@@ -929,7 +945,7 @@ body {
 
 .actions-header {
   position: relative;
-  height: 80px;
+  height: 77px;
   padding: 25px;
   display: flex;
   align-items: center;
@@ -1140,6 +1156,15 @@ body {
   margin-bottom: 10px;
   letter-spacing: 0.4px;
 }
+.update-content label.label-with-span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.update-content label.label-with-span .cool-span {
+  font-size: 11px;
+  padding: 5px;
+}
 .update-content .update-input {
   color: #222;
   border-radius: 0px;
@@ -1158,6 +1183,7 @@ body {
   border-radius: 6px;
   box-shadow: none;
   text-transform: capitalize;
+  background: none;
   background-color: #b39f07;
 }
 .update-content .update-btn img {
@@ -1212,6 +1238,15 @@ body {
 .add-entry-content label {
   margin-bottom: 8px;
 }
+.add-entry-content label.label-with-span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.add-entry-content label.label-with-span .cool-span {
+  font-size: 11px;
+  padding: 5px;
+}
 .add-entry-content .entry-input {
   font-size: 16px;
   height: 43px;
@@ -1237,6 +1272,8 @@ body {
   border-radius: 6px;
   box-shadow: none;
   text-transform: capitalize;
+  background: none;
+  background-color: #623dff;
 }
 .add-entry-content .add-btn.next-btn {
   background-color: #3519b3;
@@ -1345,14 +1382,22 @@ body {
   top: 13%;
   left: 21vw;
   width: calc(100% - 21vw);
-  padding: 25px;
+  height: calc(100vh - 77px);
+  padding: 0px 20px;
 }
 
-.dashboard-content h2 {
-  color: #333;
-  font-size: 18px;
-  font-weight: normal;
-  margin-bottom: 10px;
+.dashboard-content {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+.dashboard-content .chart-wrapper {
+  position: relative;
+  max-width: auto;
+  max-height: 260px;
 }
 
 .segment-wrapper {
@@ -1444,6 +1489,36 @@ body {
   font-size: 12px;
 }
 .config-list-item .material-design-icon__svg {
+  color: #333;
+  width: 20px;
+  height: 20px;
+}
+
+.list-view-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-view-content {
+  padding: 25px;
+  width: 40vw;
+  border-radius: 6px;
+}
+
+.list-view-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  color: #25232e;
+  text-decoration: none;
+  background-color: #fff;
+}
+.list-view-item .material-design-icon__svg {
   color: #333;
   width: 20px;
   height: 20px;

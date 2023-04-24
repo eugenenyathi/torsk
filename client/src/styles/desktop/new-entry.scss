@@ -21,6 +21,16 @@
   label {
     @extend .label;
     margin-bottom: 8px;
+
+    &.label-with-span {
+      @include flexAlign;
+      gap: 10px;
+
+      .cool-span {
+        font-size: 11px;
+        padding: 5px;
+      }
+    }
   }
 
   .entry-input {
@@ -52,6 +62,8 @@
     border-radius: 6px;
     box-shadow: none;
     text-transform: capitalize;
+    background: none;
+    background-color: $color-primary;
 
     &.next-btn {
       background-color: $color-secondary;

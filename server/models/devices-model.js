@@ -156,6 +156,14 @@ const MachineSchema = new Schema({
     required: [true, "Storage can not be empty."],
   },
   userAccPassword: String,
+  staticIpAddress: {
+    type: String,
+    unique: true,
+    validate: {
+      validator: (ipAddress) => ipValidator(ipAddress),
+      message: (props) => `${props.value} is not a valid ip address.`,
+    },
+  },
   macAddress: {
     type: String,
     unique: true,
