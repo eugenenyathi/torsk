@@ -64,9 +64,9 @@
 import EyeOutline from "vue-material-design-icons/EyeOutline.vue";
 import EyeOffOutline from "vue-material-design-icons/EyeOffOutline.vue";
 
-import Loader from "../../BtnLoader";
-import Alert from "../../Alert.vue";
-import AlertFn from "../../../helpers/AlertFn.js";
+import Loader from "@/components/BtnLoader";
+import Alert from "@/components/Alert.vue";
+import AlertFn from "@/helpers/AlertFn.js";
 
 import { ref, reactive, computed, watch } from "vue";
 import { useStore } from "vuex";
@@ -81,9 +81,9 @@ const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
 
 const collection = reactive({
-  user: data.value.user || "",
-  email: data.value.email || "",
-  password: data.value.password || "",
+  user: data.value.user || "HR",
+  email: data.value.email || "hr@kwayedza.com",
+  password: data.value.password || "&hr//@20!5.",
 });
 
 const showPassword = ref(false);

@@ -52,7 +52,7 @@ const emit = defineEmits(["next", "pop"]);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  userAccPassword: data.value.userAccPassword || "password123.",
+  userAccPassword: data.value.userAccPassword || "Jnyathi123.",
   staticIpAddress: data.value.staticIpAddress || "192.166.1.72",
 });
 

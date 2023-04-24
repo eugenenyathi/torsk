@@ -46,7 +46,7 @@ const emit = defineEmits(["next", "pop"]);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  office: data.value.office || "Office 2019",
+  office: data.value.office || "Office 2021",
   antivirus: data.value.antivirus || "Eset v10",
 });
 
