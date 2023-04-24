@@ -45,6 +45,7 @@ const currentRoute = computed(() => useRoute().name.toLowerCase());
 
 const store = useStore();
 store.dispatch("setBaseApiRoute", "/torsk/office_equipment/device");
+store.dispatch("closeActionsMenu", false);
 
 const { pagination, rowsPerPage } = usePagination();
 

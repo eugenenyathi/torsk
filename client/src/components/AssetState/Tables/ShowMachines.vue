@@ -48,6 +48,7 @@ const currentRoute = computed(() => useRoute().name.toLowerCase());
 const machineType = currentRoute.value.split("-")[1];
 const routeType = currentRoute.value.split("-")[0];
 store.dispatch("setBaseApiRoute", `/torsk/${routeType}/devices/${machineType}`);
+store.dispatch("closeActionsMenu", false);
 
 fetchData(`/torsk/${routeType}/devices/${machineType}`, false);
 
@@ -65,7 +66,7 @@ const selectMachine = (machineId) => {
     route: "devices/machine",
     ...data,
   });
-  store.dispatch("setGreyOutAction", { specs: true, update: true });
+  store.dispatch("setGreyOutAction", { specs: false, update: true });
   store.dispatch("setShowActionsMenu", true);
 };
 

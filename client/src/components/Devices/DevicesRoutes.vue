@@ -6,14 +6,14 @@
     @reload="reloadData"
   />
 
-  <ComputerTable
+  <MachineTable
     v-else-if="currentRoute === 'desktops'"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open', 'user')"
     @reload="reloadData"
   />
 
-  <ComputerTable
+  <MachineTable
     v-else-if="currentRoute === 'laptops'"
     :showReloadIcon="showReloadIcon"
     @openFilterList="toggleFilterMenu('open', 'user')"
@@ -58,7 +58,7 @@
 
 <script setup>
 import ServerTable from "./ServerTable.vue";
-import ComputerTable from "./ComputerTable.vue";
+import MachineTable from "./MachineTable.vue";
 import UPSTable from "./UPSTable.vue";
 import MobileDeviceTable from "./MobileDeviceTable.vue";
 import Pagination from "../Pagination";

@@ -68,6 +68,7 @@ const store = useStore();
 const router = useRouter();
 
 store.dispatch("setBaseApiRoute", "/torsk/telephone");
+store.dispatch("closeActionsMenu", false);
 
 const isActiveId = ref(0);
 

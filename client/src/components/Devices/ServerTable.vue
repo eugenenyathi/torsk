@@ -63,6 +63,7 @@ const props = defineProps({
 const emit = defineEmits(["openFilterList", "reload"]);
 const store = useStore();
 store.dispatch("setBaseApiRoute", "/torsk/devices/server");
+store.dispatch("closeActionsMenu", false);
 
 const isActiveId = ref(0);
 

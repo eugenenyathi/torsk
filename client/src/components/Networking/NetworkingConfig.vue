@@ -5,7 +5,7 @@
     <div class="config-view-container">
       <div class="config-view-content">
         <div class="config-list-item">
-          <Email />
+          <IpAddress />
           <div class="info-wrapper">
             <p class="info-head">Base ip address</p>
             <p class="info-text">
@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="config-list-item">
-          <Email />
+          <Gate />
           <div class="info-wrapper">
             <p class="info-head">Default gateway</p>
             <p class="info-text">
@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="config-list-item">
-          <Email />
+          <Web />
           <div class="info-wrapper">
             <p class="info-head">DNS</p>
             <p class="info-text">
@@ -38,6 +38,9 @@
 
 <script setup>
 import Email from "vue-material-design-icons/EmailOutline.vue";
+import IpAddress from "vue-material-design-icons/IpOutline.vue";
+import Gate from "vue-material-design-icons/Gate.vue";
+import Web from "vue-material-design-icons/Web.vue";
 
 import Loader from "@/components/Loader";
 import NoData from "@/components/NoData";
@@ -49,9 +52,9 @@ import useFetchData from "@/composables/useFetchData";
 
 const store = useStore();
 
-const { isLoading, fetchData } = useFetchData();
+const { isLoading, fetchConfig } = useFetchData();
 
-fetchData("/torsk/config/network");
+fetchConfig("/torsk/config/network");
 
 const configData = computed(() => store.getters.getDbData);
 </script>

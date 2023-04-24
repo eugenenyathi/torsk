@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import Loader from "@/components/BtnLoader";
+import Loader from "@/components/BrownishBtnLoader";
 import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";
 

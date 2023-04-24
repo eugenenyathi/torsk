@@ -46,10 +46,14 @@ import { useRoute } from "vue-router";
 
 const currentRoute = computed(() => useRoute().name.toLowerCase());
 
-console.log("Current route:", currentRoute.value);
+// console.log("Current route:", currentRoute.value);
 
 const store = useStore();
-store.dispatch("switchHeaderBtn", { showEditBtn: true, showDeleteBtn: false });
+store.dispatch("switchHeaderBtn", {
+  showAddBtn: true,
+  showEditBtn: false,
+  showDeleteBtn: false,
+});
 store.commit("closeActionsMenu", false);
 store.commit("setGreyOutAction", { specs: false });
 

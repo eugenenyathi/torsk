@@ -52,17 +52,25 @@ const useFetchData = () => {
         },
       });
 
-      if (Object.keys(data).length > 0) {
-        if (showEditBtn)
-          store.dispatch("switchHeaderBtn", { showEditBtn: true });
-        store.dispatch("setDbData", data);
-      }
-
       //first clear any pre-existing data to remove possible pagination errors
       store.dispatch("flushRouteData");
       store.dispatch("setRouteData", []);
       store.dispatch("setPageNumbers", []);
-      store.dispatch("setDbData", data);
+      //get the dbData to it's default state
+      store.dispatch("setDbData", {});
+
+      if (
+        Object.keys(data).length > 0 &&
+        Object.getPrototypeOf(data) === Object.prototype
+      ) {
+        if (showEditBtn)
+          store.dispatch("switchHeaderBtn", {
+            showEditBtn: true,
+            showAddBtn: false,
+            showDeleteBtn: false,
+          });
+        store.dispatch("setDbData", data);
+      }
 
       isLoading.value = false;
     } catch (err) {
@@ -72,7 +80,7 @@ const useFetchData = () => {
     }
   };
 
-  return { isLoading, axiosError, fetchData };
+  return { isLoading, axiosError, fetchData, fetchConfig };
 };
 
 export default useFetchData;

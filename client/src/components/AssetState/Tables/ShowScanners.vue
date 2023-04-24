@@ -41,6 +41,7 @@ const { isLoading, fetchData } = useFetchData();
 const currentRoute = computed(() => useRoute().name.toLowerCase());
 const routeType = currentRoute.value.split("-")[0];
 store.dispatch("setBaseApiRoute", `/torsk/${routeType}/devices/scanners`);
+store.dispatch("closeActionsMenu", false);
 
 fetchData(`/torsk/${routeType}/office-equipment/scanners`, false);
 const scanners = computed(() => store.getters.getDbData);

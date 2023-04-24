@@ -50,6 +50,7 @@ const { isLoading, fetchData } = useFetchData();
 const currentRoute = computed(() => useRoute().name.toLowerCase());
 const routeType = currentRoute.value.split("-")[0];
 store.dispatch("setBaseApiRoute", `/torsk/${routeType}/devices/routers`);
+store.dispatch("closeActionsMenu", false);
 
 fetchData(`/torsk/${routeType}/networking/routers`, false);
 const routers = computed(() => store.getters.getDbData);

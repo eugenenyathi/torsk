@@ -976,6 +976,8 @@ body {
   display: flex;
   align-items: center;
   align-items: flex-start;
+  overflow: auto;
+  min-height: min-content;
 }
 
 .actions-ul-wrapper {

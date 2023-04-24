@@ -20,7 +20,11 @@ store.dispatch("switchHeaderBtn", {
   showDeleteBtn: false,
 });
 store.dispatch("closeActionsMenu", false);
-store.dispatch("setGreyOutAction", { specs: true, update: true });
+store.dispatch("setGreyOutAction", {
+  specs: false,
+  update: false,
+  decommission: false,
+});
 
 const routes = ref([
   {

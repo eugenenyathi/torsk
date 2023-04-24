@@ -119,7 +119,7 @@ import Check from "vue-material-design-icons/Check.vue";
 import Edit from "vue-material-design-icons/Pencil";
 
 import State from "./ActionState";
-import Loader from "@/components/BtnLoader";
+import Loader from "@/components/BrownishBtnLoader";
 import SelectBox from "@/base/SearchableSelectBx.vue";
 import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";

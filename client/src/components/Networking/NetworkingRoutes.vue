@@ -55,6 +55,7 @@ const currentRoute = computed(() => useRoute().name.toLowerCase());
 const store = useStore();
 store.dispatch("switchHeaderBtn", { showEditBtn: true });
 store.dispatch("setBaseApiRoute", "/torsk/networking/device");
+store.dispatch("closeActionsMenu", false);
 
 const { pagination, rowsPerPage } = usePagination();
 

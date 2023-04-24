@@ -65,6 +65,7 @@ const router = useRouter();
 
 store.dispatch("switchHeaderBtn", { showEditBtn: true });
 store.dispatch("setBaseApiRoute", "/torsk/email");
+store.dispatch("closeActionsMenu", false);
 
 const isActiveId = ref(0);
 

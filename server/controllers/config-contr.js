@@ -34,6 +34,7 @@ const getConfig = async (req, res) => {
     default:
       throw new BadRequestError("Please provide a valid configType");
   }
+
   return res.status(StatusCodes.OK).json({ data: configs[0] });
 };
 

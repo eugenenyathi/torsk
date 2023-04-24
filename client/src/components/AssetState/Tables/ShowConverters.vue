@@ -37,6 +37,7 @@ const { isLoading, fetchData } = useFetchData();
 const currentRoute = computed(() => useRoute().name.toLowerCase());
 const routeType = currentRoute.value.split("-")[0];
 store.dispatch("setBaseApiRoute", `/torsk/${routeType}/devices/converters`);
+store.dispatch("closeActionsMenu", false);
 
 fetchData(`/torsk/${routeType}/networking/converters`, false);
 const converters = computed(() => store.getters.getDbData);

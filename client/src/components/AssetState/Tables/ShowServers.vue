@@ -48,6 +48,7 @@ const routeType = currentRoute.value.split("-")[0];
 getting an entire updated list after the
 individual update*/
 store.dispatch("setBaseApiRoute", `/torsk/${routeType}/devices/servers`);
+store.dispatch("closeActionsMenu", false);
 
 fetchData(`/torsk/${routeType}/devices/servers`, false);
 const servers = computed(() => store.getters.getDbData);
@@ -64,7 +65,7 @@ const selectServer = (serverId) => {
     route: "devices/server",
     ...data,
   });
-  store.dispatch("setGreyOutAction", { specs: true, update: true });
+  store.dispatch("setGreyOutAction", { specs: false, update: true });
   store.dispatch("setShowActionsMenu", true);
 };
 

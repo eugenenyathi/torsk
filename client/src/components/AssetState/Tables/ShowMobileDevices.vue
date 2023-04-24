@@ -46,6 +46,7 @@ const currentRoute = computed(() => useRoute().name.toLowerCase());
 const routeType = currentRoute.value.split("-")[0];
 const deviceType = currentRoute.value.split("-")[1];
 store.dispatch("setBaseApiRoute", `/torsk/${routeType}/devices/${deviceType}`);
+store.dispatch("closeActionsMenu", false);
 
 fetchData(`/torsk/${routeType}/devices/${deviceType}`, false);
 const devices = computed(() => store.getters.getDbData);
@@ -62,7 +63,7 @@ const selectDevice = (deviceId) => {
     route: "devices/mobile",
     ...data,
   });
-  store.dispatch("setGreyOutAction", { specs: true, update: true });
+  store.dispatch("setGreyOutAction", { specs: false, update: true });
   store.dispatch("setShowActionsMenu", true);
 };
 

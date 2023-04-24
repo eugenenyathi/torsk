@@ -16,5 +16,9 @@ store.dispatch("switchHeaderBtn", {
   showDeleteBtn: false,
 });
 store.dispatch("closeActionsMenu", false);
-store.dispatch("setGreyOutAction", { specs: true, update: true });
+store.dispatch("setGreyOutAction", {
+  specs: true,
+  update: true,
+  decommission: true,
+});
 </script>

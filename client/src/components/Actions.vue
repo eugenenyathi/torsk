@@ -120,19 +120,19 @@ const openAction = (category, listItemID) => {
 
   switch (category) {
     case "specs":
-      showAction.value = true;
+      showAction.value = greyOutAction.value.specs ? false : true;
       action.value = "specs";
       break;
     case "update":
-      showAction.value = true;
+      showAction.value = greyOutAction.value.update ? false : true;
       action.value = "update";
       break;
     case "faulty":
-      showAction.value = true;
+      showAction.value = greyOutAction.value.faulty ? false : true;
       action.value = "faulty";
       break;
     case "dec":
-      showAction.value = true;
+      showAction.value = greyOutAction.value.decommission ? true : false;
       action.value = "dec";
       break;
     case "delete":
@@ -147,7 +147,11 @@ const closeMenu = () => {
   showAction.value = false;
   action.value = "";
   store.commit("closeActionsMenu", false);
-  store.commit("setGreyOutAction", { specs: false });
+  store.commit("setGreyOutAction", {
+    specs: false,
+    update: false,
+    decommission: false,
+  });
 };
 
 const closeAlert = () => {

@@ -4,5 +4,5 @@
 
 <script setup>
 //assets
-import loader from "@/assets/loader-6.svg";
+import loader from "@/assets/loader-5.svg";
 </script>

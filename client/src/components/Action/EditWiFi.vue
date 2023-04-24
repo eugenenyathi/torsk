@@ -55,7 +55,7 @@
 import EyeOutline from "vue-material-design-icons/EyeOutline.vue";
 import EyeOffOutline from "vue-material-design-icons/EyeOffOutline.vue";
 
-import Loader from "@/components/BtnLoader";
+import Loader from "@/components/BrownishBtnLoader";
 import Alert from "@/components/Alert.vue";
 import AlertFn from "@/helpers/AlertFn.js";
 

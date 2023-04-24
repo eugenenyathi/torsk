@@ -5,7 +5,7 @@
     <div class="config-view-container">
       <div class="config-view-content">
         <div class="config-list-item">
-          <Email />
+          <IncomingEmail />
           <div class="info-wrapper">
             <p class="info-head">Incoming mail server</p>
             <p class="info-text">
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="config-list-item">
-          <Email />
+          <OutgoingEmail />
           <div class="info-wrapper">
             <p class="info-head">Outgoing mail server</p>
             <p class="info-text">
@@ -34,7 +34,8 @@
 </template>
 
 <script setup>
-import Email from "vue-material-design-icons/EmailOutline.vue";
+import IncomingEmail from "vue-material-design-icons/EmailArrowLeftOutline.vue";
+import OutgoingEmail from "vue-material-design-icons/EmailArrowRightOutline.vue";
 
 import Loader from "@/components/Loader";
 import NoData from "@/components/NoData";
@@ -46,9 +47,9 @@ import useFetchData from "@/composables/useFetchData";
 
 const store = useStore();
 
-const { isLoading, fetchData } = useFetchData();
+const { isLoading, fetchConfig } = useFetchData();
 
-fetchData("/torsk/config/email");
+fetchConfig("/torsk/config/email");
 
 const configData = computed(() => store.getters.getDbData);
 </script>

@@ -7,7 +7,7 @@
         <p>{{ data.machine }}</p>
       </div>
     </div>
-    <div class="info">
+    <div class="info" v-if="data.userAccPassword">
       <Devices class="icon" />
       <div class="spec">
         <p>User Account Password</p>
@@ -48,14 +48,14 @@
         <p v-else>{{ data.storageType }} {{ data.storageGigs / 1000 }} Tera</p>
       </div>
     </div>
-    <div class="info">
+    <div class="info" v-if="data.staticIpAddress">
       <Devices class="icon" />
       <div class="spec">
         <p>Static IpAddress</p>
         <p :style="{ textTransform: 'none' }">{{ data.staticIpAddress }}</p>
       </div>
     </div>
-    <div class="info">
+    <div class="info" v-if="data.macAddress">
       <Devices class="icon" />
       <div class="spec">
         <p>MAC Address</p>

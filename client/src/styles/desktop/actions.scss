@@ -1,5 +1,6 @@
 .actions-container {
   position: fixed;
+
   top: 0;
   right: 0;
   width: 20%;
@@ -9,6 +10,7 @@
   background-color: $color-light-1;
   transform: translateX(280px);
   transition: $transition-1;
+  // overflow: auto;
 
   &.active {
     transform: translateX(0px);
@@ -53,6 +55,8 @@
   height: 100%;
   @include flexAlign;
   align-items: flex-start;
+  overflow: auto;
+  min-height: min-content;
 }
 
 .actions-ul-wrapper {

@@ -142,7 +142,7 @@ const store = createStore({
       state.transitFormData = {};
     },
     setGreyOutAction(state, payload) {
-      state.greyOutAction = { ...state, ...payload };
+      state.greyOutAction = { ...state.greyOutAction, ...payload };
     },
     setRowsPerPage(state, payload) {
       if (payload === "increase") {
