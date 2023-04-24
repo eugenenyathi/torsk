@@ -93,8 +93,8 @@ const data = computed(() => store.getters.getTransitFormData);
 const routers = ref([]);
 const collection = reactive({
   routerId: "",
-  ssid: data.value.ssid || "VFCC_ICT",
-  password: data.value.password || "vfacouncil!",
+  ssid: data.value.ssid || "ICT",
+  password: data.value.password || "$ecur$@259%",
 });
 
 const showPassword = ref(false);

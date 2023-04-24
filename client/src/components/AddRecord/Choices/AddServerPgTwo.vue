@@ -131,11 +131,11 @@ const emit = defineEmits(["next", "pop"]);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  cpu: data.value.cpu || "Core i9",
-  cpuGen: data.value.cpuGen || 8,
-  ram: data.value.ram || 4,
-  storageType: data.value.storageType || "HDD",
-  storageGigs: data.value.storageGigs || 450,
+  cpu: data.value.cpu || "AMD EPYC 9004",
+  cpuGen: data.value.cpuGen || 12,
+  ram: data.value.ram || 16,
+  storageType: data.value.storageType || "SSD",
+  storageGigs: data.value.storageGigs || 8000,
 });
 
 const alert = reactive({ show: false, msg: "", type: "" });

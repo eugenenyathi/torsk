@@ -138,11 +138,11 @@ const { showAlert, removeAlert } = AlertFn(alert);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  location: data.value.location || "test",
+  location: data.value.location || "IT server room",
   model: data.value.model || "trendnet",
-  ipAddress: data.value.ipAddress || "5.11.11.5",
+  ipAddress: data.value.ipAddress || "192.166.1.253",
   serialNumber: data.value.serialNumber || "12354-5689",
-  ports: data.value.ports || 8,
+  ports: data.value.ports || 16,
   deadPorts: data.value.deadPorts || 0,
   wireless: data.value.wireless || false,
 });

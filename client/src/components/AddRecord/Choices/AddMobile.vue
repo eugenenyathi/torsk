@@ -190,12 +190,12 @@ const data = computed(() => store.getters.getTransitFormData);
 const collection = reactive({
   deviceType: data.value.deviceType || "cellphone",
   user: data.value.user || "Purchasing Manager",
-  model: data.value.model || "Samsung S22 Ultra",
-  os: data.value.os || "Android 14",
-  storage: data.value.storage || 200,
+  model: data.value.model || "Samsung S23 Ultra",
+  os: data.value.os || "Android 13",
+  storage: data.value.storage || 256,
   macAddress: data.value.macAddress || "e8:03:9a:3a:56:5c",
   serialNumber: data.value.serialNumber || "123456-8942",
-  imei: data.value.imei || "123456789102345",
+  imei: data.value.imei || "356782129814756",
 });
 
 const alert = reactive({ show: false, msg: "", type: "" });

@@ -73,7 +73,7 @@ const emit = defineEmits(["pop"]);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  ipAddress: data.value.ipAddress || "192.168.1.23",
+  ipAddress: data.value.ipAddress || "192.166.1.233",
   macAddress: data.value.macAddress || "b8:03:05:41:89:dd",
   serialNumber: data.value.serialNumber || "123456-8942",
   monitorSerialNumber: data.value.monitorSerialNumber,

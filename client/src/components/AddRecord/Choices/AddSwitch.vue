@@ -101,9 +101,9 @@ const { showAlert, removeAlert } = AlertFn(alert);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  location: data.value.location || "test",
+  location: data.value.location || "IT server room",
   model: data.value.model || "tp-link",
-  ports: data.value.ports || 8,
+  ports: data.value.ports || 24,
   deadPorts: data.value.deadPorts || 0,
   serialNumber: data.value.serialNumber || "11354-5689",
 });

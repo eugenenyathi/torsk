@@ -55,9 +55,9 @@ const emit = defineEmits(["next", "pop"]);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  os: data.value.os || "Windows Server 2016",
-  antivirus: data.value.antivirus || "Eset v10",
-  serves: data.value.serves || ["Promun System", " SimAcc System"],
+  os: data.value.os || "Windows Server 2019",
+  antivirus: data.value.antivirus || "Kapersky",
+  serves: data.value.serves || ["Accounting System", "HR System"],
 });
 
 const alert = reactive({ show: false, msg: "", type: "" });

@@ -63,7 +63,7 @@ const { showAlert, removeAlert } = AlertFn(alert);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  location: data.value.location || "test",
+  location: data.value.location || "IT server room",
   model: data.value.model || "trendnet",
   serialNumber: data.value.serialNumber || "11354-2689",
 });

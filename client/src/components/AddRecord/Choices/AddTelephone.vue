@@ -108,7 +108,7 @@ const data = computed(() => store.getters.getTransitFormData);
 const collection = reactive({
   user: data.value.user || "IT Technician",
   model: data.value.model || "NEC",
-  extension: data.value.extension || 2209,
+  extension: data.value.extension || 2109,
   directLine: data.value.directLine || 268911110,
   serialNumber: data.value.serialNumber || "12345-2312",
 });

@@ -111,10 +111,10 @@ const emit = defineEmits(["next"]);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  machineType: data.value.machineType || "desktop",
-  user: data.value.user || "Committees Officer",
-  model: data.value.model || "HP 250 G7 Notebook",
-  machine: data.value.machine || "Committees",
+  machineType: data.value.machineType || "laptop",
+  user: data.value.user || "Accountant",
+  model: data.value.model || "HP Envy",
+  machine: data.value.machine || "AccountantPC",
 });
 
 const alert = reactive({ show: false, msg: "", type: "" });

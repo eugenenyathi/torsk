@@ -179,12 +179,12 @@ const machines = ref([]);
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  user: data.value.user || "IT SUPPORT",
+  user: data.value.user || "Accountant",
   model: data.value.model || "HP Laserjet M502",
-  cartridge: data.value.cartridge || "37A",
-  multipurpose: data.value.multipurpose || false,
+  cartridge: data.value.cartridge || "26A",
+  multipurpose: data.value.multipurpose || true,
   networked: data.value.networked || false,
-  duplex: data.value.duplex || false,
+  duplex: data.value.duplex || true,
   serialNumber: data.value.serialNumber || "12345-6789",
 });
 

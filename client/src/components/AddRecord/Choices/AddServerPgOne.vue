@@ -51,8 +51,8 @@ const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
   location: data.value.user || "IT server room",
-  machine: data.value.machine || "PromunServer",
-  model: data.value.model || "HP ProLiant",
+  machine: data.value.machine || "OccaServer",
+  model: data.value.model || "HPE ProLiant DL385 Gen11",
 });
 
 const alert = reactive({ show: false, msg: "", type: "" });
