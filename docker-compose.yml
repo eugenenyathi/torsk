@@ -30,7 +30,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - "C:/torsk-backup:/data/db"
+      - "./torsk-backup:/data/db"
     networks:
       - torsk-network
 
