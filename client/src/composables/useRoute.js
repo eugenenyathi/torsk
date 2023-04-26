@@ -1,44 +1,37 @@
 import useAuth from "./useAuth.js";
-import useLogin from "./useLogin.js";
+import axios from "axios";
 
 const useRoute = () => {
   const { getAuthUser } = useAuth();
-  const { userExists, checkUser } = useLogin();
 
   const closeRoute = (to, from, next) => {
     let isAuthenticated = getAuthUser();
+
     if (isAuthenticated) next();
     else next("/login");
   };
 
-  const closeSignup = (to, from, next) => {
+  const redirectUser = async (to, from, next) => {
+    const { data } = await axios("/auth/status");
     let isAuthenticated = getAuthUser();
-    checkUser();
 
     if (isAuthenticated) next("/");
-    else if (userExists.value) next("/login");
+    else if (!data) next("/signup");
     else next();
   };
 
-  const redirectRoute = (to, from, next) => {
+  const closeSignup = async (to, from, next) => {
+    const { data } = await axios("/auth/status");
     let isAuthenticated = getAuthUser();
+
     if (isAuthenticated) next("/");
+    else if (data) next("/login");
     else next();
-  };
-
-  const redirectUser = (to, from, next) => {
-    let isAuthenticated = getAuthUser();
-    checkUser();
-
-    if (isAuthenticated) next("/");
-    else if (!userExists.value) next("/signup");
-    else next("/login");
   };
 
   return {
     closeRoute,
     closeSignup,
-    redirectRoute,
     redirectUser,
   };
 };

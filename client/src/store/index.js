@@ -4,6 +4,7 @@ const store = createStore({
   state() {
     return {
       user: null,
+      userExists: false,
       switchHeaderBtn: {
         showAddBtn: true,
         showDeleteBtn: false,
@@ -41,6 +42,9 @@ const store = createStore({
   getters: {
     getUser(state) {
       return state.user;
+    },
+    getUserExists(state) {
+      return state.userExists;
     },
     getRowsPerPage(state) {
       return state.rows;
@@ -100,6 +104,9 @@ const store = createStore({
   mutations: {
     login(state, payload) {
       state.user = payload;
+    },
+    setUserExists(state, payload) {
+      state.userExists = payload;
     },
     logout(state) {
       state.user = null;
@@ -181,6 +188,9 @@ const store = createStore({
   actions: {
     login(context, payload) {
       context.commit("login", payload);
+    },
+    setUserExists(context, payload) {
+      context.commit("setUserExists", payload);
     },
     logout(context) {
       context.commit("logout");

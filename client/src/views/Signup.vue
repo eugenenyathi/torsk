@@ -5,7 +5,7 @@
         <img :src="loginImg" alt="" class="front-img" />
       </div>
       <!-- components -->
-      <form @submit.prevent="handleSubmit" class="signup-personal-info">
+      <form class="signup-form" @submit.prevent="handleSubmit">
         <span class="krynn-logo">Torsk</span>
         <h2
           :class="{
@@ -16,7 +16,7 @@
           You are god in this planet.
         </h2>
         <Alert v-if="alert.show" :msg="alert.msg" :type="alert.type" />
-        <div class="signup-control personal-info fullName-control">
+        <div class="signup-control fullName-control">
           <input
             type="text"
             class="signup-input firstName"
@@ -31,7 +31,7 @@
           />
         </div>
 
-        <div class="signup-control personal-info">
+        <div class="signup-control">
           <!-- <label for="">Username</label> -->
           <input
             type="text"
@@ -41,7 +41,7 @@
           />
         </div>
 
-        <div class="signup-control personal-info">
+        <div class="signup-control">
           <!-- <label for="">Password</label> -->
           <input
             :type="pwdType"
@@ -66,8 +66,8 @@
           Sign Up
         </button>
         <button v-else class="signup-btn" :disabled="isLoading">
-          <Loader />
           Sign Up
+          <Loader />
         </button>
 
         <router-link to="/login" class="link-login link link-center">

@@ -9,7 +9,6 @@ import { ref, computed } from "vue";
 const useLogin = () => {
   const isLoading = ref(false);
   const axiosError = ref(null);
-  const userExists = ref(false);
 
   const store = useStore();
   const router = useRouter();
@@ -19,7 +18,7 @@ const useLogin = () => {
   const checkUser = async () => {
     try {
       const { data } = await axios("/auth/status");
-      userExists.value = data;
+      store.dispatch("setUserExists", data);
     } catch (err) {
       useAxiosError(err, axiosError, isLoading);
     }
@@ -55,7 +54,7 @@ const useLogin = () => {
     }
   };
 
-  return { isLoading, axiosError, login, loggedIn, userExists, checkUser };
+  return { isLoading, axiosError, login, loggedIn, checkUser };
 };
 
 export default useLogin;
