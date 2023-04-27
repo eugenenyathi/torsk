@@ -1,7 +1,7 @@
 version: "1.0.1"
 
 services:
-  frontend:
+  ui:
     build: ./client
     container_name: torsk-ui
     ports:
@@ -9,11 +9,11 @@ services:
     stdin_open: true
     tty: true
     depends_on:
-      - backend
+      - api
     networks:
       - torsk-network
 
-  backend:
+  api:
     build: ./server/
     container_name: torsk-api
     ports:
