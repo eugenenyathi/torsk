@@ -182,12 +182,12 @@ const ramOptions = [1, 2, 3, 4, 5, 6, 8, 12, 16];
 const data = computed(() => store.getters.getTransitFormData);
 
 const collection = reactive({
-  os: data.value.os || "Windows 11",
-  cpu: data.value.cpu || "Core i7",
-  cpuGen: data.value.cpuGen || 12,
-  ram: data.value.ram || 16,
-  storageType: data.value.storageType || "SSD",
-  storageGigs: data.value.storageGigs || 512,
+  os: data.value.os || "",
+  cpu: data.value.cpu || "",
+  cpuGen: data.value.cpuGen || 8,
+  ram: data.value.ram || 4,
+  storageType: data.value.storageType || "HDD",
+  storageGigs: data.value.storageGigs || 450,
 });
 
 const showOsCustomInput = ref(false);

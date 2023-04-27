@@ -10,7 +10,7 @@
           <input
             type="text"
             class="entry-input"
-            placeholder="e.g. Core i3"
+            placeholder="e.g. Intel Xeon "
             v-model="collection.cpu"
           />
           <div class="grand-child-control">

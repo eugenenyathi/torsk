@@ -14,12 +14,11 @@
 
 1. Let's navigate to your desktop run: `cd ~/Desktop/`
 2. Run this to get the code `git clone https://github.com/eugenenyathi/torsk.git`
-3. Then move into the newly created folder run: `cd torsk`
-4. Let's change the git branch run: `git checkout docker`
-5. Finally let's start the app run: `docker compose up -d`
-6. Lastly open a new powershell/terminal tab/instance and run `docker ps`, if everything
-   now has status of `started some minutes/seconds ago`, you are all set.
-7. To start using the app, navigate to localhost:8184 on your browser. enjoy!
+3. Then move into the newly created folder `cd torsk`
+4. Let's change the git branch `git checkout docker`
+5. Finally let's start the app `docker compose up -d`
+6. Wait until everything has started
+7. To start using the app, navigate to localhost:8384 on your browser. enjoy!
 
 ## Policies
 
@@ -36,8 +35,9 @@
 
 ## Known issues
 
-1. You might find problems when adding and removing machines from being faulty or decommissioned, we are
+1. Any page refresh will through a `localhost page not found error`, to clear the error, change your url to `localhost:8384/`, we are working on to find the trouble causer.
+2. You might find problems when adding and removing machines from being faulty or decommissioned, we are
    still working on stabilizing this feature.
-2. You might also run into CRUD (create, read, update and delete) errors for any section, whether router,
-   desktop or email. If you run into such please report the issue on whatsapp on `263 78 456 2079`, otherwise
+3. You might also run into CRUD (create, read, update and delete) errors for any section, whether router,
+   desktop or email. If you run into such please report the issue on whatsapp on `263 71 259 7570` or
    email to `eugenenyathi07@gmail.com` and we will fix the problem for future stable releases.
