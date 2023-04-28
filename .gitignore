@@ -1,5 +1,5 @@
 node_modules
-torsk-backup
+torsk-backup/
 *.code-workspace
 *.sublime-project
 *.sublime-workspace
