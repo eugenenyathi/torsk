@@ -86,8 +86,8 @@ const loginImg = require("@/assets/krynn-1.webp");
 const store = useStore();
 const userExists = computed(() => store.getters.getUserExists);
 
-const username = ref("superadmin");
-const password = ref("Trish15122010!");
+const username = ref("");
+const password = ref("");
 const showPassword = ref(false);
 const pwdType = ref("password");
 

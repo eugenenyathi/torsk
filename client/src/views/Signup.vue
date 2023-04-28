@@ -96,9 +96,9 @@ import useSignup from "@/composables/useSignup.js";
 
 import { ref, reactive } from "vue";
 
-const fullName = reactive({ firstName: "eugene", lastName: "nyathi" });
-const username = ref("superadmin");
-const password = ref("Trish15122010!");
+const fullName = reactive({ firstName: "", lastName: "" });
+const username = ref("");
+const password = ref("");
 const showPassword = ref(false);
 const pwdType = ref("password");
 
