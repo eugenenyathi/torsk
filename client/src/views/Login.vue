@@ -48,9 +48,8 @@
           </button>
         </div>
 
-        <button class="login-btn" :disabled="isLoading">
-          let's go <Loader />
-        </button>
+        <button class="login-btn" v-if="!isLoading">let's go</button>
+        <button class="login-btn loading" v-else>let's go <Loader /></button>
 
         <router-link
           v-if="!userExists"
@@ -67,34 +66,34 @@
 <script setup>
 //TODO add secret signup page
 //TODO add ipAddress Management
-import Loader from "@/components/ClearLoader.vue";
+import Loader from "@/components/BtnLoader";
 import Alert from "@/components/Alert.vue";
-
 //icons
 import EyeOutline from "vue-material-design-icons/EyeOutline.vue";
 import EyeOffOutline from "vue-material-design-icons/EyeOffOutline.vue";
-
 //composables
 import useLogin from "@/composables/useLogin";
-
 //helpers
 import AlertFn from "@/helpers/AlertFn.js";
 import validatePassword from "@/helpers/validatePassword.js";
-
 //vue
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, computed } from "vue";
+import { useStore } from "vuex";
 
 //assets
 const loginImg = require("@/assets/krynn-1.webp");
 
-const username = ref("superadmin");
-const password = ref("Trish15122010!");
+const store = useStore();
+const userExists = computed(() => store.getters.getUserExists);
+
+const username = ref("");
+const password = ref("");
 const showPassword = ref(false);
 const pwdType = ref("password");
 
 const alert = reactive({ show: false, msg: "", type: "" });
 const { showAlert, removeAlert } = AlertFn(alert);
-const { isLoading, userExists, axiosError, login, checkUser } = useLogin();
+const { isLoading, axiosError, login, checkUser } = useLogin();
 
 watch(axiosError, (currentValue, oldValue) => {
   if (currentValue) {

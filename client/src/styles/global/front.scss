@@ -102,6 +102,8 @@
   outline: none;
   border: none;
   display: block;
+  @include flexAlign;
+  gap: 10px;
   margin: 0 auto;
   cursor: pointer;
   color: #fff;

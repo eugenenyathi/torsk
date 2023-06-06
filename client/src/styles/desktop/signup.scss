@@ -4,51 +4,8 @@
 
 .signup-content {
   @extend .front-content;
+  width: 650px;
 
-  &.email-page {
-    display: block;
-    width: 380px;
-    border-radius: 8px;
-
-    .front-img-wrapper {
-      display: none;
-    }
-  }
-}
-
-.signup-email-wrapper,
-.signup-personal-info,
-.signup-root-password {
-  @extend .front-form;
-}
-
-.signup-email-wrapper {
-  .krynn-logo {
-    font-size: 35px;
-    margin-bottom: 15px;
-
-    &.email-code {
-      margin-bottom: 30px;
-    }
-  }
-
-  .header {
-    @extend .front-header;
-    color: $color-grey-2;
-    font-size: 18px;
-    margin-bottom: 10px;
-
-    &.show-alert {
-      margin-bottom: 0px;
-    }
-  }
-
-  .alert {
-    margin-top: 0px;
-  }
-}
-
-.signup-personal-info {
   .krynn-logo {
     font-size: 35px;
     margin-bottom: 15px;
@@ -57,8 +14,8 @@
   .header {
     @extend .front-header;
     color: $color-grey-2;
-    font-size: 18px;
-    margin-bottom: 15px;
+    font-size: 16px;
+    margin-bottom: 8px;
 
     &.show-alert {
       padding-bottom: 0px;
@@ -70,11 +27,8 @@
   }
 }
 
-.signup-root-password {
-  .krynn-logo {
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-  }
+.signup-form {
+  @extend .front-form;
 }
 
 .signup-control {
@@ -89,11 +43,11 @@
 
   .signup-input {
     @extend .form-input;
-    font-size: 16px;
-    height: 45px;
+    font-size: 15px;
+    height: 43px;
 
     &::placeholder {
-      font-size: 16px;
+      font-size: 15px;
     }
   }
 
@@ -103,7 +57,7 @@
 
   &.email-page {
     .signup-input {
-      height: 47px;
+      height: 45px;
     }
   }
 
@@ -127,6 +81,11 @@
 }
 
 .signup-btn {
+  margin-top: 20px;
   @extend .front-btn;
-  height: 47px;
+  height: 45px;
+}
+
+.link-login {
+  margin-top: 10px;
 }
