@@ -15,7 +15,6 @@ const RemoteDesktopSchema = new Schema({
     type: Number,
     unique: true,
     required: [true, "The address can not be empty."],
-    minLength: 6,
   },
 });
 
