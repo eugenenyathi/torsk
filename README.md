@@ -10,15 +10,32 @@
 
 ### How to get started
 
-- Open your powershell/terminal, then run the following commands
+- Open your powershell/cmd, then run the following commands
 
 1. Let's navigate to your desktop run: `cd ~/Desktop/`
 2. Run this to get the code `git clone https://github.com/eugenenyathi/torsk.git`
-3. Then move into the newly created folder `cd torsk`
-4. Let's change the git branch `git checkout docker`
-5. Finally let's start the app `docker compose up -d`
-6. Wait until everything has started
-7. To start using the app, navigate to localhost:8384 on your browser. enjoy!
+3. Close your powershell/cmd
+
+### To start the frontend of the app
+
+- Open your powershell/cmd, then run the following commands
+
+1. Lets navigate into the client folder `cd ~/Desktops/torsk/client`
+2. To start the frontend service run `npm run serve`
+3. DO NOT CLOSE CMD/POWERSHELL
+
+### To start the backend of the app
+
+- Open another powershell/cmd, then run the following commands
+
+1. Lets navigate into the server folder `cd ~/Desktops/torsk/server`
+2. To start the backend service run `nodemon`
+3. DO NOT CLOSE CMD/POWERSHELL
+
+### To use the app
+
+1. Open your browser, in the address bar type `localhost:8081`
+2. Enjoy
 
 ## Policies
 
